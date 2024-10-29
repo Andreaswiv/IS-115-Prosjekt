@@ -11,8 +11,7 @@
 <ul>
     <li><a target="_blank" href="./form_nyBruker.php">Ny bruker</a></li>
     <li><a target="_blank" href="./form_exisBruker.php">Eksisterende bruker</a></li>
-    <li><a target="_blank" href="./form_exisAdmin.php">Eksisterende bruker, ADMIN</a></li>
-    <li><a target="_blank" href="./form_nyAdmin.php">Ny bruker, ADMIN</a></li>
+    <li><a target="_blank" href="./AdminIndex.php">ADMIN? Trykk her</a></li>
 </ul>
 </body>
 </html>
