@@ -6,13 +6,13 @@
     <title>Index Page</title>
 </head>
 <body>
-    <h3>Motell-booking</h3>
+<h3>Motell-booking</h3>
 
-    <ul>
-        <li><a target= "_blank" href="./form_nyBruker.php"></a></li>
-        <li><a target= "_blank" href="./form_exisBruker.php"></a></li>
-        <li><a target= "_blank" href="./modul4_oppg3.php"></a></li>
-        <li><a target= "_blank" href="./modul4_oppg4.php"></a></li>
-    </ul>
+<ul>
+    <li><a target="_blank" href="./form_nyBruker.php">Ny bruker</a></li>
+    <li><a target="_blank" href="./form_exisBruker.php">Eksisterende bruker</a></li>
+    <li><a target="_blank" href="./form_exisAdmin.php">Eksisterende bruker, ADMIN</a></li>
+    <li><a target="_blank" href="./form_nyAdmin.php">Ny bruker, ADMIN</a></li>
+</ul>
 </body>
 </html>
