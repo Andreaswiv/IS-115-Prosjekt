@@ -6,7 +6,7 @@ Vi har valgt å lage et rombookingsystem for et hotell.
 
 # Dette er DB innstillingene 
 
-``
+```
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -14,9 +14,9 @@ CREATE TABLE users (
     role ENUM('Admin', 'Bruker') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-``
+```
 
-``
+```
 CREATE TABLE bookings (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -26,4 +26,4 @@ CREATE TABLE bookings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-``
+```
