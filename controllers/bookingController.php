@@ -1,6 +1,6 @@
 <?php
 require_once 'db.php';
-require_once 'Booking.php';
+require_once './models/Booking.php';
 
 $database = new Database();
 $db = $database->getConnection();

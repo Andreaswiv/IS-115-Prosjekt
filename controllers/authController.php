@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../db.php';
-require_once '../models/User.php';
+require_once './db.php';
+require_once './models/User.php';
 
 $database = new Database();
 $db = $database->getConnection();
