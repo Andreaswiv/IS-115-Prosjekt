@@ -72,9 +72,9 @@
 <div class="container">
     <h3>Book Motell her</h3>
     <ul>
-        <li><a target="_blank" href="./form_nyBruker.php">Ny bruker</a></li>
-        <li><a target="_blank" href="./form_exisBruker.php">Eksisterende bruker</a></li>
-        <li><a target="_blank" href="./logout.php" class="logout">Logg ut</a></li>
+        <li><a target="_blank" href="../src/forms/form_nyBruker.php">Ny bruker</a></li>
+        <li><a target="_blank" href="../src/forms/form_exisBruker.php">Eksisterende bruker</a></li>
+        <li><a target="_blank" href="../public/logout.php" class="logout">Logg ut</a></li>
     </ul>
 </div>
 </body>

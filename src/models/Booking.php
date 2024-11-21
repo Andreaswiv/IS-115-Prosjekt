@@ -1,15 +1,19 @@
 <?php
-require_once 'db.php';
+namespace models;
+require_once 'public/assets/inc/db.php';
 
-class Booking {
+class Booking
+{
     private $conn;
     private $table = "bookings";
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function createBooking($userId, $roomId, $startDate, $endDate) {
+    public function createBooking($userId, $roomId, $startDate, $endDate)
+    {
         $query = "INSERT INTO " . $this->table . " (user_id, room_id, start_date, end_date) VALUES (:userId, :roomId, :startDate, :endDate)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':userId', $userId);
@@ -19,7 +23,8 @@ class Booking {
         return $stmt->execute();
     }
 
-    public function getUserBookings($userId) {
+    public function getUserBookings($userId)
+    {
         $query = "SELECT * FROM " . $this->table . " WHERE user_id = :userId";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':userId', $userId);
@@ -27,4 +32,5 @@ class Booking {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
+
 ?>

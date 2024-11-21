@@ -1,7 +1,7 @@
 <?php
 
 // Initialize PDO connection
-include 'setupdb/setup.php';
+include '../../database/setupdb/setup.php';
 
 try {
     // Fetch user data by ID
@@ -234,6 +234,3 @@ if (!empty($registreringsmelding) && $endringer_gjort) {
 </form>
 </body>
 </html>
-
-
-

@@ -1,15 +1,19 @@
 <?php
-require_once '../db.php';
+namespace models;
+require_once 'public/assets/inc/db.php';
 
-class User {
+class User
+{
     private $conn;
     private $table = "users";
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function createUser($username, $password, $role) {
+    public function createUser($username, $password, $role)
+    {
         $query = "INSERT INTO " . $this->table . " (username, password, role) VALUES (:username, :password, :role)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
@@ -18,7 +22,8 @@ class User {
         return $stmt->execute();
     }
 
-    public function getUser($username) {
+    public function getUser($username)
+    {
         $query = "SELECT * FROM " . $this->table . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
@@ -26,4 +31,5 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
+
 ?>
