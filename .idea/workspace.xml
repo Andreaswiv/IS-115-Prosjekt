@@ -4,28 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Endret hele filstrukturen">
-      <change afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/IS-115-Prosjekt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/IS-115-Prosjekt.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AdminIndex.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/private/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/authController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/bookingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/bookingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/inc/db.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/form_exisBruker.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisBruker.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/form_nyAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_nyAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/form_nyBruker.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_nyBruker.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/logout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Booking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setupdb/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/setupdb/setup.php" afterDir="false" />
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="fikset login og registrering">
+      <change afterPath="$PROJECT_DIR$/public/register.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controllers/registerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/private/.idea/IS-115-Prosjekt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/IS-115-Prosjekt.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="6-koble-form_exisbrukerphp-til-db-v2" />
+        <entry key="$PROJECT_DIR$" value="Develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -74,6 +57,7 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "register",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/Prosjekt/IS-115-Prosjekt",
     "node.js.detected.package.eslint": "true",
@@ -93,12 +77,16 @@
       <recent name="$PROJECT_DIR$/inc" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="PHP Script.register.php">
     <configuration name="db.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/public/assets/inc/db.php">
+      <method v="2" />
+    </configuration>
+    <configuration name="register.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/public/register.php">
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHP Script.register.php" />
         <item itemvalue="PHP Script.db.php" />
       </list>
     </recent_temporary>
@@ -129,6 +117,8 @@
       <workItem from="1732110824079" duration="3810000" />
       <workItem from="1732196787507" duration="252000" />
       <workItem from="1732197119602" duration="4284000" />
+      <workItem from="1732211508763" duration="201000" />
+      <workItem from="1732211712257" duration="89000" />
     </task>
     <task id="LOCAL−00001" summary="lager nye filer osv">
       <option name="closed" value="true" />
@@ -179,7 +169,14 @@
       <option name="presentableId" value="LOCAL−00007" />
       <updated>1732199222644</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="fikset login og registrering">
+      <option name="closed" value="true" />
+      <created>1732211556670</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1732211556670</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,6 +188,7 @@
     <MESSAGE value="Strukturert koden, lagt til login, kontrollere, models" />
     <MESSAGE value="Fikset README.md" />
     <MESSAGE value="Lagt til setup.php fil" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lagt til setup.php fil" />
+    <MESSAGE value="fikset login og registrering" />
+    <option name="LAST_COMMIT_MESSAGE" value="fikset login og registrering" />
   </component>
 </project>
