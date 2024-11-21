@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Lagt til setup.php fil">
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Endret hele filstrukturen">
       <change afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/IS-115-Prosjekt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/IS-115-Prosjekt.iml" afterDir="false" />
@@ -55,6 +55,7 @@
     &quot;accountId&quot;: &quot;3b55ee59-61c0-4e13-885c-e91f00d565c3&quot;
   }
 }</component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -73,7 +74,6 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "endre-filstruktur",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/Prosjekt/IS-115-Prosjekt",
     "node.js.detected.package.eslint": "true",
@@ -92,6 +92,16 @@
       <recent name="$PROJECT_DIR$/public/assets" />
       <recent name="$PROJECT_DIR$/inc" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="db.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/public/assets/inc/db.php">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.db.php" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
