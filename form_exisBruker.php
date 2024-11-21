@@ -1,34 +1,32 @@
 <?php
 
-// Initialiser PDO-forbindelse
-include 'inc/db_connect.php';
+// Initialize PDO connection
+include 'setupdb/setup.php';
 
-// Hent brukerdata fra databasen (bruker ID som eksempel)
-$bruker_id = 1; // Definer hvordan bruker-ID skal identifiseres
-$stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
-$stmt->bindParam(':id', $bruker_id, PDO::PARAM_INT);
-$stmt->execute();
+try {
+    // Fetch user data by ID
+    $bruker_id = 1; // Example user ID
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->bindParam(':id', $bruker_id, PDO::PARAM_INT);
+    $stmt->execute();
 
-$bruker = $stmt->fetch(PDO::FETCH_ASSOC);
-if ($bruker) {
-    $brukerprofil = array(
+    $bruker = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$bruker) {
+        throw new Exception("Ingen bruker funnet med ID $bruker_id.");
+    }
+
+    // Populate user profile
+    $brukerprofil = [
         'fornavn' => $bruker['firstName'],
         'etternavn' => $bruker['lastName'],
         'epost' => $bruker['email'],
         'telefonnr' => $bruker['phone'],
         'addresse' => $bruker['address'],
-        'postnummer' => $bruker['postnummer']
-    );
-} else {
-    echo "Ingen bruker funnet med ID $bruker_id.";
-    $brukerprofil = array(
-        'fornavn' => "",
-        'etternavn' => "",
-        'epost' => "",
-        'telefonnr' => "",
-        'addresse' => "",
-        'postnummer' => ""
-    );
+        'postnummer' => $bruker['postnummer'],
+    ];
+
+} catch (Exception $e) {
+    die("Feil: " . $e->getMessage());
 }
 
 
@@ -43,7 +41,7 @@ function vask($variabel)
 
 $feilmeldinger = []; // Definerer en tom matrise for feilmeldinger til bruker
 $endringer = []; // Definerer en tom matrise for endringsmeldinger til bruker
-$melding = ""; 
+$melding = "";
 $registreringsmelding = "";
 
 # Definerer variablene for skjemaet
@@ -146,23 +144,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $updateStmt->bindParam(':id', $bruker_id, PDO::PARAM_INT);
                 $updateStmt->execute();
 
-                  // Hent oppdatert informasjon
+                // Hent oppdatert informasjon
                 $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
                 $stmt->bindParam(':id', $bruker_id, PDO::PARAM_INT);
                 $stmt->execute();
                 $bruker = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 if ($bruker) {
-                  $brukerprofil = array(
-                  'fornavn' => $bruker['firstName'],
-                  'etternavn' => $bruker['lastName'],
-                  'epost' => $bruker['email'],
-                  'telefonnr' => $bruker['phone'],
-                  'addresse' => $bruker['address'],
-                  'postnummer' => $bruker['postnummer']
-                     );
-                 }
-        
+                    $brukerprofil = array(
+                        'fornavn' => $bruker['firstName'],
+                        'etternavn' => $bruker['lastName'],
+                        'epost' => $bruker['email'],
+                        'telefonnr' => $bruker['phone'],
+                        'addresse' => $bruker['address'],
+                        'postnummer' => $bruker['postnummer']
+                    );
+                }
+
                 // Meld at oppføringen er endret
                 $melding = 'Brukeroppføringen er oppdatert i databasen.';
             } catch (PDOException $e) {
@@ -185,55 +183,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Brukerprofil</title>
 </head>
 <body>
-    <h1>Brukerprofil</h1>
+<h1>Brukerprofil</h1>
 
-    <?php
-    // Vis feilmeldinger
-    if (!empty($feilmeldinger)) {
-        echo '<ul>';
-        foreach ($feilmeldinger as $feil) {
-            echo '<li>' . htmlspecialchars($feil) . '</li>';
-        }
-        echo '</ul>';
+<?php
+// Vis feilmeldinger
+if (!empty($feilmeldinger)) {
+    echo '<ul>';
+    foreach ($feilmeldinger as $feil) {
+        echo '<li>' . htmlspecialchars($feil) . '</li>';
     }
+    echo '</ul>';
+}
 
-    // Vis melding til brukeren
-    if (!empty($melding)) {
-        echo '<p">' . htmlspecialchars($melding) . '</p>';
+// Vis melding til brukeren
+if (!empty($melding)) {
+    echo '<p">' . htmlspecialchars($melding) . '</p>';
+}
+
+// Vis oppdatert brukerprofil hvis registrert
+if (!empty($registreringsmelding) && $endringer_gjort) {
+    echo '<p>' . htmlspecialchars($registreringsmelding) . '</p>';
+    echo '<ul>';
+    foreach ($brukerprofil as $key => $value) {
+        echo '<li>' . htmlspecialchars(ucfirst($key)) . ': ' . htmlspecialchars($value) . '</li>';
     }
+    echo '</ul>';
+}
+?>
 
-    // Vis oppdatert brukerprofil hvis registrert
-    if (!empty($registreringsmelding) && $endringer_gjort) {
-        echo '<p>' . htmlspecialchars($registreringsmelding) . '</p>';
-        echo '<ul>';
-        foreach ($brukerprofil as $key => $value) {
-            echo '<li>' . htmlspecialchars(ucfirst($key)) . ': ' . htmlspecialchars($value) . '</li>';
-        }
-        echo '</ul>';
-    }
-    ?>
+<form method="post" action="">
+    <label for="fornavn">Fornavn:</label><br>
+    <input type="text" id="fornavn" name="fornavn" value="<?php echo htmlspecialchars($fornavn); ?>"><br><br>
 
-    <form method="post" action="">
-        <label for="fornavn">Fornavn:</label><br>
-        <input type="text" id="fornavn" name="fornavn" value="<?php echo htmlspecialchars($fornavn); ?>"><br><br>
+    <label for="etternavn">Etternavn:</label><br>
+    <input type="text" id="etternavn" name="etternavn" value="<?php echo htmlspecialchars($etternavn); ?>"><br><br>
 
-        <label for="etternavn">Etternavn:</label><br>
-        <input type="text" id="etternavn" name="etternavn" value="<?php echo htmlspecialchars($etternavn); ?>"><br><br>
+    <label for="epost">E-post:</label><br>
+    <input type="text" id="epost" name="epost" value="<?php echo htmlspecialchars($epost); ?>"><br><br>
 
-        <label for="epost">E-post:</label><br>
-        <input type="text" id="epost" name="epost" value="<?php echo htmlspecialchars($epost); ?>"><br><br>
+    <label for="telefonnr">Telefonnummer:</label><br>
+    <input type="text" id="telefonnr" name="telefonnr" value="<?php echo htmlspecialchars($telefonnr); ?>"><br><br>
 
-        <label for="telefonnr">Telefonnummer:</label><br>
-        <input type="text" id="telefonnr" name="telefonnr" value="<?php echo htmlspecialchars($telefonnr); ?>"><br><br>
+    <label for="addresse">Adresse:</label><br>
+    <input type="text" id="addresse" name="addresse" value="<?php echo htmlspecialchars($addresse); ?>"><br><br>
 
-        <label for="addresse">Adresse:</label><br>
-        <input type="text" id="addresse" name="addresse" value="<?php echo htmlspecialchars($addresse); ?>"><br><br>
+    <label for="postnummer">Postnummer:</label><br>
+    <input type="text" id="postnummer" name="postnummer" value="<?php echo htmlspecialchars($postnr); ?>"><br><br>
 
-        <label for="postnummer">Postnummer:</label><br>
-        <input type="text" id="postnummer" name="postnummer" value="<?php echo htmlspecialchars($postnr); ?>"><br><br>
-
-        <input type="submit" value="Oppdater">
-    </form>
+    <input type="submit" value="Oppdater">
+</form>
 </body>
 </html>
 

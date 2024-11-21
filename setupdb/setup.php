@@ -1,25 +1,21 @@
 <?php
-$host = 'localhost'; // EVENTUELT '127.0.0.1:3307' ??
-$username = 'root';       // Update if different
-$password = '';           // Update if different
+$host = 'localhost';
+$username = 'root';
+$password = '';
 $db_name = 'motell_booking';
 
-
-// Connect to MySQL server
 try {
-    $conn = new PDO("mysql:host=$host;dbname=$db_name", $username, $password);
-    ####### $conn = new PDO("mysql:unix_socket=/tmp/mysql.sock", $username, $password); ### ny fiks for spesifikk socket, funker ikke atm?
-
+    // Connect to MySQL server and select the database
+    $conn = new PDO("mysql:host=$host", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Create the database if it doesn't exist
     $conn->exec("CREATE DATABASE IF NOT EXISTS $db_name");
-    echo "Database '$db_name' created successfully or already exists.<br>";
 
-    // Select the database
+    // Use the database
     $conn->exec("USE $db_name");
 
-    // Create the `users` table ---------------- LA TIL FIRSTNAME OG LASTNAME
+    // Create the `users` table
     $createUsersTable = "
         CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +31,6 @@ try {
         );
     ";
     $conn->exec($createUsersTable);
-    echo "Table 'users' created successfully or already exists.<br>";
 
     // Create the `bookings` table
     $createBookingsTable = "
@@ -49,13 +44,7 @@ try {
         );
     ";
     $conn->exec($createBookingsTable);
-    echo "Table 'bookings' created successfully or already exists.<br>";
 
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    die("Database error: " . $e->getMessage());
 }
-
-// Close the connection
-$conn = null;
-?>
-
