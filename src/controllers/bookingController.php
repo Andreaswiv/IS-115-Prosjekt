@@ -1,6 +1,9 @@
 <?php
-require_once 'db.php';
-require_once './models/Booking.php';
+
+use models\Booking;
+
+require_once 'public/assets/inc/db.php';
+require_once 'src/models/Booking.php';
 
 $database = new Database();
 $db = $database->getConnection();

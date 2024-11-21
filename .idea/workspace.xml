@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Lagt til setup.php fil">
+      <change afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/IS-115-Prosjekt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/IS-115-Prosjekt.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AdminIndex.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/private/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/authController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/bookingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/bookingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/inc/db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/form_exisBruker.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisBruker.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/form_nyAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_nyAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/form_nyBruker.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_nyBruker.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/logout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setupdb/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/setupdb/setup.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="6-koble-form_exisbrukerphp-til-db-v2" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Andreaswiv&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Andreaswiv/IS-115-Prosjekt.git&quot;,
+    &quot;accountId&quot;: &quot;3b55ee59-61c0-4e13-885c-e91f00d565c3&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2o6uOaRaMBPkygIEIsC8DfpHxUk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "endre-filstruktur",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/Prosjekt/IS-115-Prosjekt",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/private" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/public/assets" />
+      <recent name="$PROJECT_DIR$/inc" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="" />
+      <created>1730202314357</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730202314357</updated>
+      <workItem from="1730202315547" duration="52000" />
+      <workItem from="1730202374990" duration="2495000" />
+      <workItem from="1730277432439" duration="1532000" />
+      <workItem from="1730374626806" duration="5516000" />
+      <workItem from="1731315187320" duration="1260000" />
+      <workItem from="1731673117697" duration="12000" />
+      <workItem from="1732110365381" duration="385000" />
+      <workItem from="1732110824079" duration="3810000" />
+      <workItem from="1732196787507" duration="252000" />
+      <workItem from="1732197119602" duration="4284000" />
+    </task>
+    <task id="LOCAL−00001" summary="lager nye filer osv">
+      <option name="closed" value="true" />
+      <created>1730203207294</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1730203207294</updated>
+    </task>
+    <task id="LOCAL−00002" summary="Lagt til admin index">
+      <option name="closed" value="true" />
+      <created>1730203499498</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1730203499498</updated>
+    </task>
+    <task id="LOCAL−00003" summary="Strukturert koden, lagt til login, kontrollere, models">
+      <option name="closed" value="true" />
+      <created>1730375637388</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1730375637388</updated>
+    </task>
+    <task id="LOCAL−00004" summary="Strukturert koden, lagt til login, kontrollere, models">
+      <option name="closed" value="true" />
+      <created>1730376158270</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1730376158270</updated>
+    </task>
+    <task id="LOCAL−00005" summary="Fikset README.md">
+      <option name="closed" value="true" />
+      <created>1730376257445</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1730376257445</updated>
+    </task>
+    <task id="LOCAL−00006" summary="Lagt til setup.php fil">
+      <option name="closed" value="true" />
+      <created>1730377928119</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1730377928119</updated>
+    </task>
+    <task id="LOCAL−00007" summary="Lagt til setup.php fil">
+      <option name="closed" value="true" />
+      <created>1732199222643</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1732199222644</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="lager nye filer osv" />
+    <MESSAGE value="Lagt til admin index" />
+    <MESSAGE value="Strukturert koden, lagt til login, kontrollere, models" />
+    <MESSAGE value="Fikset README.md" />
+    <MESSAGE value="Lagt til setup.php fil" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lagt til setup.php fil" />
+  </component>
+</project>
