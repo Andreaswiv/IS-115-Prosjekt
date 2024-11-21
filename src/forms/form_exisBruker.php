@@ -5,125 +5,124 @@ include '../../database/setupdb/setup.php';
 
 try {
     // Fetch user data by ID
-    $bruker_id = 1; // Example user ID
+    $user_id = 1; // Example user ID
     $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
-    $stmt->bindParam(':id', $bruker_id, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
 
-    $bruker = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$bruker) {
-        throw new Exception("Ingen bruker funnet med ID $bruker_id.");
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$user) {
+        throw new Exception("No user found with ID $user_id.");
     }
 
     // Populate user profile
-    $brukerprofil = [
-        'fornavn' => $bruker['firstName'],
-        'etternavn' => $bruker['lastName'],
-        'epost' => $bruker['email'],
-        'telefonnr' => $bruker['phone'],
-        'addresse' => $bruker['address'],
-        'postnummer' => $bruker['postnummer'],
+    $userProfile = [
+        'firstName' => $user['firstName'],
+        'lastName' => $user['lastName'],
+        'email' => $user['email'],
+        'phone' => $user['phone'],
+        'address' => $user['address'],
+        'postalCode' => $user['postnummer'],
     ];
 
 } catch (Exception $e) {
-    die("Feil: " . $e->getMessage());
+    die("Error: " . $e->getMessage());
 }
 
-
-
-function vask($variabel)
+// Sanitize function
+function sanitize($variable)
 {
-    $variabel = strip_tags($variabel);
-    $variabel = htmlentities($variabel);
-    $variabel = trim($variabel);
-    return $variabel;
+    $variable = strip_tags($variable);
+    $variable = htmlentities($variable);
+    $variable = trim($variable);
+    return $variable;
 }
 
-$feilmeldinger = []; // Definerer en tom matrise for feilmeldinger til bruker
-$endringer = []; // Definerer en tom matrise for endringsmeldinger til bruker
-$melding = "";
-$registreringsmelding = "";
+$errorMessages = []; // Define an empty array for error messages
+$updates = []; // Define an empty array for change notifications
+$message = "";
+$registrationMessage = "";
 
-# Definerer variablene for skjemaet
-$fornavn = $brukerprofil['fornavn'];
-$etternavn = $brukerprofil['etternavn'];
-$epost = $brukerprofil['epost'];
-$telefonnr = $brukerprofil['telefonnr'];
-$addresse = $brukerprofil['addresse'];
-$postnr = $brukerprofil['postnummer'];
+// Define variables for the form
+$firstName = $userProfile['firstName'];
+$lastName = $userProfile['lastName'];
+$email = $userProfile['email'];
+$phone = $userProfile['phone'];
+$address = $userProfile['address'];
+$postalCode = $userProfile['postalCode'];
 
-# Kontrollerer at requestmetoden er POST, og deretter renser data med func vask()
+// Check if the request method is POST, then sanitize the input data
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $fornavn = vask($_POST['fornavn']);
-    $etternavn = vask($_POST['etternavn']);
-    $epost = vask($_POST['epost']);
-    $telefonnr = vask($_POST['telefonnr']);
-    $addresse = vask($_POST['addresse']);
-    $postnr = vask($_POST['postnummer']);
+    $firstName = sanitize($_POST['firstName']);
+    $lastName = sanitize($_POST['lastName']);
+    $email = sanitize($_POST['email']);
+    $phone = sanitize($_POST['phone']);
+    $address = sanitize($_POST['address']);
+    $postalCode = sanitize($_POST['postalCode']);
 
-    // Validerer input, legger evt melding inn i $feilmeldinger ved behov
-    if (empty($fornavn)) {
-        $feilmeldinger[] = "Påkrevet felt: Fornavn kan ikke være tomt.";
+    // Validate input, add error messages to $errorMessages if necessary
+    if (empty($firstName)) {
+        $errorMessages[] = "Required field: First name cannot be empty.";
     }
-    if (empty($etternavn)) {
-        $feilmeldinger[] = "Påkrevet felt: Etternavn kan ikke være tomt.";
+    if (empty($lastName)) {
+        $errorMessages[] = "Required field: Last name cannot be empty.";
     }
-    if (empty($epost)) {
-        $feilmeldinger[] = "Påkrevet felt: E-post kan ikke være tom.";
-    } elseif (!filter_var($epost, FILTER_VALIDATE_EMAIL)) {
-        $feilmeldinger[] = 'Ugyldig e-postadresse.';
+    if (empty($email)) {
+        $errorMessages[] = "Required field: Email cannot be empty.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessages[] = "Invalid email address.";
     }
-    if (empty($telefonnr)) {
-        $feilmeldinger[] = "Påkrevet felt: Telefonnummer kan ikke være tomt.";
-    } elseif (strlen($telefonnr) != 8) {
-        $feilmeldinger[] = "Telefonnummer må være 8 siffer langt.";
+    if (empty($phone)) {
+        $errorMessages[] = "Required field: Phone number cannot be empty.";
+    } elseif (strlen($phone) != 8) {
+        $errorMessages[] = "Phone number must be 8 digits long.";
     }
-    if (empty($addresse)){
-        $feilmeldinger[] = "Påkrevet felt: Addresse kan ikke være tomt.";
+    if (empty($address)) {
+        $errorMessages[] = "Required field: Address cannot be empty.";
     }
-    if (empty($postnr)){
-        $feilmeldinger[] = "Påkrevet felt: Postnummer kan ikke være tomt.";
-    }else if (strlen($postnr) != 4){
-        $feilmeldinger[] = "Postnummer må være 4 siffer langt.";
+    if (empty($postalCode)) {
+        $errorMessages[] = "Required field: Postal code cannot be empty.";
+    } elseif (strlen($postalCode) != 4) {
+        $errorMessages[] = "Postal code must be 4 digits long.";
     }
 
-    // Hvis ingen valideringsfeilmeldinger, fortsett
-    if (empty($feilmeldinger)) {
-        $endringer_gjort = false;
+    // If no validation errors, proceed
+    if (empty($errorMessages)) {
+        $changesMade = false;
 
-        // Formater fornavn, etternavn og adresse
-        $fornavn_formatert = mb_convert_case(mb_strtolower($fornavn, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
-        $etternavn_formatert = mb_convert_case(mb_strtolower($etternavn, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
-        $addresse_formatert = mb_convert_case(mb_strtolower($addresse, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
+        // Format first name, last name, and address
+        $formattedFirstName = mb_convert_case(mb_strtolower($firstName, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
+        $formattedLastName = mb_convert_case(mb_strtolower($lastName, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
+        $formattedAddress = mb_convert_case(mb_strtolower($address, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
 
-        // Sammenlign hvert felt og registrer endringer
-        if ($fornavn_formatert != $brukerprofil['fornavn']) {
-            $endringer['Fornavn'] = array('gammel' => $brukerprofil['fornavn'], 'ny' => $fornavn_formatert);
-            $endringer_gjort = true;
+        // Compare each field and record changes
+        if ($formattedFirstName != $userProfile['firstName']) {
+            $updates['First Name'] = ['old' => $userProfile['firstName'], 'new' => $formattedFirstName];
+            $changesMade = true;
         }
-        if ($etternavn_formatert != $brukerprofil['etternavn']) {
-            $endringer['Etternavn'] = array('gammel' => $brukerprofil['etternavn'], 'ny' => $etternavn_formatert);
-            $endringer_gjort = true;
+        if ($formattedLastName != $userProfile['lastName']) {
+            $updates['Last Name'] = ['old' => $userProfile['lastName'], 'new' => $formattedLastName];
+            $changesMade = true;
         }
-        if ($epost != $brukerprofil['epost']) {
-            $endringer['E-post'] = array('gammel' => $brukerprofil['epost'], 'ny' => $epost);
-            $endringer_gjort = true;
+        if ($email != $userProfile['email']) {
+            $updates['Email'] = ['old' => $userProfile['email'], 'new' => $email];
+            $changesMade = true;
         }
-        if ($telefonnr != $brukerprofil['telefonnr']) {
-            $endringer['Telefonnummer'] = array('gammel' => $brukerprofil['telefonnr'], 'ny' => $telefonnr);
-            $endringer_gjort = true;
+        if ($phone != $userProfile['phone']) {
+            $updates['Phone'] = ['old' => $userProfile['phone'], 'new' => $phone];
+            $changesMade = true;
         }
-        if ($addresse_formatert != $brukerprofil['addresse']) {
-            $endringer['Adresse'] = array('gammel' => $brukerprofil['addresse'], 'ny' => $addresse_formatert);
-            $endringer_gjort = true;
+        if ($formattedAddress != $userProfile['address']) {
+            $updates['Address'] = ['old' => $userProfile['address'], 'new' => $formattedAddress];
+            $changesMade = true;
         }
-        if ($postnr != $brukerprofil['postnummer']) {
-            $endringer['Postnummer'] = array('gammel' => $brukerprofil['postnummer'], 'ny' => $postnr);
-            $endringer_gjort = true;
+        if ($postalCode != $userProfile['postalCode']) {
+            $updates['Postal Code'] = ['old' => $userProfile['postalCode'], 'new' => $postalCode];
+            $changesMade = true;
         }
 
-        if ($endringer_gjort) {
-            // Oppdater databasen med de nye verdiene
+        if ($changesMade) {
+            // Update database with the new values
             try {
                 $updateStmt = $conn->prepare("
                     UPDATE users SET 
@@ -135,102 +134,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         postnummer = :postnummer 
                     WHERE id = :id
                 ");
-                $updateStmt->bindParam(':firstName', $fornavn_formatert);
-                $updateStmt->bindParam(':lastName', $etternavn_formatert);
-                $updateStmt->bindParam(':email', $epost);
-                $updateStmt->bindParam(':phone', $telefonnr);
-                $updateStmt->bindParam(':address', $addresse_formatert);
-                $updateStmt->bindParam(':postnummer', $postnr);
-                $updateStmt->bindParam(':id', $bruker_id, PDO::PARAM_INT);
+                $updateStmt->bindParam(':firstName', $formattedFirstName);
+                $updateStmt->bindParam(':lastName', $formattedLastName);
+                $updateStmt->bindParam(':email', $email);
+                $updateStmt->bindParam(':phone', $phone);
+                $updateStmt->bindParam(':address', $formattedAddress);
+                $updateStmt->bindParam(':postnummer', $postalCode);
+                $updateStmt->bindParam(':id', $user_id, PDO::PARAM_INT);
                 $updateStmt->execute();
 
-                // Hent oppdatert informasjon
+                // Retrieve updated information
                 $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
-                $stmt->bindParam(':id', $bruker_id, PDO::PARAM_INT);
+                $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
                 $stmt->execute();
-                $bruker = $stmt->fetch(PDO::FETCH_ASSOC);
+                $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                if ($bruker) {
-                    $brukerprofil = array(
-                        'fornavn' => $bruker['firstName'],
-                        'etternavn' => $bruker['lastName'],
-                        'epost' => $bruker['email'],
-                        'telefonnr' => $bruker['phone'],
-                        'addresse' => $bruker['address'],
-                        'postnummer' => $bruker['postnummer']
-                    );
+                if ($user) {
+                    $userProfile = [
+                        'firstName' => $user['firstName'],
+                        'lastName' => $user['lastName'],
+                        'email' => $user['email'],
+                        'phone' => $user['phone'],
+                        'address' => $user['address'],
+                        'postalCode' => $user['postnummer']
+                    ];
                 }
 
-                // Meld at oppføringen er endret
-                $melding = 'Brukeroppføringen er oppdatert i databasen.';
+                // Notify that the entry was updated
+                $message = 'User record updated in the database.';
             } catch (PDOException $e) {
-                $feilmeldinger[] = "Feil ved oppdatering av databasen: " . $e->getMessage();
+                $errorMessages[] = "Error updating the database: " . $e->getMessage();
             }
         } else {
-            $melding = 'Ingen endringer ble gjort.';
-            $endringer_gjort = false;
+            $message = 'No changes were made.';
         }
 
-        // Vis den oppdaterte informasjonen
-        $registreringsmelding = 'Oppdatert informasjon er registrert:';
+        // Display the updated information
+        $registrationMessage = 'Updated information has been saved:';
     }
 }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Brukerprofil</title>
-</head>
-<body>
-<h1>Brukerprofil</h1>
-
-<?php
-// Vis feilmeldinger
-if (!empty($feilmeldinger)) {
-    echo '<ul>';
-    foreach ($feilmeldinger as $feil) {
-        echo '<li>' . htmlspecialchars($feil) . '</li>';
-    }
-    echo '</ul>';
-}
-
-// Vis melding til brukeren
-if (!empty($melding)) {
-    echo '<p">' . htmlspecialchars($melding) . '</p>';
-}
-
-// Vis oppdatert brukerprofil hvis registrert
-if (!empty($registreringsmelding) && $endringer_gjort) {
-    echo '<p>' . htmlspecialchars($registreringsmelding) . '</p>';
-    echo '<ul>';
-    foreach ($brukerprofil as $key => $value) {
-        echo '<li>' . htmlspecialchars(ucfirst($key)) . ': ' . htmlspecialchars($value) . '</li>';
-    }
-    echo '</ul>';
-}
-?>
-
-<form method="post" action="">
-    <label for="fornavn">Fornavn:</label><br>
-    <input type="text" id="fornavn" name="fornavn" value="<?php echo htmlspecialchars($fornavn); ?>"><br><br>
-
-    <label for="etternavn">Etternavn:</label><br>
-    <input type="text" id="etternavn" name="etternavn" value="<?php echo htmlspecialchars($etternavn); ?>"><br><br>
-
-    <label for="epost">E-post:</label><br>
-    <input type="text" id="epost" name="epost" value="<?php echo htmlspecialchars($epost); ?>"><br><br>
-
-    <label for="telefonnr">Telefonnummer:</label><br>
-    <input type="text" id="telefonnr" name="telefonnr" value="<?php echo htmlspecialchars($telefonnr); ?>"><br><br>
-
-    <label for="addresse">Adresse:</label><br>
-    <input type="text" id="addresse" name="addresse" value="<?php echo htmlspecialchars($addresse); ?>"><br><br>
-
-    <label for="postnummer">Postnummer:</label><br>
-    <input type="text" id="postnummer" name="postnummer" value="<?php echo htmlspecialchars($postnr); ?>"><br><br>
-
-    <input type="submit" value="Oppdater">
-</form>
-</body>
-</html>

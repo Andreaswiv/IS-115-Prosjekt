@@ -1,155 +1,190 @@
 <?php
 /*
-DETTE SCRIPTET LAGRER EN NY BRUKER I EN MATRISE
---------------- DETTE MÅ ENDRES -------------- SÅNN AT DATAEN OM NY BRUKER LAGRES I DATABASE ISTEDENFOR
+THIS SCRIPT SAVES A NEW USER IN THE DATABASE
+The user input is validated and stored in the "users" table in the database
 */
 
-# VIDERE SKAL DETTE FORMET LEDE TIL form_bruker_index.php
+# Include database connection
+include '../../database/setupdb/setup.php';
 
-
-
-# oppretter en funksjon for å vaske input fra bruker
-function vask($variabel)
+# Function to sanitize user input
+function sanitize($variable)
 {
-    $variabel = strip_tags($variabel);
-    $variabel = htmlentities($variabel);
-
-    return $variabel;
+    $variable = strip_tags($variable);
+    $variable = htmlentities($variable);
+    $variable = trim($variable);
+    return $variable;
 }
 
-# validering av brukerdata
-$feilmeldinger = [];
-$brukerinfo = [];
-$bekreftelseGodkjent = true;
+# Validation of user data
+$errorMessages = [];
+$isConfirmationValid = true;
 
-# SJEKK AT FELTENE IKKE ER TOMME
-
-#fornavn
-$fNavn = vask($_REQUEST['fNavn']);
-if($fNavn != ""){
-    #fornavn godkjent
-    $brukerinfo[] = mb_convert_case(mb_strtolower($fNavn, 'UTF-8'), MB_CASE_TITLE, "UTF-8"); //sikrer stor forbokstav etterfulgt av små bokstaver
-    $bekreftelseGodkjent = true;
-} else{
-    #fornavn ikke godkjent
-    $feilmeldinger[] = "Påkrevet felt: Fornavn kan ikke være tomt.";
-    $bekreftelseGodkjent = false;
-}
-
-
-#etternavn
-$eNavn = vask($_REQUEST['eNavn']);
-if($eNavn != ""){
-    #etternavn godkjent
-    $brukerinfo[] = mb_convert_case(mb_strtolower($eNavn, 'UTF-8'), MB_CASE_TITLE, "UTF-8"); //sikrer stor forbokstav etterfulgt av små bokstaver
-    $bekreftelseGodkjent = true;
-} else{
-    #etternavn ikke godkjent
-    $feilmeldinger[] = "Påkrevet felt: Etternavn kan ikke være tomt.";
-    $bekreftelseGodkjent = false;
-}
-
-
-# validering formatering email
-$email = vask($_REQUEST['email']);
-if(empty($email)){
-    #epost er tom
-    $feilmeldinger[] = "Påkrevet felt: Epost kan ikke være tomt.";
-    $bekreftelseGodkjent = false;
-
-} else if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-    # epost formattert riktig
-    $brukerinfo[] = $email;
-    $bekreftelseGodkjent = true;
+# Username
+if (isset($_REQUEST['username']) && $_REQUEST['username'] !== null) {
+    $username = sanitize($_REQUEST['username']);
+    if ($username != "") {
+        # Username is valid
+        $usernameFormatted = mb_convert_case(mb_strtolower($username, 'UTF-8'), MB_CASE_LOWER, "UTF-8"); // Ensures lowercase username
+    } else {
+        $errorMessages[] = "Required field: Username cannot be empty.";
+        $isConfirmationValid = false;
+    }
 } else {
-    #epost ikke formattert riktig
-    $feilmeldinger[] = "Epost ikke formattert riktig.";
-    $bekreftelseGodkjent = false;
+    $errorMessages[] = "Required field: Username is missing.";
+    $isConfirmationValid = false;
 }
 
-
-# validering formatering tlfnummer
-$tlf = vask($_REQUEST['tlf']);
-if($tlf == ""){
-    # ikke påkrevet felt tlfnummer ikke registrert
-    $brukerinfo[] = "";
-    $bekreftelseGodkjent = true;
-}
-else if(strlen($tlf) == 8){
-    # mobilnummer formatert riktig
-    $brukerinfo[] = $tlf;
-    $bekreftelseGodkjent = true;
+# First name
+if (isset($_REQUEST['firstName']) && $_REQUEST['firstName'] !== null) {
+    $firstName = sanitize($_REQUEST['firstName']);
+    if ($firstName != "") {
+        # First name is valid
+        $firstNameFormatted = mb_convert_case(mb_strtolower($firstName, 'UTF-8'), MB_CASE_TITLE, "UTF-8"); // Ensures uppercase first letter
+    } else {
+        $errorMessages[] = "Required field: First name cannot be empty.";
+        $isConfirmationValid = false;
+    }
 } else {
-    # mobilnummer ikke formatert riktig
-    $feilmeldinger[] = "Telefonnummer må være 8 siffer langt.";
-    $bekreftelseGodkjent = false;
+    $errorMessages[] = "Required field: First name is missing.";
+    $isConfirmationValid = false;
 }
 
-
-#addresse
-$addr = vask($_REQUEST['addresse']);
-if($addr != ""){
-    #addresse godkjent
-    $brukerinfo[] = mb_convert_case(mb_strtolower($addr, 'UTF-8'), MB_CASE_TITLE, "UTF-8"); //sikrer stor forbokstav etterfulgt av små bokstaver
-    $bekreftelseGodkjent = true;
-} else{
-    #addresse ikke godkjent
-    $feilmeldinger[] = "Påkrevet felt: Addresse kan ikke være tomt.";
-    $bekreftelseGodkjent = false;
+# Last name
+if (isset($_REQUEST['lastName']) && $_REQUEST['lastName'] !== null) {
+    $lastName = sanitize($_REQUEST['lastName']);
+    if ($lastName != "") {
+        # Last name is valid
+        $lastNameFormatted = mb_convert_case(mb_strtolower($lastName, 'UTF-8'), MB_CASE_TITLE, "UTF-8"); // Ensures uppercase first letter
+    } else {
+        $errorMessages[] = "Required field: Last name cannot be empty.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $errorMessages[] = "Required field: Last name is missing.";
+    $isConfirmationValid = false;
 }
 
-#postnummer
-$postnr = (int)vask($_REQUEST['zip']);
-if(strlen($postnr) == 4){
-    #postnummer godkjent
-    $brukerinfo[] = $postnr;
-    $bekreftelseGodkjent = true;
-
-} else{
-    #postnummer ikke godkjent
-    $feilmeldinger[] = "Påkrevet felt: Postnummer må bestå av 4 tall.";
-    $bekreftelseGodkjent = false;
+# Email validation
+if (isset($_REQUEST['email']) && $_REQUEST['email'] !== null) {
+    $email = sanitize($_REQUEST['email']);
+    if (empty($email)) {
+        $errorMessages[] = "Required field: Email cannot be empty.";
+        $isConfirmationValid = false;
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessages[] = "Invalid email address.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $errorMessages[] = "Required field: Email is missing.";
+    $isConfirmationValid = false;
 }
 
+# Phone number validation
+$phone = isset($_REQUEST['phone']) ? sanitize($_REQUEST['phone']) : null;
+if ($phone !== null) {
+    if (strlen($phone) == 8) {
+        # Phone number is properly formatted
+        $phoneFormatted = $phone;
+    } else {
+        $errorMessages[] = "Phone number must be 8 digits long.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $phoneFormatted = null; // Optional field
+}
 
+# Address
+if (isset($_REQUEST['address']) && $_REQUEST['address'] !== null) {
+    $address = sanitize($_REQUEST['address']);
+    if ($address != "") {
+        # Address is valid
+        $addressFormatted = mb_convert_case(mb_strtolower($address, 'UTF-8'), MB_CASE_TITLE, "UTF-8"); // Ensures uppercase first letter
+    } else {
+        $errorMessages[] = "Required field: Address cannot be empty.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $errorMessages[] = "Required field: Address is missing.";
+    $isConfirmationValid = false;
+}
 
+# Postal code
+if (isset($_REQUEST['postalCode']) && $_REQUEST['postalCode'] !== null) {
+    $postalCode = sanitize($_REQUEST['postalCode']);
+    if (strlen($postalCode) != 4) {
+        $errorMessages[] = "Postal code must consist of 4 digits.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $errorMessages[] = "Required field: Postal code is missing.";
+    $isConfirmationValid = false;
+}
 
-
+# Password
+if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
+    $password = sanitize($_REQUEST['password']);
+    if (strlen($password) >= 8) {
+        # Hash the password before saving
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    } else {
+        $errorMessages[] = "Password must be at least 8 characters long.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $errorMessages[] = "Required field: Password is missing.";
+    $isConfirmationValid = false;
+}
 ?>
-
 
 <html>
-    <head>
-
-    </head>
-    <body>
-        <form name="oppg2" action="<?php echo $_SERVER['PHP_SELF']?>">
-            <input type="text" name="fNavn" placeholder="Fornavn">*påkrevet<br>
-            <input type="text" name="eNavn" placeholder="Etternavn">*påkrevet<br>
-            <input type="text" name="email" placeholder="E-post">*påkrevet<br>
-            <input type="number" name="tlf" placeholder="Telefonnummer"><br>
-            <input type="text" name="addresse" placeholder="Gatenavn og -nummer">*påkrevet<br>
-            <input type="number" name="zip" placeholder="Postnummer">*påkrevet<br>
-            <input type="submit" name="registrer" value="Registrer"><br>
-        </form>
-    </body>
+<head>
+    <title>User Registration</title>
+</head>
+<body>
+    <form name="registerUser" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <input type="text" name="username" placeholder="Username">*required<br>
+        <input type="text" name="firstName" placeholder="First Name">*required<br>
+        <input type="text" name="lastName" placeholder="Last Name">*required<br>
+        <input type="text" name="email" placeholder="Email">*required<br>
+        <input type="number" name="phone" placeholder="Phone Number"><br>
+        <input type="text" name="address" placeholder="Street Name and Number">*required<br>
+        <input type="number" name="postalCode" placeholder="Postal Code">*required<br>
+        <input type="password" name="password" placeholder="Password">*required<br>
+        <input type="submit" name="register" value="Register"><br>
+    </form>
+</body>
 </html>
 
-
-
-
 <?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($isConfirmationValid) {
+        try {
+            // Insert the validated data into the database
+            $stmt = $conn->prepare("
+                INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password)
+                VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postalCode, :password)
+            ");
+            $stmt->bindParam(':username', $usernameFormatted);
+            $stmt->bindParam(':firstName', $firstNameFormatted);
+            $stmt->bindParam(':lastName', $lastNameFormatted);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':phone', $phoneFormatted);
+            $stmt->bindParam(':address', $addressFormatted);
+            $stmt->bindParam(':postalCode', $postalCode);
+            $stmt->bindParam(':password', $hashedPassword);
+            $stmt->execute();
 
-if($bekreftelseGodkjent === true)
-{
-    echo "<strong> opprettelsen av bruker er bekreftet</strong>";
-    echo "<pre>";
-    print_r($brukerinfo);
-    echo "</pre>";
-} else if($bekreftelseGodkjent === false){
-    foreach($feilmeldinger as $melding){
-        echo $melding . "<br>";
+            echo "<strong>User has been successfully registered.</strong>";
+
+        } catch (PDOException $e) {
+            echo "Error saving user to the database: " . $e->getMessage();
+        }
+    } else {
+        # Display error messages
+        foreach ($errorMessages as $message) {
+            echo $message . "<br>";
+        }
     }
 }
-?>
 ?>
