@@ -7,7 +7,7 @@ The user input is validated and stored in the "users" table in the database, wit
 # Include database connection
 include '../../src/assets/inc/setupdb/setup.php';
 
-# Function to sanitize user input –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– DENNE MÅ FJERNES HERFRA OG KALLES PÅ FRA inc-FIL
+# Function to sanitize user input 
 function sanitize($variable)
 {
     $variable = strip_tags($variable);
