@@ -40,7 +40,7 @@ try {
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($users as $user): ?>
+            <?php foreach ($users as $user): ?> <!-- fill table with data from database table Users -->
                 <tr>
                     <td><?php echo htmlspecialchars($user['id']); ?></td>
                     <td><?php echo htmlspecialchars($user['username']); ?></td>
@@ -57,6 +57,6 @@ try {
     </table>
 
     <br>
-    <a href="form_nyAdmin.php">Register a New User</a>
+    <a href="form_nyAdmin.php">Registrer en ny bruker</a>
 </body>
 </html>
