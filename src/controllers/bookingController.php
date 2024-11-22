@@ -2,7 +2,7 @@
 
 use src\models\Booking;
 
-require_once '../../public/assets/inc/db.php';
+require_once '../../src/assets/inc/db.php';
 require_once '../models/Booking.php';
 
 $database = new Database();

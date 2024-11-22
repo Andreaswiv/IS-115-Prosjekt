@@ -1,7 +1,7 @@
 <?php
 
 // Initialize PDO connection
-include '../../database/setupdb/setup.php';
+include '../../src/assets/inc/setupdb/setup.php';
 
 try {
     // Fetch user data by ID

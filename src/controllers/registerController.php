@@ -1,5 +1,5 @@
 <?php
-require_once '../../public/assets/inc/db.php';
+require_once '../../src/assets/inc/db.php';
 require_once '../../src/models/user.php';
 
 session_start(); // Start session to access session data

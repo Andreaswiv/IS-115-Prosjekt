@@ -1,7 +1,7 @@
 <?php
 
 // Include database connection
-include '../../database/setupdb/setup.php';
+include '../../src/assets/inc/setupdb/setup.php';
 
 try {
     // Fetch all users from the database
