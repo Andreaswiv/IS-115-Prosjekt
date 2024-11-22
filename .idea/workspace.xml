@@ -78,7 +78,7 @@
     </key>
   </component>
   <component name="RunManager" selected="PHP Script.register.php">
-    <configuration name="db.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/public/assets/inc/db.php">
+    <configuration name="db.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/src/assets/inc/db.php">
       <method v="2" />
     </configuration>
     <configuration name="register.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/public/register.php">

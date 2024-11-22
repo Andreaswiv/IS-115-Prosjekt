@@ -5,7 +5,7 @@ The user input is validated and stored in the "users" table in the database
 */
 
 # Include database connection
-include '../../database/setupdb/setup.php';
+include '../../src/assets/inc/setupdb/setup.php';
 
 # Function to sanitize user input
 function sanitize($variable)
