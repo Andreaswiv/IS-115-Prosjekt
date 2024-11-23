@@ -169,3 +169,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brukerprofil</title>
+</head>
+<body>
+    <h1>Brukerprofil</h1>
+
+    <?php if (!empty($errorMessages)) : ?>
+        <ul>
+            <?php foreach ($errorMessages as $error) : ?>
+                <li><?php echo htmlspecialchars($error); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+
+    <?php if (!empty($successMessage)) : ?>
+        <p><?php echo htmlspecialchars($successMessage); ?></p>
+    <?php endif; ?>
+
+    <form method="post">
+        <label for="firstName">Fornavn:</label><br>
+        <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>"><br><br>
+
+        <label for="lastName">Etternavn:</label><br>
+        <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>"><br><br>
+
+        <label for="email">E-post:</label><br>
+        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>"><br><br>
+
+        <label for="phone">Telefonnummer:</label><br>
+        <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($phone); ?>"><br><br>
+
+        <label for="address">Adresse:</label><br>
+        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($address); ?>"><br><br>
+
+        <label for="postalCode">Postnummer:</label><br>
+        <input type="text" id="postalCode" name="postalCode" value="<?php echo htmlspecialchars($postalCode); ?>"><br><br>
+
+        <button type="submit">Oppdater profil</button>
+    </form>
+</body>
+</html>
