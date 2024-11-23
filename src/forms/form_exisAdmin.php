@@ -57,6 +57,6 @@ try {
     </table>
 
     <br>
-    <a href="form_nyAdmin.php">Registrer en ny bruker</a>
+    <a href="form_newAdmin.php">Registrer en ny bruker</a>
 </body>
 </html>
