@@ -7,14 +7,8 @@ The user input is validated and stored in the "users" table in the database, wit
 # Include database connection
 include '../../src/assets/inc/setupdb/setup.php';
 
-# Function to sanitize user input 
-function sanitize($variable)
-{
-    $variable = strip_tags($variable);
-    $variable = htmlentities($variable);
-    $variable = trim($variable);
-    return $variable;
-}
+# Include utility functions
+include '../../src/assets/inc/functions.php';
 
 # Validation of user data
 $errorMessages = [];
