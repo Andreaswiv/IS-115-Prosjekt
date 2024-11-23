@@ -57,28 +57,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Validate input, add error messages to $errorMessages if necessary
     if (empty($firstName)) {
-        $errorMessages[] = "Required field: First name cannot be empty.";
+        $errorMessages[] = "Påkrevet felt: fornavn kan ikke være tomt.";
     }
     if (empty($lastName)) {
-        $errorMessages[] = "Required field: Last name cannot be empty.";
+        $errorMessages[] = "Påkrevet felt: etternavn kan ikke være tomt.";
     }
     if (empty($email)) {
-        $errorMessages[] = "Required field: Email cannot be empty.";
+        $errorMessages[] = "Påkrevet felt: epost kan ikke være tomt.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errorMessages[] = "Invalid email address.";
+        $errorMessages[] = "Ugyldig epost-addresse.";
     }
     if (empty($phone)) {
-        $errorMessages[] = "Required field: Phone number cannot be empty.";
+        $errorMessages[] = "Påkrevet felt: telefonnummer kan ikke være tomt.";
     } elseif (strlen($phone) != 8) {
-        $errorMessages[] = "Phone number must be 8 digits long.";
+        $errorMessages[] = "Telefonnummer må være 8 siffer.";
     }
     if (empty($address)) {
-        $errorMessages[] = "Required field: Address cannot be empty.";
+        $errorMessages[] = "Påkrevet felt: addresse kan ikke være tomt.";
     }
     if (empty($postalCode)) {
-        $errorMessages[] = "Required field: Postal code cannot be empty.";
+        $errorMessages[] = "Påkrevet felt: postnummer kan ikke være tomt.";
     } elseif (strlen($postalCode) != 4) {
-        $errorMessages[] = "Postal code must be 4 digits long.";
+        $errorMessages[] = "Postnummer må være 4 siffer.";
     }
 
     // If no validation errors, proceed
@@ -156,16 +156,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
 
                 // Notify that the entry was updated
-                $message = 'User record updated in the database.';
+                $message = 'Brukerinformasjon oppdatert.';
             } catch (PDOException $e) {
-                $errorMessages[] = "Error updating the database: " . $e->getMessage();
+                $errorMessages[] = "Feil i oppdatering av brukerinformasjon: " . $e->getMessage();
             }
         } else {
-            $message = 'No changes were made.';
+            $message = 'Ingen endringer gjort.';
         }
 
         // Display the updated information
-        $registrationMessage = 'Updated information has been saved:';
+        $registrationMessage = 'Oppdatert informasjon er lagret:';
     }
 }
 ?>
