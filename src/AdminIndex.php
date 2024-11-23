@@ -10,7 +10,7 @@
 
 <ul>
     <li><a target="_blank" href="forms/form_exisAdmin.php">Eksisterende bruker, ADMIN</a></li>
-    <li><a target="_blank" href="forms/form_nyAdmin.php">Ny bruker, ADMIN</a></li>
+    <li><a target="_blank" href="forms/form_newAdmin.php">Ny bruker, ADMIN</a></li>
     <li><a target="_blank" href="../public/logout.php">Logg ut</a></li>
 </ul>
 </body>
