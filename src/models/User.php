@@ -41,7 +41,7 @@ class User {
                 throw new Exception("Database error");
             }
         } catch (Exception $e) {
-            throw $e; // Rethrow the exception
+            throw $e;
         }
     }
 

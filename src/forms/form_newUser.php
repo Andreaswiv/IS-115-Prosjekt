@@ -85,7 +85,7 @@ if ($phone !== null) {
         $isConfirmationValid = false;
     }
 } else {
-    $phoneFormatted = null; // Optional field
+    $phoneFormatted = null;
 }
 
 # Address

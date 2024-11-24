@@ -1,215 +1,175 @@
 <?php
-
-# Include database connection
+// Include database connection
 include '../../src/assets/inc/setupdb/setup.php';
 
-# Include utility functions
-include '../../src/assets/inc/functions.php';
-
-
+// Fetch all users from the database
 try {
-    // Fetch user data by ID
-    $user_id = 1; // Example user ID
-    $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
-    $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
+    $stmt = $conn->prepare("SELECT * FROM users");
     $stmt->execute();
-
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    if (!$user) {
-        throw new Exception("No user found with ID $user_id.");
-    }
-
-    // Populate user profile
-    $userProfile = [
-        'firstName' => $user['firstName'],
-        'lastName' => $user['lastName'],
-        'email' => $user['email'],
-        'phone' => $user['phone'],
-        'address' => $user['address'],
-        'postalCode' => $user['postnummer'],
-    ];
-
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
-    die("Error: " . $e->getMessage());
+    die("Error fetching users: " . $e->getMessage());
 }
 
-$errorMessages = []; // Define an empty array for error messages
-$updates = []; // Define an empty array for change notifications
-$message = "";
-$registrationMessage = "";
+// Check if editing is requested
+$isEditing = false;
+$selectedUser = null;
 
-// Define variables for the form
-$firstName = $userProfile['firstName'];
-$lastName = $userProfile['lastName'];
-$email = $userProfile['email'];
-$phone = $userProfile['phone'];
-$address = $userProfile['address'];
-$postalCode = $userProfile['postalCode'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['editUserId'])) {
+    $editUserId = (int)$_POST['editUserId'];
 
-// Check if the request method is POST, then sanitize the input data
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $firstName = sanitize($_POST['firstName']);
-    $lastName = sanitize($_POST['lastName']);
-    $email = sanitize($_POST['email']);
-    $phone = sanitize($_POST['phone']);
-    $address = sanitize($_POST['address']);
-    $postalCode = sanitize($_POST['postalCode']);
+    // Fetch the selected user's data
+    try {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->bindParam(':id', $editUserId, PDO::PARAM_INT);
+        $stmt->execute();
+        $selectedUser = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Validate input, add error messages to $errorMessages if necessary
-    if (empty($firstName)) {
-        $errorMessages[] = "Påkrevet felt: fornavn kan ikke være tomt.";
-    }
-    if (empty($lastName)) {
-        $errorMessages[] = "Påkrevet felt: etternavn kan ikke være tomt.";
-    }
-    if (empty($email)) {
-        $errorMessages[] = "Påkrevet felt: epost kan ikke være tomt.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errorMessages[] = "Ugyldig epost-addresse.";
-    }
-    if (empty($phone)) {
-        $errorMessages[] = "Påkrevet felt: telefonnummer kan ikke være tomt.";
-    } elseif (strlen($phone) != 8) {
-        $errorMessages[] = "Telefonnummer må være 8 siffer.";
-    }
-    if (empty($address)) {
-        $errorMessages[] = "Påkrevet felt: addresse kan ikke være tomt.";
-    }
-    if (empty($postalCode)) {
-        $errorMessages[] = "Påkrevet felt: postnummer kan ikke være tomt.";
-    } elseif (strlen($postalCode) != 4) {
-        $errorMessages[] = "Postnummer må være 4 siffer.";
-    }
-
-    // If no validation errors, proceed
-    if (empty($errorMessages)) {
-        $changesMade = false;
-
-        // Format first name, last name, and address
-        $formattedFirstName = mb_convert_case(mb_strtolower($firstName, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
-        $formattedLastName = mb_convert_case(mb_strtolower($lastName, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
-        $formattedAddress = mb_convert_case(mb_strtolower($address, 'UTF-8'), MB_CASE_TITLE, "UTF-8");
-
-        // Compare each field and record changes
-        if ($formattedFirstName != $userProfile['firstName']) {
-            $updates['First Name'] = ['old' => $userProfile['firstName'], 'new' => $formattedFirstName];
-            $changesMade = true;
-        }
-        if ($formattedLastName != $userProfile['lastName']) {
-            $updates['Last Name'] = ['old' => $userProfile['lastName'], 'new' => $formattedLastName];
-            $changesMade = true;
-        }
-        if ($email != $userProfile['email']) {
-            $updates['Email'] = ['old' => $userProfile['email'], 'new' => $email];
-            $changesMade = true;
-        }
-        if ($phone != $userProfile['phone']) {
-            $updates['Phone'] = ['old' => $userProfile['phone'], 'new' => $phone];
-            $changesMade = true;
-        }
-        if ($formattedAddress != $userProfile['address']) {
-            $updates['Address'] = ['old' => $userProfile['address'], 'new' => $formattedAddress];
-            $changesMade = true;
-        }
-        if ($postalCode != $userProfile['postalCode']) {
-            $updates['Postal Code'] = ['old' => $userProfile['postalCode'], 'new' => $postalCode];
-            $changesMade = true;
-        }
-
-        if ($changesMade) {
-            // Update database with the new values
-            try {
-                $updateStmt = $conn->prepare("
-                    UPDATE users SET 
-                        firstName = :firstName, 
-                        lastName = :lastName, 
-                        email = :email, 
-                        phone = :phone, 
-                        address = :address, 
-                        postnummer = :postnummer 
-                    WHERE id = :id
-                ");
-                $updateStmt->bindParam(':firstName', $formattedFirstName);
-                $updateStmt->bindParam(':lastName', $formattedLastName);
-                $updateStmt->bindParam(':email', $email);
-                $updateStmt->bindParam(':phone', $phone);
-                $updateStmt->bindParam(':address', $formattedAddress);
-                $updateStmt->bindParam(':postnummer', $postalCode);
-                $updateStmt->bindParam(':id', $user_id, PDO::PARAM_INT);
-                $updateStmt->execute();
-
-                // Retrieve updated information
-                $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
-                $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
-                $stmt->execute();
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($user) {
-                    $userProfile = [
-                        'firstName' => $user['firstName'],
-                        'lastName' => $user['lastName'],
-                        'email' => $user['email'],
-                        'phone' => $user['phone'],
-                        'address' => $user['address'],
-                        'postalCode' => $user['postnummer']
-                    ];
-                }
-
-                // Notify that the entry was updated
-                $message = 'Brukerinformasjon oppdatert.';
-            } catch (PDOException $e) {
-                $errorMessages[] = "Feil i oppdatering av brukerinformasjon: " . $e->getMessage();
-            }
+        if ($selectedUser) {
+            $isEditing = true;
         } else {
-            $message = 'Ingen endringer gjort.';
+            throw new Exception("User not found.");
         }
+    } catch (Exception $e) {
+        die("Error fetching user: " . $e->getMessage());
+    }
+}
 
-        // Display the updated information
-        $registrationMessage = 'Oppdatert informasjon er lagret:';
+// Handle form submission for updating user data
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateUser'])) {
+    $id = (int)$_POST['userId'];
+    $firstName = htmlspecialchars($_POST['firstName']);
+    $lastName = htmlspecialchars($_POST['lastName']);
+    $email = htmlspecialchars($_POST['email']);
+    $phone = htmlspecialchars($_POST['phone']);
+    $address = htmlspecialchars($_POST['address']);
+    $postalCode = htmlspecialchars($_POST['postalCode']);
+
+    // Validate input
+    $errors = [];
+    if (empty($firstName)) $errors[] = "Fornavn er påkrevd.";
+    if (empty($lastName)) $errors[] = "Etternavn er påkrevd.";
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Gyldig e-post er påkrevd.";
+    if (empty($phone) || strlen($phone) != 8) $errors[] = "Telefonnummer må være 8 siffer.";
+    if (empty($address)) $errors[] = "Adresse er påkrevd.";
+    if (empty($postalCode) || strlen($postalCode) != 4) $errors[] = "Postnummer må være 4 siffer.";
+
+    if (empty($errors)) {
+        // Update the user in the database
+        try {
+            $stmt = $conn->prepare("
+                UPDATE users 
+                SET firstName = :firstName, 
+                    lastName = :lastName, 
+                    email = :email, 
+                    phone = :phone, 
+                    address = :address, 
+                    postnummer = :postalCode 
+                WHERE id = :id
+            ");
+            $stmt->bindParam(':firstName', $firstName);
+            $stmt->bindParam(':lastName', $lastName);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':phone', $phone);
+            $stmt->bindParam(':address', $address);
+            $stmt->bindParam(':postalCode', $postalCode);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $successMessage = "Brukeren ble oppdatert.";
+            $isEditing = false;
+
+            // Refresh user list
+            $stmt = $conn->prepare("SELECT * FROM users");
+            $stmt->execute();
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            $errors[] = "Feil ved oppdatering av bruker: " . $e->getMessage();
+        }
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
-    <title>Brukerprofil</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brukeradministrasjon</title>
+    <link rel="stylesheet" href="../../public/assets/css/table.css">
 </head>
 <body>
-    <h1>Brukerprofil</h1>
+<h1>Brukeradministrasjon</h1>
 
-    <?php if (!empty($errorMessages)) : ?>
+<?php if (!empty($errors)) : ?>
+    <div class="error">
         <ul>
-            <?php foreach ($errorMessages as $error) : ?>
+            <?php foreach ($errors as $error) : ?>
                 <li><?php echo htmlspecialchars($error); ?></li>
             <?php endforeach; ?>
         </ul>
-    <?php endif; ?>
+    </div>
+<?php endif; ?>
 
-    <?php if (!empty($successMessage)) : ?>
+<?php if (isset($successMessage)) : ?>
+    <div class="success">
         <p><?php echo htmlspecialchars($successMessage); ?></p>
-    <?php endif; ?>
+    </div>
+<?php endif; ?>
 
+<?php if ($isEditing && $selectedUser) : ?>
+    <h2>Rediger Bruker</h2>
     <form method="post">
+        <input type="hidden" name="userId" value="<?php echo htmlspecialchars($selectedUser['id']); ?>">
         <label for="firstName">Fornavn:</label><br>
-        <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($firstName); ?>"><br><br>
+        <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($selectedUser['firstName']); ?>"><br><br>
 
         <label for="lastName">Etternavn:</label><br>
-        <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($lastName); ?>"><br><br>
+        <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($selectedUser['lastName']); ?>"><br><br>
 
         <label for="email">E-post:</label><br>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>"><br><br>
+        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($selectedUser['email']); ?>"><br><br>
 
         <label for="phone">Telefonnummer:</label><br>
-        <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($phone); ?>"><br><br>
+        <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($selectedUser['phone']); ?>"><br><br>
 
         <label for="address">Adresse:</label><br>
-        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($address); ?>"><br><br>
+        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($selectedUser['address']); ?>"><br><br>
 
         <label for="postalCode">Postnummer:</label><br>
-        <input type="text" id="postalCode" name="postalCode" value="<?php echo htmlspecialchars($postalCode); ?>"><br><br>
+        <input type="text" id="postalCode" name="postalCode" value="<?php echo htmlspecialchars($selectedUser['postnummer']); ?>"><br><br>
 
-        <button type="submit">Oppdater profil</button>
+        <button type="submit" name="updateUser">Oppdater</button>
     </form>
+<?php else : ?>
+    <h2>Profil</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Fornavn</th>
+            <th>Etternavn</th>
+            <th>E-post</th>
+            <th>Telefonnummer</th>
+            <th>Handling</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($users as $user) : ?>
+            <tr>
+                <td><?php echo htmlspecialchars($user['firstName']); ?></td>
+                <td><?php echo htmlspecialchars($user['lastName']); ?></td>
+                <td><?php echo htmlspecialchars($user['email']); ?></td>
+                <td><?php echo htmlspecialchars($user['phone']); ?></td>
+                <td>
+                    <form method="post" style="display: inline;">
+                        <input type="hidden" name="editUserId" value="<?php echo htmlspecialchars($user['id']); ?>">
+                        <button type="submit">Rediger</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
 </body>
 </html>
