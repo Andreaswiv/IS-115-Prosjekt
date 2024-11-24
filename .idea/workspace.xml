@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="fikset login og registrering">
-      <change afterPath="$PROJECT_DIR$/public/register.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/registerController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/private/.idea/IS-115-Prosjekt.iml" beforeDir="false" afterPath="$PROJECT_DIR$/private/.idea/IS-115-Prosjekt.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/table.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/table.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_exisUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_newUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newUser.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +57,7 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "register",
+    "git-widget-placeholder": "form__exis__update",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/Prosjekt/IS-115-Prosjekt",
     "node.js.detected.package.eslint": "true",
@@ -176,7 +176,14 @@
       <option name="presentableId" value="LOCAL−00008" />
       <updated>1732211556670</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL−00009" summary="fikset login og registrering">
+      <option name="closed" value="true" />
+      <created>1732488065083</created>
+      <option name="number" value="LOCAL−00009" />
+      <option name="presentableId" value="LOCAL−00009" />
+      <updated>1732488065083</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

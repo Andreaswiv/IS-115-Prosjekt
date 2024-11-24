@@ -85,7 +85,7 @@ if ($phone !== null) {
         $isConfirmationValid = false;
     }
 } else {
-    $phoneFormatted = null; // Optional field
+    $phoneFormatted = null;
 }
 
 # Address
@@ -131,54 +131,86 @@ if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
 }
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="no">
 <head>
-    <title>User Registration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrer ny bruker</title>
+    <link rel="stylesheet" href="../../public/assets/css/table.css">
 </head>
 <body>
-    <form name="registerUser" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-        <input type="text" name="username" placeholder="Username">*required<br>
-        <input type="text" name="firstName" placeholder="First Name">*required<br>
-        <input type="text" name="lastName" placeholder="Last Name">*required<br>
-        <input type="text" name="email" placeholder="Email">*required<br>
-        <input type="number" name="phone" placeholder="Phone Number"><br>
-        <input type="text" name="address" placeholder="Street Name and Number">*required<br>
-        <input type="number" name="postalCode" placeholder="Postal Code">*required<br>
-        <input type="password" name="password" placeholder="Password">*required<br>
-        <input type="submit" name="register" value="Register"><br>
+<div class="container">
+    <h1>Registrer ny bruker</h1>
+
+    <?php
+    # Display error messages only if there are errors
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$isConfirmationValid) {
+        echo '<div class="error-messages">';
+        foreach ($errorMessages as $message) {
+            echo "<p>$message</p>";
+        }
+        echo '</div>';
+    }
+
+    # Display success message if registration is successful
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isConfirmationValid) {
+        echo '<div class="success-message">';
+        echo "<p><strong>Brukeren er registrert.</strong></p>";
+        echo '</div>';
+    }
+    ?>
+
+    <form name="registerUser" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="user-form">
+        <label for="username">Brukernavn *</label>
+        <input type="text" id="username" name="username" placeholder="Brukernavn" required>
+
+        <label for="firstName">Fornavn *</label>
+        <input type="text" id="firstName" name="firstName" placeholder="Fornavn" required>
+
+        <label for="lastName">Etternavn *</label>
+        <input type="text" id="lastName" name="lastName" placeholder="Etternavn" required>
+
+        <label for="email">E-post *</label>
+        <input type="email" id="email" name="email" placeholder="E-post" required>
+
+        <label for="phone">Telefonnummer</label>
+        <input type="number" id="phone" name="phone" placeholder="Telefonnummer (valgfritt)">
+
+        <label for="address">Adresse *</label>
+        <input type="text" id="address" name="address" placeholder="Gateadresse og nummer" required>
+
+        <label for="postalCode">Postnummer *</label>
+        <input type="number" id="postalCode" name="postalCode" placeholder="Postnummer" required>
+
+        <label for="password">Passord *</label>
+        <input type="password" id="password" name="password" placeholder="Passord" required>
+
+        <button type="submit" name="register">Registrer</button>
     </form>
+</div>
 </body>
 </html>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($isConfirmationValid) {
-        try {
-            // Insert the validated data into the database
-            $stmt = $conn->prepare("
-                INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password)
-                VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postalCode, :password)
-            ");
-            $stmt->bindParam(':username', $usernameFormatted);
-            $stmt->bindParam(':firstName', $firstNameFormatted);
-            $stmt->bindParam(':lastName', $lastNameFormatted);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':phone', $phoneFormatted);
-            $stmt->bindParam(':address', $addressFormatted);
-            $stmt->bindParam(':postalCode', $postalCode);
-            $stmt->bindParam(':password', $hashedPassword);
-            $stmt->execute();
-
-            echo "<strong>User has been successfully registered.</strong>";
-
-        } catch (PDOException $e) {
-            echo "Error saving user to the database: " . $e->getMessage();
-        }
-    } else {
-        # Display error messages
-        foreach ($errorMessages as $message) {
-            echo $message . "<br>";
-        }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isConfirmationValid) {
+    try {
+        // Insert the validated data into the database
+        $stmt = $conn->prepare("
+            INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password)
+            VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postalCode, :password)
+        ");
+        $stmt->bindParam(':username', $usernameFormatted);
+        $stmt->bindParam(':firstName', $firstNameFormatted);
+        $stmt->bindParam(':lastName', $lastNameFormatted);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phoneFormatted);
+        $stmt->bindParam(':address', $addressFormatted);
+        $stmt->bindParam(':postalCode', $postalCode);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo "<p class='error-message'>Feil ved lagring av bruker: " . htmlspecialchars($e->getMessage()) . "</p>";
     }
 }
 ?>
