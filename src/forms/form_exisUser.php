@@ -96,80 +96,82 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateUser'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brukeradministrasjon</title>
-    <link rel="stylesheet" href="../../public/assets/css/table.css">
+    <link rel="stylesheet" href="../../public/assets/css/table.css"> <!-- Link the updated CSS -->
 </head>
 <body>
-<h1>Brukeradministrasjon</h1>
+<div class="container">
+    <h1>Brukeradministrasjon</h1>
 
-<?php if (!empty($errors)) : ?>
-    <div class="error">
-        <ul>
-            <?php foreach ($errors as $error) : ?>
-                <li><?php echo htmlspecialchars($error); ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-<?php endif; ?>
+    <?php if (!empty($errors)) : ?>
+        <div class="error">
+            <ul>
+                <?php foreach ($errors as $error) : ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 
-<?php if (isset($successMessage)) : ?>
-    <div class="success">
-        <p><?php echo htmlspecialchars($successMessage); ?></p>
-    </div>
-<?php endif; ?>
+    <?php if (isset($successMessage)) : ?>
+        <div class="success">
+            <p><?php echo htmlspecialchars($successMessage); ?></p>
+        </div>
+    <?php endif; ?>
 
-<?php if ($isEditing && $selectedUser) : ?>
-    <h2>Rediger Bruker</h2>
-    <form method="post">
-        <input type="hidden" name="userId" value="<?php echo htmlspecialchars($selectedUser['id']); ?>">
-        <label for="firstName">Fornavn:</label><br>
-        <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($selectedUser['firstName']); ?>"><br><br>
+    <?php if ($isEditing && $selectedUser) : ?>
+        <h2>Rediger Bruker</h2>
+        <form method="post">
+            <input type="hidden" name="userId" value="<?php echo htmlspecialchars($selectedUser['id']); ?>">
+            <label for="firstName">Fornavn:</label><br>
+            <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($selectedUser['firstName']); ?>"><br><br>
 
-        <label for="lastName">Etternavn:</label><br>
-        <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($selectedUser['lastName']); ?>"><br><br>
+            <label for="lastName">Etternavn:</label><br>
+            <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($selectedUser['lastName']); ?>"><br><br>
 
-        <label for="email">E-post:</label><br>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($selectedUser['email']); ?>"><br><br>
+            <label for="email">E-post:</label><br>
+            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($selectedUser['email']); ?>"><br><br>
 
-        <label for="phone">Telefonnummer:</label><br>
-        <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($selectedUser['phone']); ?>"><br><br>
+            <label for="phone">Telefonnummer:</label><br>
+            <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($selectedUser['phone']); ?>"><br><br>
 
-        <label for="address">Adresse:</label><br>
-        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($selectedUser['address']); ?>"><br><br>
+            <label for="address">Adresse:</label><br>
+            <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($selectedUser['address']); ?>"><br><br>
 
-        <label for="postalCode">Postnummer:</label><br>
-        <input type="text" id="postalCode" name="postalCode" value="<?php echo htmlspecialchars($selectedUser['postnummer']); ?>"><br><br>
+            <label for="postalCode">Postnummer:</label><br>
+            <input type="text" id="postalCode" name="postalCode" value="<?php echo htmlspecialchars($selectedUser['postnummer']); ?>"><br><br>
 
-        <button type="submit" name="updateUser">Oppdater</button>
-    </form>
-<?php else : ?>
-    <h2>Profil</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>Fornavn</th>
-            <th>Etternavn</th>
-            <th>E-post</th>
-            <th>Telefonnummer</th>
-            <th>Handling</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($users as $user) : ?>
+            <button type="submit" name="updateUser">Oppdater</button>
+        </form>
+    <?php else : ?>
+        <h2>Profil</h2>
+        <table>
+            <thead>
             <tr>
-                <td><?php echo htmlspecialchars($user['firstName']); ?></td>
-                <td><?php echo htmlspecialchars($user['lastName']); ?></td>
-                <td><?php echo htmlspecialchars($user['email']); ?></td>
-                <td><?php echo htmlspecialchars($user['phone']); ?></td>
-                <td>
-                    <form method="post" style="display: inline;">
-                        <input type="hidden" name="editUserId" value="<?php echo htmlspecialchars($user['id']); ?>">
-                        <button type="submit">Rediger</button>
-                    </form>
-                </td>
+                <th>Fornavn</th>
+                <th>Etternavn</th>
+                <th>E-post</th>
+                <th>Telefonnummer</th>
+                <th>Handling</th>
             </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php endif; ?>
+            </thead>
+            <tbody>
+            <?php foreach ($users as $user) : ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($user['firstName']); ?></td>
+                    <td><?php echo htmlspecialchars($user['lastName']); ?></td>
+                    <td><?php echo htmlspecialchars($user['email']); ?></td>
+                    <td><?php echo htmlspecialchars($user['phone']); ?></td>
+                    <td>
+                        <form method="post" style="display: inline;">
+                            <input type="hidden" name="editUserId" value="<?php echo htmlspecialchars($user['id']); ?>">
+                            <button type="submit">Rediger</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
 </body>
 </html>

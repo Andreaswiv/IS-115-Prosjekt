@@ -1,74 +1,151 @@
-/* style.css */
-
 /* Generelle stiler */
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    line-height: 1.6;
-    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
     color: #333;
 }
 
-/* Tabellstiler */
-table {
-    width: 100%;
-    border-collapse: collapse;
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tittel */
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    font-size: 28px;
     margin-bottom: 20px;
 }
 
-table, th, td {
-    border: 1px solid #ddd;
+/* Feilmeldinger */
+.error, .success {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
-th {
-    background-color: #f4f4f4;
-    font-weight: bold;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-/* Meldingsstiler */
 .error {
-    color: red;
-    margin-bottom: 20px;
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 .success {
-    color: green;
-    margin-bottom: 20px;
+    background-color: #d4edda;
+    color: #155724;
 }
 
-/* Skjemastiler */
+/* Form-stiler */
 form {
     margin-top: 20px;
 }
 
 form label {
+    display: block;
+    margin-bottom: 5px;
     font-weight: bold;
+    font-size: 14px;
+    color: #333;
 }
 
-form input[type="text"],
-form input[type="email"] {
+form input {
     width: 100%;
     padding: 10px;
-    margin: 5px 0 15px 0;
-    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 14px;
+}
+
+form input:focus {
+    border-color: #4CAF50;
+    outline: none;
 }
 
 form button {
-    padding: 10px 20px;
+    width: 100%;
+    padding: 10px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
 }
 
 form button:hover {
     background-color: #45a049;
+}
+
+/* Style for form fields on error */
+form input.error {
+    border-color: #f44336;
+}
+
+form input.error:focus {
+    border-color: #f44336;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+table td form button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design: Make the form container responsive */
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    form input,
+    form button {
+        padding: 12px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 8px;
+    }
 }
