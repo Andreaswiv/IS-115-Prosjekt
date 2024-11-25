@@ -1,0 +1,44 @@
+<?php
+class Bruker {
+    // Klasseegenskaper
+    public $fornavn;
+    public $etternavn;
+    public $brukernavn;
+    public $fodselsdato;
+    public $registreringsdato;
+
+    // Konstruktør for å initialisere egenskaper
+    public function __construct($fornavn, $etternavn, $brukernavn, $fodselsdato) {
+        $this->fornavn = str_replace(' ', '', $fornavn);
+        $this->etternavn = str_replace(' ', '', $etternavn);
+        $this->brukernavn = str_replace(' ', '', $brukernavn);
+        $this->fodselsdato = $fodselsdato;
+        $this->registreringsdato = date("Y-m-d"); // Setter dagens dato som registreringsdato
+    }
+
+    // Klassemetode 1: Beregn alder basert på fødselsdato
+    public function beregnAlder() {
+        $fodselsdato = new DateTime($this->fodselsdato);
+        $dagensDato = new DateTime();
+        $alder = $dagensDato->diff($fodselsdato)->y;
+        return $alder;
+    }
+
+    // Klassemetode 2: Vis fullstendig informasjon om brukeren
+    public function visInformasjon() {
+        return "Bruker: {$this->fornavn} {$this->etternavn}<br> 
+                Brukernavn: {$this->brukernavn}<br> 
+                Fødselsdato: {$this->fodselsdato}<br> 
+                Registreringsdato: {$this->registreringsdato}<br> 
+                Alder: " . $this->beregnAlder() . " år <br><br>";
+
+    }
+}
+
+// Eksempel på bruks
+$bruker = new Bruker("Ola", "Nordmann", "ola123", "1995-05-20");
+
+// Vis informasjon om brukeren
+echo $bruker->visInformasjon() . "<br>";
+
+?>

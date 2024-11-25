@@ -1,0 +1,108 @@
+<?php
+/*
+Oppdater Bruker-klassen slik at klasseegenskapene brukernavn og registreringsdato er protected.
+
+Oppdater Bruker-klassen med konstruktor hvor brukernavn blir generert tilfeldig og registreringsdato
+blir lagret automatisk.
+
+Lag også en destruktor for denne klassen som lagrer brukernavnene til slettede
+brukere i en matrise. 
+
+Opprett to objekter basert på underklassen (ref. oppgave 2) og kjør en metode på
+denne klassen som viser navn, brukernavn og registreringsdato for de to brukerne.
+
+Slett deretter begge de opprettede objektene og skriv ut begge brukernavnene til de slettede brukerne (ved å bruke
+matrisen). Gjør oppgaven relevant for prosjektet du arbeider med
+*/
+
+
+class Bruker {
+    public $fornavn;
+    public $etternavn;
+    protected $brukernavn; // Endret til protected
+    protected $registreringsdato; // Endret til protected
+    public $fodselsdato;
+    private static $slettedeBrukernavn = []; // Matrise som lagrer brukernavn til slettede brukere
+
+    // Konstruktør
+    public function __construct($fornavn, $etternavn, $fodselsdato) {
+        $this->fornavn = $fornavn;
+        $this->etternavn = $etternavn;
+        $this->brukernavn = $this->genererBrukernavn($fornavn, $etternavn);
+        $this->registreringsdato = date("Y-m-d");
+        $this->fodselsdato = $fodselsdato;
+    }
+
+    // Destruktor
+    public function __destruct() {
+        self::$slettedeBrukernavn[] = $this->brukernavn;
+    }
+
+    // Generer tilfeldig brukernavn
+    private function genererBrukernavn($fornavn, $etternavn) {
+        return strtolower(substr($fornavn, 0, 3) . substr($etternavn, 0, 3)) . rand(100, 999);
+    }
+
+    // Metode for å hente slettede brukernavn
+    public static function hentSlettedeBrukernavn() {
+        return self::$slettedeBrukernavn;
+    }
+
+    // Vis navn, brukernavn og registreringsdato
+    public function visBrukerDetaljer() {
+        return "Navn: {$this->fornavn} {$this->etternavn}<br>" .
+               "Brukernavn: {$this->brukernavn}<br>" .
+               "Registreringsdato: {$this->registreringsdato}<br>". 
+               "<br><br>";
+    }
+}
+
+// Underklassen "Kunde"
+class Kunde extends Bruker {
+    public $email;
+    public $phone;
+    public $address;
+    public $postnummer;
+    public $password;
+
+    public function __construct(
+        $fornavn, $etternavn, $fodselsdato,
+        $email, $phone, $address, $postnummer, $password
+    ) {
+        parent::__construct($fornavn, $etternavn, $fodselsdato);
+        $this->email = $email;
+        $this->phone = $phone;
+        $this->address = $address;
+        $this->postnummer = $postnummer;
+        $this->password = $password;
+    }
+
+    // Kunde-spesifikk metode (kan overstyre eller bruke foreldres metoder)
+    public function visInformasjon() {
+        return parent::visBrukerDetaljer() . 
+               "E-post: {$this->email} <br>" .
+               "Telefon: {$this->phone} <br>" .
+               "Adresse: {$this->address}, Postnummer: {$this->postnummer} <br>";
+    }
+}
+
+
+
+// Opprett to kundeobjekter
+$kunde1 = new Kunde("Kari", "Hansen", "1988-08-15", "kari@example.com", "98765432", "Storgata 12", "1234", "passord123");
+$kunde2 = new Kunde("Ola", "Nordmann", "1990-10-05", "ola@example.com", "12345678", "Bakkegata 34", "5678", "passord456");
+
+// Vis detaljer for begge kundene
+echo $kunde1->visBrukerDetaljer() . "<br>";
+echo $kunde2->visBrukerDetaljer() . "<br>";
+
+// Slett begge objektene
+unset($kunde1);
+unset($kunde2);
+
+// Vis brukernavn til slettede brukere
+echo "Slettede brukernavn: <pre>";
+print_r(Bruker::hentSlettedeBrukernavn());
+echo "</pre>";
+
+?>

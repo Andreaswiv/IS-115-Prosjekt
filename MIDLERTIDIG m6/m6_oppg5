@@ -1,0 +1,71 @@
+<?php
+/*
+Utvid valideringsklassen slik at den kan validere tre ulike typer input: passord, e-post og mobilnummer.
+Skriv ut resultatet av en validering for hver type på skjermen. Gi brukeren beskjed om hva som ev. er
+galt.
+Passordkrav: minst én stor bokstav, minst to tall, minst ett spesialtegn og en lengde på minimum ni tegn.
+Mobilnummerkrav: gyldig norsk mobilnummer (behøver ikke sjekke hvorvidt et nummer eksisterer)
+*/
+
+class Validering {
+    // Valider e-post
+    public static function validerEpost($epost) {
+        if (filter_var($epost, FILTER_VALIDATE_EMAIL)) {
+            return "<strong> E-postadressen '{$epost}' </strong> er gyldig. <br>";
+        } else {
+            return "<strong> E-postadressen '{$epost}' </strong> er ikke gyldig. <br>";
+        }
+    }
+
+    // Valider passord
+    public static function validerPassord($passord) {
+        $lengde = strlen($passord) >= 9; // Sjekker at passordet er minst 9 tegn langt
+        $storBokstav = preg_match('/[A-Z]/', $passord); // Sjekker om det er minst én stor bokstav
+        $toTall = preg_match_all('/[0-9]/', $passord) >= 2; // Sjekker om det er minst to tall
+        $spesialtegn = preg_match('/[\W_]/', $passord); // Sjekker om det er minst ett spesialtegn (\W er ikke-alfanumerisk)
+    
+        if ($lengde && $storBokstav && $toTall && $spesialtegn) {
+            return "<strong>Passordet er gyldig: $passord </strong>";
+        } else {
+            $feilmeldinger = [];
+            if (!$lengde) $feilmeldinger[] = "Passordet må være minst 9 tegn langt.";
+            if (!$storBokstav) $feilmeldinger[] = "Passordet må inneholde minst én stor bokstav.";
+            if (!$toTall) $feilmeldinger[] = "Passordet må inneholde minst to tall.";
+            if (!$spesialtegn) $feilmeldinger[] = "Passordet må inneholde minst ett spesialtegn.";
+            
+            return "<strong>Passordet er ikke gyldig: $passord </strong> " . implode(" ", $feilmeldinger);
+        }
+    }
+
+    // Valider mobilnummer
+    public static function validerMobilnummer($mobilnummer) {
+        if (preg_match('/^[0-9]{8}$/', $mobilnummer)) { // Sjekker at mobilnr er et tall på 8 siffer fra 0-9
+            return "<strong>Mobilnummeret '{$mobilnummer}'</strong> er gyldig. <br>";
+        } else {
+            return "<strong>Mobilnummeret '{$mobilnummer}'</strong> er ikke gyldig. Det må være 8 siffer. <br>";
+        }
+    }
+}
+
+
+// Test e-postvalidering
+$epost = "Kari@nordmann.no";
+echo Validering::validerEpost($epost) . "<br>";
+
+// Test passordvalidering
+$passord = "Pass123!@";
+echo Validering::validerPassord($passord) . "<br>";
+
+// Test mobilnummervalidering
+$mobilnummer = "93456789";
+echo Validering::validerMobilnummer($mobilnummer) . "<br>";
+
+// Test ugyldige eksempler
+$feilPassord = "pass123";
+$feilMobilnummer = "1234567";
+echo Validering::validerPassord($feilPassord) . "<br>";
+echo Validering::validerMobilnummer($feilMobilnummer) . "<br>";
+
+
+
+?>
