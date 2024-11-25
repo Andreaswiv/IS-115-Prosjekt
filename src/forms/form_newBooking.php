@@ -1,6 +1,8 @@
 <?php
 include '../../src/assets/inc/setupdb/setup.php';
 include '../../src/assets/inc/functions.php';
+require_once '../func/security.php';
+require_once '../../src/func/header.php';
 
 $roomTypes = [
     'Double Room' => ['Room with view', 'Room without view'],

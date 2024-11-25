@@ -13,7 +13,7 @@ try {
     $conn->exec("CREATE DATABASE IF NOT EXISTS $db_name");
     $conn->exec("USE $db_name");
 
-    // Create tables only if they don't exist
+    // Create 'users' table if it doesn't exist
     $createUsersTable = "
     CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,13 +25,14 @@ try {
         phone VARCHAR(20),
         address VARCHAR(255),
         postnummer VARCHAR(20),
-        role VARCHAR(20) DEFAULT 'user',
+        role ENUM('user', 'admin') DEFAULT 'user',
         birthDate DATE NULL,
         registrationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
-";
+    ";
     $conn->exec($createUsersTable);
 
+    // Create 'bookings' table if it doesn't exist
     $createBookingsTable = "
     CREATE TABLE IF NOT EXISTS bookings (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -44,9 +45,10 @@ try {
         end_date DATE NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );
-";
+    ";
     $conn->exec($createBookingsTable);
 
+    // Create 'preferences' table if it doesn't exist
     $createPreferencesTable = "
     CREATE TABLE IF NOT EXISTS preferences (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,33 +60,124 @@ try {
 ";
     $conn->exec($createPreferencesTable);
 
-    // Insert initial data only if tables are empty
+    // Insert initial users into the database if the table is empty
     $userCheck = $conn->query("SELECT COUNT(*) FROM users")->fetchColumn();
     if ($userCheck == 0) {
-        $insertUsers = "
-        INSERT INTO users (username, password, firstName, lastName, email, phone, address, postnummer, role, birthDate, registrationDate)
-        VALUES
-        ('user1', 'password1', 'John', 'Doe', 'john.doe@example.com', '12345678', '123 Street', '1000', 'user', '1990-01-01', '2024-08-01'),
-        ('user2', 'password2', 'Jane', 'Doe', 'jane.doe@example.com', '87654321', '456 Avenue', '2000', 'user', '1992-02-02', '2024-11-15'),
-        ('user3', 'password3', 'Alice', 'Smith', 'alice.smith@example.com', '23456789', '789 Boulevard', '3000', 'user', '1994-03-03', '2024-10-20'),
-        ('user4', 'password4', 'Bob', 'Johnson', 'bob.johnson@example.com', '34567890', '101 Highway', '4000', 'user', '1996-04-04', '2024-09-25'),
-        ('user5', 'password5', 'Charlie', 'Brown', 'charlie.brown@example.com', '45678901', '202 Lane', '5000', 'user', '1998-05-05', '2024-11-10'),
-        ('user6', 'password6', 'Diana', 'Prince', 'diana.prince@example.com', '56789012', '303 Street', '6000', 'user', '2000-06-06', '2024-12-05');
-        ";
-        $conn->exec($insertUsers);
+        $userInsertData = [
+            [
+                'username' => 'admin',
+                'password' => password_hash('adminpassword', PASSWORD_DEFAULT),
+                'firstName' => 'Admin',
+                'lastName' => 'User',
+                'email' => 'admin@example.com',
+                'phone' => '12345678',
+                'address' => 'Admin Address',
+                'postnummer' => '1234',
+                'role' => 'admin',
+                'birthDate' => null,
+                'registrationDate' => '20-02-2024',
+            ],
+            [
+                'username' => 'user1',
+                'password' => password_hash('password1', PASSWORD_DEFAULT),
+                'firstName' => 'John',
+                'lastName' => 'Doe',
+                'email' => 'john.doe@example.com',
+                'phone' => '12345678',
+                'address' => '123 Street',
+                'postnummer' => '1000',
+                'role' => 'user',
+                'birthDate' => '01-01-1990',
+                'registrationDate' => '12-01-2024',
+            ],
+            [
+                'username' => 'user2',
+                'password' => password_hash('password2', PASSWORD_DEFAULT),
+                'firstName' => 'Jane',
+                'lastName' => 'Doe',
+                'email' => 'jane.doe@example.com',
+                'phone' => '87654321',
+                'address' => '456 Avenue',
+                'postnummer' => '2000',
+                'role' => 'user',
+                'birthDate' => '02-02-1992',
+                'registrationDate' => '02-04-2024',
+            ],
+            [
+                'username' => 'user3',
+                'password' => password_hash('password3', PASSWORD_DEFAULT),
+                'firstName' => 'Alice',
+                'lastName' => 'Smith',
+                'email' => 'alice.smith@example.com',
+                'phone' => '23456789',
+                'address' => '789 Boulevard',
+                'postnummer' => '3000',
+                'role' => 'user',
+                'birthDate' => '03-03-1994',
+                'registrationDate' => '29-05-2024',
+            ],
+            [
+                'username' => 'user4',
+                'password' => password_hash('password4', PASSWORD_DEFAULT),
+                'firstName' => 'Bob',
+                'lastName' => 'Johnson',
+                'email' => 'bob.johnson@example.com',
+                'phone' => '34567890',
+                'address' => '101 Highway',
+                'postnummer' => '4000',
+                'role' => 'user',
+                'birthDate' => '04-04-1996',
+                'registrationDate' => '20-03-2024',
+            ],
+            [
+                'username' => 'user5',
+                'password' => password_hash('password5', PASSWORD_DEFAULT),
+                'firstName' => 'Charlie',
+                'lastName' => 'Brown',
+                'email' => 'charlie.brown@example.com',
+                'phone' => '45678901',
+                'address' => '202 Lane',
+                'postnummer' => '5000',
+                'role' => 'user',
+                'birthDate' => '05-05-1998',
+                'registrationDate' => '26-04-2024',
+            ],
+            [
+                'username' => 'user6',
+                'password' => password_hash('password6', PASSWORD_DEFAULT),
+                'firstName' => 'Diana',
+                'lastName' => 'Prince',
+                'email' => 'diana.prince@example.com',
+                'phone' => '56789012',
+                'address' => '303 Street',
+                'postnummer' => '6000',
+                'role' => 'user',
+                'birthDate' => '06-06-2000',
+                'registrationDate' => '02-09-2024',
+            ],
+        ];
+
+        foreach ($userInsertData as $userData) {
+            $stmt = $conn->prepare("
+                INSERT INTO users (username, password, firstName, lastName, email, phone, address, postnummer, role, birthDate, registrationDate)
+                VALUES (:username, :password, :firstName, :lastName, :email, :phone, :address, :postnummer, :role, STR_TO_DATE(:birthDate, '%d-%m-%Y'), STR_TO_DATE(:registrationDate, '%d-%m-%Y'))
+            ");
+            $stmt->execute($userData);
+        }
     }
 
-    $preferenceCheck = $conn->query("SELECT COUNT(*) FROM preferences")->fetchColumn();
+    // Ensure users exist before inserting preferences
+  $preferenceCheck = $conn->query("SELECT COUNT(*) FROM preferences")->fetchColumn();
     if ($preferenceCheck == 0) {
         $insertPreferences = "
         INSERT INTO preferences (user_id, preference_type, preference_value)
         VALUES
-        (1, 'Room Preference', 'Double Room'),
-        (2, 'Room Preference', 'Single Room'),
-        (3, 'Room Preference', 'King Suite'),
-        (4, 'Room Preference', 'Double Room'),
-        (5, 'Room Preference', 'Single Room'),
-        (6, 'Room Preference', 'King Suite');
+        (2, 'Room Preference', 'Double Room'),
+        (3, 'Room Preference', 'Single Room'),
+        (4, 'Room Preference', 'King Suite'),
+        (5, 'Room Preference', 'Double Room'),
+        (6, 'Room Preference', 'Single Room'),
+        (7, 'Room Preference', 'King Suite');
         ";
         $conn->exec($insertPreferences);
     }

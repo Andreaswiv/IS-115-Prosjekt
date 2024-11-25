@@ -2,7 +2,8 @@
 
 // Include database connection
 include '../../src/assets/inc/setupdb/setup.php';
-
+require_once '../func/security.php';
+require_once '../../src/func/header.php';
 try {
     // Fetch all users from the database
     $stmt = $conn->prepare("

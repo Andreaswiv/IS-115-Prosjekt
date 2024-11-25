@@ -1,6 +1,5 @@
 <?php
-require_once '../../src/assets/inc/db.php';
-
+require_once '../func/security.php';
 class User {
     private $conn;
     private $table = 'users';
@@ -9,41 +8,39 @@ class User {
         $this->conn = $db;
     }
 
-    public function createUser($username, $firstName, $lastName, $email, $phone, $address, $postalCode, $password, $role, $birthDate = null) {
+    // Function to create a new user
+    public function createUser($username, $firstName, $lastName, $email, $phone, $address, $postnummer, $password, $role) {
         $query = "
-        INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password, role, birthDate)
-        VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postnummer, :password, :role, :birthDate)
+        INSERT INTO users (username, password, firstName, lastName, email, phone, address, postnummer, role)
+        VALUES (:username, :password, :firstName, :lastName, :email, :phone, :address, :postnummer, :role)
     ";
 
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
         $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
         $stmt->bindParam(':firstName', $firstName);
         $stmt->bindParam(':lastName', $lastName);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':address', $address);
-        $stmt->bindParam(':postnummer', $postalCode);
-        $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
+        $stmt->bindParam(':postnummer', $postnummer);
         $stmt->bindParam(':role', $role);
-        $stmt->bindParam(':birthDate', $birthDate);
 
-        if ($stmt->execute()) {
-            return true;
+        if (!$stmt->execute()) {
+            throw new Exception("Error creating user: " . implode(", ", $stmt->errorInfo()));
         }
-
-        throw new Exception("Failed to create user: " . implode(", ", $stmt->errorInfo()));
     }
 
-    // Check if a user exists by username
-    public function getUser($username)
-    {
-        $query = "SELECT * FROM " . $this->table . " WHERE username = :username LIMIT 1";
+    // Function to retrieve a user by username
+    public function getUser($username) {
+        $query = "SELECT * FROM users WHERE username = :username LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
 ?>

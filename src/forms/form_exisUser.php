@@ -1,6 +1,8 @@
 <?php
-// Include database connection
+
 include '../../src/assets/inc/setupdb/setup.php';
+require_once '../func/security.php';
+require_once '../../src/func/header.php';
 
 // Default sorting and filtering logic
 $orderDir = isset($_GET['order']) && $_GET['order'] == 'DESC' ? 'DESC' : 'ASC';

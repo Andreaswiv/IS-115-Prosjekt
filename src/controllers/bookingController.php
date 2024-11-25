@@ -1,6 +1,10 @@
 <?php
 include '../../src/assets/inc/setupdb/setup.php';
 
+
+$db_instance = new Database();
+$db = $db_instance->getConnection();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_POST['user_id'];
     $roomType = $_POST['room_type'];

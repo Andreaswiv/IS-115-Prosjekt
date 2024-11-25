@@ -6,7 +6,8 @@ The user input is validated and stored in the "users" table in the database, wit
 
 # Include database connection
 include '../../src/assets/inc/setupdb/setup.php';
-
+require_once '../func/security.php';
+require_once '../../src/func/header.php';
 # Include utility functions
 include '../../src/assets/inc/functions.php';
 

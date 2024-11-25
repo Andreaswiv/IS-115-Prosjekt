@@ -1,7 +1,7 @@
 <?php
 namespace models;
 require_once 'src/assets/inc/db.php';
-
+require_once '../func/security.php';
 class Booking
 {
     private $conn;
