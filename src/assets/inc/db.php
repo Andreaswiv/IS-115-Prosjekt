@@ -4,7 +4,7 @@ class Database {
     private $db_name = "motell_booking";
     private $username = "root";
     private $password = "";
-    public $conn;
+    private $conn;
 
     public function getConnection() {
         $this->conn = null;
@@ -12,8 +12,10 @@ class Database {
         try {
             $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
-            echo "Connection error: " . $exception->getMessage();
+            $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        } catch (PDOException $exception) {
+            error_log("Connection error: " . $exception->getMessage());
+            die("Database connection failed. Please try again later.");
         }
 
         return $this->conn;

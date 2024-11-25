@@ -6,7 +6,8 @@ The user input is validated and stored in the "users" table in the database, wit
 
 # Include database connection
 include '../../src/assets/inc/setupdb/setup.php';
-
+require_once '../func/security.php';
+require_once '../../src/func/header.php';
 # Include utility functions
 include '../../src/assets/inc/functions.php';
 
@@ -26,6 +27,21 @@ if (isset($_REQUEST['username']) && $_REQUEST['username'] !== null) {
     }
 } else {
     $errorMessages[] = "Required field: Username is missing.";
+    $isConfirmationValid = false;
+}
+
+# Password
+if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
+    $password = sanitize($_REQUEST['password']);
+    if (strlen($password) >= 8) {
+        # Hash the password before saving
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    } else {
+        $errorMessages[] = "Password must be at least 8 characters long.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $errorMessages[] = "Required field: Password is missing.";
     $isConfirmationValid = false;
 }
 
@@ -115,19 +131,12 @@ if (isset($_REQUEST['postalCode']) && $_REQUEST['postalCode'] !== null) {
     $isConfirmationValid = false;
 }
 
-# Password
-if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
-    $password = sanitize($_REQUEST['password']);
-    if (strlen($password) >= 8) {
-        # Hash the password before saving
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    } else {
-        $errorMessages[] = "Password must be at least 8 characters long.";
-        $isConfirmationValid = false;
-    }
+// Validate birthDate (optional)
+$birthDate = isset($_REQUEST['birthDate']) ? sanitize($_REQUEST['birthDate']) : null;
+if ($birthDate !== null) {
+    $birthDateFormatted = date('d-m-Y', strtotime($birthDate));
 } else {
-    $errorMessages[] = "Required field: Password is missing.";
-    $isConfirmationValid = false;
+    $birthDateFormatted = null;
 }
 
 # Role validation
@@ -152,13 +161,14 @@ if (isset($_REQUEST['role']) && $_REQUEST['role'] !== null) {
 <body>
     <form name="registerAdmin" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <input type="text" name="username" placeholder="Username">*required<br>
+        <input type="password" name="password" placeholder="Password">*required<br>
         <input type="text" name="firstName" placeholder="First Name">*required<br>
         <input type="text" name="lastName" placeholder="Last Name">*required<br>
         <input type="text" name="email" placeholder="Email">*required<br>
         <input type="number" name="phone" placeholder="Phone Number"><br>
         <input type="text" name="address" placeholder="Street Name and Number">*required<br>
         <input type="number" name="postalCode" placeholder="Postal Code">*required<br>
-        <input type="password" name="password" placeholder="Password">*required<br>
+        <input type="date" name="birthDate" placeholder="Birth Date (YYYY-MM-DD)"><br>
         <select name="role">
             <option value="User">User</option>
             <option value="Admin">Admin</option>
@@ -174,17 +184,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // Insert the validated data into the database
             $stmt = $conn->prepare("
-                INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password, role)
-                VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postalCode, :password, :role)
+                INSERT INTO users (username, password, firstName, lastName, email, phone, address, postnummer,birthDate, role)
+                VALUES (:username, :firstName,:password, :lastName, :email, :phone, :address, :postalCode, :birthDate, :role)
             ");
             $stmt->bindParam(':username', $usernameFormatted);
+            $stmt->bindParam(':password', $hashedPassword);
             $stmt->bindParam(':firstName', $firstNameFormatted);
             $stmt->bindParam(':lastName', $lastNameFormatted);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':phone', $phoneFormatted);
             $stmt->bindParam(':address', $addressFormatted);
             $stmt->bindParam(':postalCode', $postalCode);
-            $stmt->bindParam(':password', $hashedPassword);
             $stmt->bindParam(':role', $role);
             $stmt->execute();
 

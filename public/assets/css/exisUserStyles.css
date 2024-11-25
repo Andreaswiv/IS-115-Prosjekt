@@ -1,0 +1,233 @@
+
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #2d6a4f;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #2d6a4f;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Status for user visibility */
+.status-container {
+    margin-bottom: 20px;
+}
+
+.status {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.status-month {
+    background-color: #4caf50;
+}
+
+.status-all {
+    background-color: #388e3c;
+}
+
+/* Form for choosing visibility (all users or last month) */
+.status-toggle-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 20px 0;
+    width: 20%;
+    text-align: left;
+}
+label {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 10px;
+    color: #2d6a4f;
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-left: 10px;
+    cursor: pointer;
+    width: auto;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* Table */
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+}
+
+table thead {
+    background-color: #4caf50;
+    color: white;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+}
+
+table th {
+    position: relative;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Sorting arrow */
+.sort-arrow {
+    margin-left: 5px;
+    font-size: 0.8em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Hover effect for registration date sorting arrow */
+table th:hover .sort-arrow {
+    color: #2d6a4f;
+    cursor: pointer;
+}
+
+/* Buttons */
+.button, button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin: 10px 0;
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.button:hover, button:hover {
+    background-color: #388e3c;
+}
+
+/* Input fields */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+    padding: 12px;
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Form for editing users */
+form {
+    margin-top: 20px;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form label {
+    font-size: 18px;
+}
+
+form input {
+    font-size: 16px;
+}
+
+/* Error and success messages */
+.error, .success {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Centering the table and forms */
+table, .form-container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+    }
+}

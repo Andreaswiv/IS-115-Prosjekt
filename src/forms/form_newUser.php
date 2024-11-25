@@ -6,7 +6,8 @@ The user input is validated and stored in the "users" table in the database
 
 # Include database connection
 include '../../src/assets/inc/setupdb/setup.php';
-
+require_once '../func/security.php';
+require_once '../../src/func/header.php';
 # Include utility functions
 include '../../src/assets/inc/functions.php';
 
@@ -26,6 +27,21 @@ if (isset($_REQUEST['username']) && $_REQUEST['username'] !== null) {
     }
 } else {
     $errorMessages[] = "Required field: Username is missing.";
+    $isConfirmationValid = false;
+}
+
+# Password
+if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
+    $password = sanitize($_REQUEST['password']);
+    if (strlen($password) >= 8) {
+        # Hash the password before saving
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    } else {
+        $errorMessages[] = "Password must be at least 8 characters long.";
+        $isConfirmationValid = false;
+    }
+} else {
+    $errorMessages[] = "Required field: Password is missing.";
     $isConfirmationValid = false;
 }
 
@@ -115,20 +131,18 @@ if (isset($_REQUEST['postalCode']) && $_REQUEST['postalCode'] !== null) {
     $isConfirmationValid = false;
 }
 
-# Password
-if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
-    $password = sanitize($_REQUEST['password']);
-    if (strlen($password) >= 8) {
-        # Hash the password before saving
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    } else {
-        $errorMessages[] = "Password must be at least 8 characters long.";
+$birthDate = isset($_REQUEST['birthDate']) ? sanitize($_REQUEST['birthDate']) : null;
+if ($birthDate !== null) {
+    if (!DateTime::createFromFormat('Y-m-d', $birthDate)) {
+        $errorMessages[] = "Invalid birth date format. Please use the YYYY-MM-DD format.";
         $isConfirmationValid = false;
+    } else {
+        $birthDateFormatted = $birthDate;
     }
 } else {
-    $errorMessages[] = "Required field: Password is missing.";
-    $isConfirmationValid = false;
+    $birthDateFormatted = null;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -165,6 +179,9 @@ if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
         <label for="username">Brukernavn *</label>
         <input type="text" id="username" name="username" placeholder="Brukernavn" required>
 
+        <label for="password">Passord *</label>
+        <input type="password" id="password" name="password" placeholder="Passord" required>
+
         <label for="firstName">Fornavn *</label>
         <input type="text" id="firstName" name="firstName" placeholder="Fornavn" required>
 
@@ -183,8 +200,9 @@ if (isset($_REQUEST['password']) && $_REQUEST['password'] !== null) {
         <label for="postalCode">Postnummer *</label>
         <input type="number" id="postalCode" name="postalCode" placeholder="Postnummer" required>
 
-        <label for="password">Passord *</label>
-        <input type="password" id="password" name="password" placeholder="Passord" required>
+        <label for="birthDate">Fødselsdato</label>
+        <input type="date" name="birthDate" placeholder="Birth Date (DD-MM-YYYYD)"><br>
+
 
         <button type="submit" name="register">Registrer</button>
     </form>
@@ -197,8 +215,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isConfirmationValid) {
     try {
         // Insert the validated data into the database
         $stmt = $conn->prepare("
-            INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password)
-            VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postalCode, :password)
+            INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password, birthDate)
+            VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postalCode, :password, :birthDate)
         ");
         $stmt->bindParam(':username', $usernameFormatted);
         $stmt->bindParam(':firstName', $firstNameFormatted);
@@ -208,6 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $isConfirmationValid) {
         $stmt->bindParam(':address', $addressFormatted);
         $stmt->bindParam(':postalCode', $postalCode);
         $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':birthDate', $birthDateFormatted);
         $stmt->execute();
     } catch (PDOException $e) {
         echo "<p class='error-message'>Feil ved lagring av bruker: " . htmlspecialchars($e->getMessage()) . "</p>";
