@@ -5,10 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="fikset login og registrering">
+      <change afterPath="$PROJECT_DIR$/public/assets/css/exisUserStyles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MIDLERTIDIG m6/m6_oppg1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MIDLERTIDIG m6/m6_oppg2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MIDLERTIDIG m6/m6_oppg3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MIDLERTIDIG m6/m6_oppg4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MIDLERTIDIG m6/m6_oppg5" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/table.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/table.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/inc/setupdb/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/inc/setupdb/setup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/bookingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/bookingController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/registerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/registerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/forms/form_exisUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_newAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newAdmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/forms/form_newUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Develop" />
+        <entry key="$PROJECT_DIR$" value="27-oppdatere-db-regdato" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,7 +72,7 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "form__exis__update",
+    "git-widget-placeholder": "modul-7-oppdateringer",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/Prosjekt/IS-115-Prosjekt",
     "node.js.detected.package.eslint": "true",

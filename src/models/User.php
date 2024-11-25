@@ -9,40 +9,31 @@ class User {
         $this->conn = $db;
     }
 
-    public function createUser($username, $firstName, $lastName, $email, $phone, $address, $postnummer, $password, $role)
-    {
-        try {
-            // Check if username already exists
-            if ($this->getUser($username)) {
-                throw new Exception("Username already exists");
-            }
+    public function createUser($username, $firstName, $lastName, $email, $phone, $address, $postalCode, $password, $role, $birthDate = null) {
+        $query = "
+        INSERT INTO users (username, firstName, lastName, email, phone, address, postnummer, password, role, birthDate)
+        VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postnummer, :password, :role, :birthDate)
+    ";
 
-            // Hash password
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $this->conn->prepare($query);
 
-            // Insert query
-            $query = "INSERT INTO " . $this->table . " (username, firstName, lastName, email, phone, address, postnummer, password, role)
-                  VALUES (:username, :firstName, :lastName, :email, :phone, :address, :postnummer, :password, :role)";
-            $stmt = $this->conn->prepare($query);
+        // Bind parameters
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':firstName', $firstName);
+        $stmt->bindParam(':lastName', $lastName);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':phone', $phone);
+        $stmt->bindParam(':address', $address);
+        $stmt->bindParam(':postnummer', $postalCode);
+        $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
+        $stmt->bindParam(':role', $role);
+        $stmt->bindParam(':birthDate', $birthDate);
 
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':firstName', $firstName);
-            $stmt->bindParam(':lastName', $lastName);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':phone', $phone);
-            $stmt->bindParam(':address', $address);
-            $stmt->bindParam(':postnummer', $postnummer);
-            $stmt->bindParam(':password', $hashedPassword);
-            $stmt->bindParam(':role', $role);
-
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                throw new Exception("Database error");
-            }
-        } catch (Exception $e) {
-            throw $e;
+        if ($stmt->execute()) {
+            return true;
         }
+
+        throw new Exception("Failed to create user: " . implode(", ", $stmt->errorInfo()));
     }
 
     // Check if a user exists by username

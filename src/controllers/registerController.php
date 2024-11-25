@@ -47,22 +47,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    try {
-        // Create user object
-        $user = new User($db);
+        try {
+            // Create user object
+            $user = new User($db);
+            // Get the optional birth date
+            $birthDate = isset($_POST['birthDate']) ? $_POST['birthDate'] : null;
 
-        // Attempt to create a new user in the database
-        $result = $user->createUser(
-            $_POST['username'],
-            $_POST['firstName'],
-            $_POST['lastName'],
-            $_POST['email'],
-            $_POST['phone'],
-            $_POST['address'],
-            $_POST['postnummer'],
-            $_POST['password'],
-            $_POST['role']
-        );
+            // Attempt to create a new user
+            $result = $user->createUser(
+                $_POST['username'],
+                $_POST['firstName'],
+                $_POST['lastName'],
+                $_POST['email'],
+                $_POST['phone'],
+                $_POST['address'],
+                $_POST['postnummer'],
+                $_POST['password'],
+                $_POST['role'],
+                $birthDate
+            );
 
         // Success: clear form data and redirect to login page
         unset($_SESSION['form_data']);

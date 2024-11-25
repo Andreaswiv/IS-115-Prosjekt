@@ -74,6 +74,7 @@
     <ul>
         <li><a target="_blank" href="../src/forms/form_newUser.php">Ny bruker</a></li>
         <li><a target="_blank" href="../src/forms/form_exisUser.php">Eksisterende bruker</a></li>
+        <li><a target="_blank" href="../src/forms/form_newBooking.php">Book rom her</a></li>
         <li><a target="_blank" href="../public/logout.php" class="logout">Logg ut</a></li>
     </ul>
 </div>
