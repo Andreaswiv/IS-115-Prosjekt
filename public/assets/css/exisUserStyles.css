@@ -81,19 +81,19 @@ select {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 20px; /* Avstand mellom elementene */
+    gap: 20px;
 }
 
 .filter-form {
     display: flex;
-    flex-wrap: wrap; /* Sørger for at elementer bryter linje hvis plassen er for liten */
-    gap: 20px; /* Avstand mellom grupper */
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .filter-group {
     display: flex;
     align-items: center;
-    gap: 10px; /* Avstand mellom label og select */
+    gap: 10px;
 }
 
 

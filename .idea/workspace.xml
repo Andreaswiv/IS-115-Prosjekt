@@ -5,30 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="fikset login og registrering">
-      <change afterPath="$PROJECT_DIR$/config.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/private/tests/test_password.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/private/tests/test_session.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/css/headerStyle.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/func/header.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/func/security.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/logout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminIndex.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/inc/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/inc/db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/exisUserStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/exisUserStyles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/inc/setupdb/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/inc/setupdb/setup.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/authController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/bookingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/bookingController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/registerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/registerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/forms/form_exisUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_newAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_newBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_newUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Booking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +128,7 @@
       <workItem from="1732197119602" duration="4284000" />
       <workItem from="1732211508763" duration="201000" />
       <workItem from="1732211712257" duration="89000" />
-      <workItem from="1732567178471" duration="266000" />
+      <workItem from="1732567178471" duration="2748000" />
     </task>
     <task id="LOCAL−00001" summary="lager nye filer osv">
       <option name="closed" value="true" />
@@ -218,7 +200,14 @@
       <option name="presentableId" value="LOCAL−00010" />
       <updated>1732551451701</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL−00011" summary="fikset login og registrering">
+      <option name="closed" value="true" />
+      <created>1732567476278</created>
+      <option name="number" value="LOCAL−00011" />
+      <option name="presentableId" value="LOCAL−00011" />
+      <updated>1732567476278</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

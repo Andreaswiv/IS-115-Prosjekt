@@ -172,12 +172,13 @@ try {
         $insertPreferences = "
         INSERT INTO preferences (user_id, preference_type, preference_value)
         VALUES
-        (2, 'Room Preference', 'Double Room'),
-        (3, 'Room Preference', 'Single Room'),
-        (4, 'Room Preference', 'King Suite'),
-        (5, 'Room Preference', 'Double Room'),
-        (6, 'Room Preference', 'Single Room'),
-        (7, 'Room Preference', 'King Suite');
+        (2, 'room_type', 'Double Room'),
+        (2, 'room_type', 'Double Room'),
+        (3, 'room_type', 'Single Room'),
+        (4, 'room_type', 'King Suite'),
+        (5, 'room_typee', 'Double Room'),
+        (6, 'room_type', 'Single Room'),
+        (7, 'room_typee', 'King Suite');
         ";
         $conn->exec($insertPreferences);
     }

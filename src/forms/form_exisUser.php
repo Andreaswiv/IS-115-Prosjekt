@@ -145,13 +145,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateUser'])) {
 </head>
 <body>
 <div class="container">
-    <h1>User Management</h1>
+    <h1>Bruker Behandling</h1>
 
     <div class="filters">
         <form method="get" class="filter-form">
             <!-- View Filter -->
             <div class="filter-group">
-                <label for="viewType">View:</label>
+                <label for="viewType">Visning:</label>
                 <select name="view" id="viewType" onchange="this.form.submit()">
                     <option value="all" <?php echo ($viewType == 'all') ? 'selected' : ''; ?>>All Users</option>
                     <option value="lastMonth" <?php echo ($viewType == 'lastMonth') ? 'selected' : ''; ?>>Last 30 Days</option>
@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateUser'])) {
 
             <!-- Group By Preference -->
             <div class="filter-group">
-                <label for="groupBy">Group By Preference:</label>
+                <label for="groupBy">Gruppering:</label>
                 <select name="groupBy" id="groupBy" onchange="this.form.submit()">
                     <option value="none" <?php echo !$groupBy ? 'selected' : ''; ?>>None</option>
                     <?php foreach ($preferences as $preference): ?>
