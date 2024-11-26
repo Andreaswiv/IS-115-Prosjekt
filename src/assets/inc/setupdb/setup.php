@@ -176,9 +176,9 @@ try {
         (2, 'room_type', 'Double Room'),
         (3, 'room_type', 'Single Room'),
         (4, 'room_type', 'King Suite'),
-        (5, 'room_typee', 'Double Room'),
+        (5, 'room_type', 'Double Room'),
         (6, 'room_type', 'Single Room'),
-        (7, 'room_typee', 'King Suite');
+        (7, 'room_type', 'King Suite');
         ";
         $conn->exec($insertPreferences);
     }

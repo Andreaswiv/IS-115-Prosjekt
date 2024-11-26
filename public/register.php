@@ -1,6 +1,8 @@
 <?php
 session_start();
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +11,18 @@ session_start();
 </head>
 <body>
 <h2>Register</h2>
+
+<!-- Display Success and Error Messages -->
+<?php
+if (isset($_SESSION['register_errors'])) {
+    echo '<ul style="color: red;">';
+    foreach ($_SESSION['register_errors'] as $error) {
+        echo '<li>' . htmlspecialchars($error) . '</li>';
+    }
+    echo '</ul>';
+    unset($_SESSION['register_errors']);
+}
+?>
 
 <!-- Registration form -->
 <form action="../src/controllers/registerController.php" method="post">

@@ -17,6 +17,10 @@ if (isset($_SESSION['logout_message'])) {
     echo '<p style="color: green; font-weight: bold; text-align: center;">' . htmlspecialchars($_SESSION['logout_message']) . '</p>';
     unset($_SESSION['logout_message']);
 }
+if (isset($_SESSION['register_success'])) {
+    echo '<p style="color: green;">' . htmlspecialchars($_SESSION['register_success']) . '</p>';
+    unset($_SESSION['register_success']);
+}
 ?>
 
 <!DOCTYPE html>

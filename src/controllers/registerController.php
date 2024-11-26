@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $firstName = $_POST['firstName'];
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
-    $email = $_POST['phone'];
-    $email = $_POST['address'];
-    $email = $_POST['postalCode'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $postalCode = $_POST['postalCode'];
     $role = $_POST['role'] ?? 'user';
 
     try {
