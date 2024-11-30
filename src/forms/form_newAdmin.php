@@ -1,5 +1,5 @@
 <?php
-include '../../src/assets/inc/setupdb/setup.php';
+include '../../src/resources/inc/setupdb/setup.php';
 require_once '../func/header.php';
 
 ?>
