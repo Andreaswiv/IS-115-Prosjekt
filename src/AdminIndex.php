@@ -1,35 +1,31 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
- 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once '../src/func/header.php';
 require_once '../src/func/security.php';
 ensureAdmin();
 
+require_once '../src/assets/inc/db.php';
+require_once '../src/models/Room.php';
 
+$db = new PDO("mysql:host=localhost;dbname=motell_booking", "root", "");
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// Inkluder nødvendige filer for romhåndtering
-require_once '../src/assets/inc/db.php'; // Databaseforbindelse
-require_once '../src/models/Room.php';   // Room-modellen
-
-// Opprett Room-modellen
-$db = new PDO("mysql:host=localhost;dbname=motell_booking", "root", ""); // Endre med riktig DB-info
 $roomModel = new Room($db);
 
-// Hent alle rom for en rask oversikt
 $rooms = $roomModel->getAllRooms();
 $totalRooms = count($rooms);
 $availableRooms = count(array_filter($rooms, fn($room) => $room['is_available'] === 1));
 
-// Vis eventuelle feilmeldinger
 if (isset($_SESSION['error_message'])) {
     echo '<p style="color: red; font-weight: bold; text-align: center;">' . htmlspecialchars($_SESSION['error_message']) . '</p>';
     unset($_SESSION['error_message']);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="no">
@@ -57,7 +53,7 @@ if (isset($_SESSION['error_message'])) {
         Totalt antall rom: <?php echo $totalRooms; ?><br>
         Tilgjengelige rom for booking: <?php echo $availableRooms; ?>
     </p>
-    <a href="roomOverview.php" class="btn">Gå til Romoversikt</a>
+    <a href="forms/form_roomOverview.php" class="btn">Gå til Romoversikt</a>
 </div>
 </body>
 </html>

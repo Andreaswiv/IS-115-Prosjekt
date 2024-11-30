@@ -8,12 +8,10 @@ class Room{
     {
         $this->conn = $db;
     }
-
-    // Hent alle rom
     public function getAllRooms()
     {
         $query = "SELECT * FROM rooms ORDER BY id ASC";
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->conn->prepare($query); // Corrected property usage
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -22,7 +20,7 @@ class Room{
     public function getRoomById($id)
     {
         $query = "SELECT * FROM rooms WHERE id = :id";
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -40,7 +38,7 @@ class Room{
                     unavailable_end = :unavailable_end
                   WHERE id = :id";
 
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':room_type', $room_type, PDO::PARAM_STR);
@@ -59,7 +57,7 @@ class Room{
         $query = "INSERT INTO rooms (name, room_type, capacity, is_available) 
                   VALUES (:name, :room_type, :capacity, 1)";
 
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':room_type', $room_type, PDO::PARAM_STR);
@@ -72,7 +70,7 @@ class Room{
     public function deleteRoom($id)
     {
         $query = "DELETE FROM rooms WHERE id = :id";
-        $stmt = $this->db->prepare($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
