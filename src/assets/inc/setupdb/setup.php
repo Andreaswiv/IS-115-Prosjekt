@@ -59,6 +59,20 @@ try {
 ";
     $conn->exec($createPreferencesTable);
 
+    // create table "rooms" if not exist
+    $createRoomsTable = "
+    CREATE TABLE IF NOT EXISTS rooms (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        room_name VARCHAR(10) NOT NULL,
+        room_type ENUM('Single', 'Double', 'King Suite') NOT NULL,
+        capacity INT NOT NULL,
+        is_available BOOLEAN NOT NULL,
+        unavailable_start DATETIME DEFAULT NULL,
+        unavailable_end DATETIME DEFAULT NULL
+    );
+";
+$conn->exec($createRoomsTable);
+
     // Insert initial users into the database if the table is empty
     $userCheck = $conn->query("SELECT COUNT(*) FROM users")->fetchColumn();
     if ($userCheck == 0) {
@@ -158,6 +172,7 @@ try {
         }
     }
 
+    // Ensure users exist before inserting preferences
     // Ensure users exist before inserting preferences
     $preferenceCheck = $conn->query("SELECT COUNT(*) FROM preferences")->fetchColumn();
     if ($preferenceCheck == 0) {

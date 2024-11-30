@@ -19,7 +19,7 @@ $floors = [1, 2];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book a Room</title>
-    <link rel="stylesheet" href="../../public/assets/css/table.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css">
 </head>
 <body>
 <div class="container">

@@ -1,44 +1,97 @@
-/* General styles */
+/* Generelle stiler */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f9;
     color: #333;
-    line-height: 1.6;
-}
-
-
-/* Logout button */
-.logout {
-    background-color: #FF3D00;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.logout:hover {
-    background-color: #d32f2f;
-}
-
-/* Body content */
-body {
-    margin-top: 70px;
 }
 
 .container {
-    max-width: 800px;
-    margin: 30px auto;
+    max-width: 900px;
+    margin: 40px auto;
     padding: 20px;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tittel */
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Feilmeldinger */
+.error, .success {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Form-stiler */
+form {
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+form input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Style for form fields on error */
+form input.error {
+    border-color: #f44336;
+}
+
+form input.error:focus {
+    border-color: #f44336;
 }
 
 /* List items */
@@ -67,29 +120,57 @@ ul li a:hover {
     background-color: #0056b3;
 }
 
-/* Error message styles */
-.error-message {
-    color: red;
-    font-weight: bold;
-    text-align: center;
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
-    .header {
-        flex-direction: column;
-        text-align: center;
-    }
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
 
-    .header a {
-        margin: 10px 0;
-    }
+table th {
+    background-color: #f4f4f4;
+}
 
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+table td form button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design: Make the form container responsive */
+@media screen and (max-width: 600px) {
     .container {
         padding: 15px;
+        margin: 10px;
     }
 
-    ul li a {
+    h1 {
+        font-size: 24px;
+    }
+
+    form input,
+    form button {
+        padding: 12px;
+    }
+
+    table th, table td {
         font-size: 14px;
         padding: 8px;
     }

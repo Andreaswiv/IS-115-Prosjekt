@@ -10,7 +10,7 @@ session_start();
 </head>
 <body>
 <h2>Registrering</h2>
-<link rel="stylesheet" href="assets/css/table.css">
+<link rel="stylesheet" href="assets/css/style.css">
 
 <!-- Display Success and Error Messages -->
 <?php
