@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="fikset login og registrering">
-      <change afterPath="$PROJECT_DIR$/src/forms/form_roomOverview.php" afterDir="false" />
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Gjort noen større endringer i prosjektet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminIndex.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/css/table.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/overviewStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/inc/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/inc/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/func/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/func/header.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="modul-7-oppdateringer" />
+        <entry key="$PROJECT_DIR$" value="autentisering" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -64,24 +60,25 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "#36 on 32-opprette-modell-for-rom",
+    "git-widget-placeholder": "store-endringer",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/Prosjekt/IS-115-Prosjekt",
+    "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/assets/css" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/private" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/public/assets" />
+      <recent name="$PROJECT_DIR$/inc" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Script.register.php">
@@ -129,7 +126,14 @@
       <workItem from="1732197119602" duration="4284000" />
       <workItem from="1732211508763" duration="201000" />
       <workItem from="1732211712257" duration="89000" />
-      <workItem from="1732567178471" duration="2748000" />
+      <workItem from="1732567178471" duration="5800000" />
+      <workItem from="1732620500884" duration="3563000" />
+      <workItem from="1732624205893" duration="2265000" />
+      <workItem from="1732629700937" duration="447000" />
+      <workItem from="1732729365575" duration="707000" />
+      <workItem from="1732794059088" duration="3586000" />
+      <workItem from="1732960342128" duration="12742000" />
+      <workItem from="1732997391060" duration="3608000" />
     </task>
     <task id="LOCAL−00001" summary="lager nye filer osv">
       <option name="closed" value="true" />
@@ -208,7 +212,28 @@
       <option name="presentableId" value="LOCAL−00011" />
       <updated>1732567476278</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL−00012" summary="fikset login og registrering">
+      <option name="closed" value="true" />
+      <created>1732569940285</created>
+      <option name="number" value="LOCAL−00012" />
+      <option name="presentableId" value="LOCAL−00012" />
+      <updated>1732569940285</updated>
+    </task>
+    <task id="LOCAL−00013" summary="Fikset noe stuk jeg la til i forrge push">
+      <option name="closed" value="true" />
+      <created>1732629744273</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1732629744273</updated>
+    </task>
+    <task id="LOCAL−00014" summary="Gjort noen større endringer i prosjektet">
+      <option name="closed" value="true" />
+      <created>1733000595061</created>
+      <option name="number" value="LOCAL−00014" />
+      <option name="presentableId" value="LOCAL−00014" />
+      <updated>1733000595061</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,6 +257,8 @@
     <MESSAGE value="Fikset README.md" />
     <MESSAGE value="Lagt til setup.php fil" />
     <MESSAGE value="fikset login og registrering" />
-    <option name="LAST_COMMIT_MESSAGE" value="fikset login og registrering" />
+    <MESSAGE value="Fikset noe stuk jeg la til i forrge push" />
+    <MESSAGE value="Gjort noen større endringer i prosjektet" />
+    <option name="LAST_COMMIT_MESSAGE" value="Gjort noen større endringer i prosjektet" />
   </component>
 </project>

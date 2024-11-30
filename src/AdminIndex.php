@@ -44,7 +44,6 @@ if (isset($_SESSION['error_message'])) {
     <ul>
         <li><a target="_blank" href="forms/form_exisAdmin.php">Eksisterende bruker, ADMIN</a></li>
         <li><a target="_blank" href="forms/form_newAdmin.php">Ny bruker, ADMIN</a></li>
-        <li><a target="_blank" href="../public/logout.php" class="logout">Logg ut</a></li>
     </ul>
 
     <!-- Rask romoversikt -->
