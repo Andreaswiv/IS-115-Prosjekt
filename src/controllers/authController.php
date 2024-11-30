@@ -68,6 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['login_error'] = "Too many failed attempts. Your account is locked for 1 hour.";
             } else {
                 $_SESSION['login_error'] = "Invalid username or password. Attempt " . $_SESSION['failed_attempts'] . " of $maxAttempts.";
+                error_log("Password mismatch for username: $username");
+                error_log("Input Password: $password");
+                error_log("Stored Hash: " . $userData['password']);
             }
 
             header("Location: ../../public/login.php");
