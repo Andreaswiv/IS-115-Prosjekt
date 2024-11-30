@@ -28,7 +28,7 @@ if (isset($_SESSION['register_success'])) {
 <head>
     <meta charset="UTF-8">
     <title>Innlogging</title>
-    <link rel="stylesheet" href="assets/css/table.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 <h2>Innlogging</h2>

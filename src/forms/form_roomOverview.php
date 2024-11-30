@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-include '../../src/assets/inc/db.php'; // Database connection
-include '../../src/models/Room.php';   // Room model
+include '../../src/assets/inc/db.php';
+include '../../src/models/Room.php';
 include '../../src/func/security.php';
-include '../../src/func/header.php';// Optional security functions
+include '../../src/func/header.php';
 ensureAdmin();
 
 // Create a database connection instance
@@ -24,7 +24,7 @@ $rooms = $roomModel->getAllRooms();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Romoversikt</title>
-    <link rel="stylesheet" href="../../public/assets/css/overviewStyle.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css">
 </head>
 <body>
 <h1>Romoversikt</h1>

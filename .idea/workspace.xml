@@ -4,10 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Gjort noen større endringer i prosjektet">
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="fikset dum kode">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/func/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/func/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/table.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/table.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_newAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_newBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_roomOverview.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_roomOverview.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,9 +65,9 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "store-endringer",
+    "git-widget-placeholder": "32-opprette-modell-for-rom",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt",
+    "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt/public/assets/img",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -73,6 +78,9 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/assets/img" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/private" />
@@ -259,6 +267,7 @@
     <MESSAGE value="fikset login og registrering" />
     <MESSAGE value="Fikset noe stuk jeg la til i forrge push" />
     <MESSAGE value="Gjort noen større endringer i prosjektet" />
-    <option name="LAST_COMMIT_MESSAGE" value="Gjort noen større endringer i prosjektet" />
+    <MESSAGE value="fikset dum kode" />
+    <option name="LAST_COMMIT_MESSAGE" value="fikset dum kode" />
   </component>
 </project>
