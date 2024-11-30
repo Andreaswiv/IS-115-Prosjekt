@@ -9,23 +9,23 @@ class User {
     }
 
     // Function to create a new user
-    public function createUser($username, $firstName, $lastName, $email, $phone, $address, $postnummer, $password, $role) {
+    public function createUser($username, $firstName, $lastName, $email, $phone, $address, $postalCode, $password, $role) {
         $query = "
-        INSERT INTO users (username, password, firstName, lastName, email, phone, address, postnummer, role)
-        VALUES (:username, :password, :firstName, :lastName, :email, :phone, :address, :postnummer, :role)
+        INSERT INTO users (username, password, firstName, lastName, email, phone, address, postalCode, role)
+        VALUES (:username, :password, :firstName, :lastName, :email, :phone, :address, :postalCode, :role)
     ";
 
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', password_hash($password, PASSWORD_DEFAULT));
+        $stmt->bindParam(':password', $password);
         $stmt->bindParam(':firstName', $firstName);
         $stmt->bindParam(':lastName', $lastName);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':phone', $phone);
         $stmt->bindParam(':address', $address);
-        $stmt->bindParam(':postnummer', $postnummer);
+        $stmt->bindParam(':postalCode', $postalCode);
         $stmt->bindParam(':role', $role);
 
         if (!$stmt->execute()) {

@@ -27,24 +27,26 @@ if (isset($_SESSION['register_success'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Innlogging</title>
+    <link rel="stylesheet" href="assets/css/table.css">
 </head>
 <body>
-<h2>Login</h2>
+<h2>Innlogging</h2>
+
 
 <!-- Login form -->
 <form action="../src/controllers/authController.php" method="post">
-    <label for="username">Username:</label>
+    <label for="username">Brukernavn:</label>
     <input type="text" name="username" id="username" required><br>
 
-    <label for="password">Password:</label>
+    <label for="password">Passord:</label>
     <input type="password" name="password" id="password" required><br>
 
-    <button type="submit">Log In</button>
+    <button type="submit">Logg Inn</button>
 </form>
 
 <!-- Link to Register Page -->
-<p>Don't have an account? <a href="register.php">Register here</a></p>
+<p>Har du ikke en konto? <a href="register.php">Registrer deg her</a></p>
 
 </body>
 </html>
