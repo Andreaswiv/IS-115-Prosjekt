@@ -1,6 +1,6 @@
 <?php
 
-include '../../src/assets/inc/setupdb/setup.php';
+include '../../src/resources/inc/setupdb/setup.php';
 require_once '../func/security.php';
 require_once '../../src/func/header.php';
 

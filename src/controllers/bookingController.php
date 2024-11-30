@@ -1,5 +1,5 @@
 <?php
-include '../../src/assets/inc/setupdb/setup.php';
+include '../../src/resources/inc/setupdb/setup.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Capture and sanitize POST data
