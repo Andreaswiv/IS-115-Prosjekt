@@ -34,7 +34,6 @@ if (isset($_SESSION['error_message'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motell Booking ADMIN</title>
     <link rel="stylesheet" href="../public/assets/css/style.css">
-    <link rel="stylesheet" href="../public/assets/css/headerStyle.css">
 </head>
 <body>
 <div class="container">

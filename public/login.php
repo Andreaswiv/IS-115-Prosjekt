@@ -31,9 +31,8 @@ if (isset($_SESSION['register_success'])) {
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<h2>Innlogging</h2>
-
-
+<div class = "container">
+    <h2>Innlogging</h2>
 <!-- Login form -->
 <form action="../src/controllers/authController.php" method="post">
     <label for="username">Brukernavn:</label>
@@ -47,6 +46,6 @@ if (isset($_SESSION['register_success'])) {
 
 <!-- Link to Register Page -->
 <p>Har du ikke en konto? <a href="register.php">Registrer deg her</a></p>
-
+</div>
 </body>
 </html>

@@ -3,6 +3,7 @@
 include '../../src/resources/inc/setupdb/setup.php';
 require_once '../func/security.php';
 require_once '../../src/func/header.php';
+ensureAdmin();
 
 // Default sorting and filtering logic
 $orderDir = isset($_GET['order']) && $_GET['order'] == 'DESC' ? 'DESC' : 'ASC';
@@ -132,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateUser'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
-    <link rel="stylesheet" href="../../public/assets/css/exisUserStyles.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css">
     <script>
         function toggleSortOrder() {
             const currentOrder = '<?php echo $orderDir; ?>';
