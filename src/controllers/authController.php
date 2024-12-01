@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../assets/inc/db.php';
+require_once '../resources/inc/db.php';
 require_once '../models/User.php';
 
 $db_instance = new Database();
