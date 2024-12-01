@@ -192,4 +192,14 @@ table td form button:hover {
         font-size: 14px;
         padding: 10px;
     }
+    }
+
+/* container for table of rooms in form_roomOverview.php */
+ .container_roomOverview {
+    max-width: 890px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #ffffff; / Pure white background for contrast /
+    border-radius: 12px; / Slightly rounder edges for a modern look /
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); / Softer, larger shadow */
 }

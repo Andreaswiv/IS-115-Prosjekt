@@ -4,22 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Lagt til bilde">
-      <change afterPath="$PROJECT_DIR$/public/assets/css/oversiktStyle.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/logo.png" afterDir="false" />
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Lagt til bilde, og stylet og fikset exisUser side">
+      <change afterPath="$PROJECT_DIR$/public/assets/css/bookingStyle.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/css/homePageStyle.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/css/roomStyle.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/double_room.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/king_suite.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/single_room.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/js/bookingScript.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/homePage.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/forms/doubleRoomBooking.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/forms/kingSuiteBooking.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/forms/singleRoomBooking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/headerStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/headerStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/overviewStyle.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminIndex.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_exisUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_newAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/logout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/inc/setupdb/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/inc/setupdb/setup.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/authController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/registerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/registerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_newBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_roomOverview.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_roomOverview.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/func/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/func/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/func/security.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/func/security.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Room.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +42,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Develop" />
+        <entry key="$PROJECT_DIR$" value="bilde" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -72,7 +82,7 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "bilde",
+    "git-widget-placeholder": "styling-og-exisUser",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt/public/assets/img",
     "node.js.detected.package.eslint": "true",
@@ -269,7 +279,14 @@
       <option name="presentableId" value="LOCAL−00017" />
       <updated>1733006873506</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL−00018" summary="Lagt til bilde, og stylet og fikset exisUser side">
+      <option name="closed" value="true" />
+      <created>1733062738745</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1733062738745</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,6 +315,7 @@
     <MESSAGE value="Gjort noen større endringer i prosjektet" />
     <MESSAGE value="Fikset merge conflicts" />
     <MESSAGE value="Lagt til bilde" />
-    <option name="LAST_COMMIT_MESSAGE" value="Lagt til bilde" />
+    <MESSAGE value="Lagt til bilde, og stylet og fikset exisUser side" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lagt til bilde, og stylet og fikset exisUser side" />
   </component>
 </project>

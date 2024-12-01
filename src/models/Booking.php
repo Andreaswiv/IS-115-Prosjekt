@@ -1,6 +1,7 @@
 <?php
 namespace models;
-require_once 'src/assets/inc/db.php';
+
+require_once '../../src/assets/inc/db.php';
 require_once '../func/security.php';
 
 class Booking
@@ -23,9 +24,9 @@ class Booking
         $stmt->bindParam(':userId', $userId);
         $stmt->bindParam(':roomId', $roomId);
         $stmt->bindParam(':roomType', $roomType);
-        $stmt->bindParam(':floor', $floor);
-        $stmt->bindParam(':nearElevator', $nearElevator, PDO::PARAM_BOOL);
-        $stmt->bindParam(':hasView', $hasView, PDO::PARAM_BOOL);
+        $stmt->bindParam(':floor', $floor, $floor !== null ? \PDO::PARAM_INT : \PDO::PARAM_NULL);
+        $stmt->bindParam(':nearElevator', $nearElevator, \PDO::PARAM_BOOL);
+        $stmt->bindParam(':hasView', $hasView, \PDO::PARAM_BOOL);
         $stmt->bindParam(':startDate', $startDate);
         $stmt->bindParam(':endDate', $endDate);
 
@@ -39,8 +40,9 @@ class Booking
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':userId', $userId);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC); // Use \PDO to specify global namespace
     }
 }
+
 
 ?>

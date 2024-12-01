@@ -1,10 +1,13 @@
-/* Reset default styles for the header */
-body, html {
+/* Reset styles to prevent conflicts */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Roboto', Arial, sans-serif;
     overflow-x: hidden; /* Prevent horizontal scrolling */
-    font-family: 'Roboto', Arial, sans-serif; /* Thinner, modern font */
 }
 
 /* Sticky header styling */
@@ -14,66 +17,26 @@ body, html {
     top: 0;
     left: 0;
     width: 100%; /* Ensure header spans the viewport width */
-    height: 80px; /* Header height */
+    height: 60px; /* Header height */
     z-index: 1000;
-    border-bottom: 1px solid black; /* Thinner black underline */
+    border-bottom: 1px solid #D3D3D3; /* Thinner black underline */
     display: flex;
     justify-content: space-between; /* Space between logo, links, and user image */
     align-items: center; /* Vertically center items */
+    padding: 0 20px; /* Add some horizontal padding */
 }
 
-
-/* Logo container */
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between logo and text */
-    margin-left: 20px;
-}
-
-.logo-container img.logo-image {
-    height: 70px; /* Adjust logo size */
-    width: auto; /* Maintain aspect ratio */
-}
-
-/* Style for the logo text (anchor element) */
-.logo-container a {
-    text-decoration: none; /* Remove the default underline */
-    font-size: 18px; /* Adjust font size */
-    font-weight: 300; /* Light font weight for thinner text */
-    color: #333; /* Neutral color for logo text */
-    transition: color 0.3s ease; /* Smooth color transition on hover */
-}
-
-.logo-container a:hover {
-    color: #32CD32; /* Optional: Light green on hover */
-    text-decoration: none; /* Ensure no underline on hover */
-}
-
-/* Navigation links */
-.nav-links {
-    display: flex;
-    gap: 20px; /* Space between navigation links */
-}
-
+/* Navigation Links */
 .nav-link {
     text-decoration: none; /* Remove underline */
     color: #32CD32; /* Light green text */
     font-size: 16px;
     font-weight: 300; /* Lighter font weight for thinner text */
-    transition: color 0.3s ease, text-decoration 0.3s ease;
+    padding: 10px 15px; /* Increase padding for a larger clickable area */
+    border-radius: 5px; /* Optional: Add rounded corners for better visual cues */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Smooth transition effect */
     position: relative; /* For underline effect */
-}
-
-.nav-link::after {
-    content: ''; /* Empty pseudo-element for underline */
-    position: absolute;
-    bottom: -2px; /* Position the underline below the text */
-    left: 0;
-    height: 2px; /* Thickness of the underline */
-    width: 0%; /* Start with no underline */
-    background-color: #32CD32; /* Light green underline */
-    transition: width 0.3s ease; /* Smooth animation */
+    display: inline-block; /* Ensure padding works with inline elements */
 }
 
 .nav-link:hover {
@@ -81,39 +44,57 @@ body, html {
     color: #228B22; /* Slightly darker green on hover */
 }
 
-.nav-link:hover::after {
-    width: 100%; /* Expand underline to full width on hover */
+/* Expand underline to include padding */
+.nav-link::after {
+    content: ''; /* Empty pseudo-element for underline */
+    position: absolute;
+    bottom: 5px; /* Position the underline below the text and padding */
+    left: 10px; /* Align with padding */
+    height: 2px; /* Thickness of the underline */
+    width: calc(100% - 20px); /* Adjust underline width for padding */
+    background-color: #32CD32; /* Light green underline */
+    transform: scaleX(0); /* Initially hidden (scale down) */
+    transform-origin: left; /* Scale from the left */
+    transition: transform 0.3s ease; /* Smooth transition effect */
 }
 
-/* Style the image container */
+.nav-link:hover::after {
+    transform: scaleX(1); /* Expand underline to full width on hover */
+}
+
+/* User Image Container */
 .image-container {
     display: flex;
     justify-content: flex-end; /* Align image to the right */
     align-items: center; /* Align image vertically */
     position: relative; /* Enable positioning for underline effect */
+    cursor: pointer; /* Show pointer cursor */
+    transition: transform 0.3s ease; /* Smooth transition effect */
+    padding: 15px;
 }
 
-/* Style the user image */
 .user-image {
-    height: 50px; /* Image height */
-    width: auto; /* Maintain aspect ratio */
-    margin-right: 20px; /* Add margin to prevent it from being flush against the edge */
+    height: 40px; /* Image height */
+    width: 40px; /* Maintain aspect ratio */
+    border-radius: 50%; /* Make the image circular */
+    margin-right: 15px; /* Add margin to separate it from the edge */
     position: relative; /* Enable positioning for underline */
-    transition: filter 0.2s ease; /* Smooth transition for hover effects */
+    transition: filter 0.3s ease; /* Smooth transition for hover effects */
+    object-fit: cover; /* Ensure the image scales properly */
 }
 
-/* Create green underline under the image */
+/* Expand clickable area and underline effect */
 .image-container::after {
     content: ''; /* Empty pseudo-element for underline */
     position: absolute;
-    bottom: -5px; /* Position the underline below the image container */
-    left: 1px; /* Align with the container */
-    right: 20px; /* Align with the container */
+    bottom: 10px; /* Position the underline below the image container */
+    left: 12px; /* Align with the container */
+    right: 12px; /* Align with the container */
     height: 2px; /* Thickness of the underline */
     background-color: #32CD32; /* Light green underline */
     transform: scaleX(0); /* Initially hidden (scale down) */
-    transform-origin: left; /* Scale from the center */
-    transition: transform 0.2s ease-in-out; /* Smooth animation */
+    transform-origin: left; /* Scale from the left */
+    transition: transform 0.3s ease; /* Smooth transition effect */
 }
 
 .image-container:hover::after {
@@ -122,4 +103,58 @@ body, html {
 
 .image-container:hover .user-image {
     filter: brightness(1.2); /* Slightly brighten the image on hover */
+}
+
+/* Logo Container */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo and text */
+    margin-left: 20px; /* Adjust margin to keep it close to the edge */
+}
+
+.logo-container img.logo-image {
+    height: 45px; /* Adjust logo size */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Clickable User Link */
+.user-link {
+    display: flex;
+    align-items: center; /* Vertically align the image and text */
+    text-decoration: none; /* Remove default underline */
+}
+
+/* Style for "Logg Inn" Text */
+.login-text {
+    font-family: 'Roboto', Arial, sans-serif; /* Use consistent font */
+    font-size: 14px; /* Adjust font size */
+    color: #333; /* Neutral text color */
+    font-weight: 400; /* Regular font weight */
+    margin-left: 5px; /* Add spacing between text and user image */
+    display: inline-block; /* Ensure proper spacing and layout */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; /* Stack the header vertically on smaller screens */
+        height: auto;
+        padding: 10px;
+    }
+
+    .logo-container {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .nav-link {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    .user-image {
+        height: 35px;
+        width: 35px;
+    }
 }

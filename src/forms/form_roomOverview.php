@@ -54,8 +54,6 @@ $rooms = $roomModel->getAllRooms();
                 <td><?php echo htmlspecialchars($room['room_type']); ?></td>
                 <td><?php echo htmlspecialchars($room['capacity']); ?></td>
                 <td><?php echo $room['is_available'] ? 'Ja' : 'Nei'; ?></td>
-                <td><?php echo htmlspecialchars($room['unavailable_start']) ?: '-'; ?></td>
-                <td><?php echo htmlspecialchars($room['unavailable_end']) ?: '-'; ?></td>
                 <td>
                     <form action="roomEdit.php" method="get" style="display: inline;">
                         <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['id']); ?>">

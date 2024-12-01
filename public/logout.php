@@ -8,6 +8,6 @@ session_start();
 $_SESSION['logout_message'] = "Du har blitt logget ut.";
 
 // Redirect to login page
-header("Location: login.php");
+header("Location: homePage.php");
 exit();
 ?>

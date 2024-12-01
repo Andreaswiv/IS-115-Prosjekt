@@ -1,12 +1,16 @@
 <?php
-
+namespace models;
 class Room{
     private $conn;
     private $table = 'rooms';
 
     public function __construct($db)
     {
-        $this->conn = $db;
+        if ($db instanceof \PDO) { // Use \PDO here
+            $this->conn = $db;
+        } else {
+            throw new \InvalidArgumentException("Invalid database connection.");
+        }
     }
     public function getAllRooms()
     {
@@ -27,15 +31,13 @@ class Room{
     }
 
     // Oppdater et rom
-    public function updateRoom($id, $name, $room_type, $capacity, $is_available, $unavailable_start, $unavailable_end)
+    public function updateRoom($id, $name, $room_type, $capacity, $is_available)
     {
         $query = "UPDATE rooms SET 
                     name = :name, 
                     room_type = :room_type, 
                     capacity = :capacity, 
                     is_available = :is_available, 
-                    unavailable_start = :unavailable_start, 
-                    unavailable_end = :unavailable_end
                   WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -44,8 +46,6 @@ class Room{
         $stmt->bindParam(':room_type', $room_type, PDO::PARAM_STR);
         $stmt->bindParam(':capacity', $capacity, PDO::PARAM_INT);
         $stmt->bindParam(':is_available', $is_available, PDO::PARAM_BOOL);
-        $stmt->bindParam(':unavailable_start', $unavailable_start, PDO::PARAM_STR);
-        $stmt->bindParam(':unavailable_end', $unavailable_end, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
         return $stmt->execute();
