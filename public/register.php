@@ -7,10 +7,9 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>Registrering</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<h2>Registrering</h2>
-<link rel="stylesheet" href="assets/css/style.css">
 
 <!-- Display Success and Error Messages -->
 <?php
@@ -23,7 +22,8 @@ if (isset($_SESSION['register_errors'])) {
     unset($_SESSION['register_errors']);
 }
 ?>
-
+<div class = "container">
+    <h2>Registrering</h2>
 <!-- Registration form -->
 <form action="../src/controllers/registerController.php" method="post">
     <label for="username">Brukernavn:</label>
@@ -55,5 +55,6 @@ if (isset($_SESSION['register_errors'])) {
 
     <button type="submit">Registrer deg</button>
 </form>
+</div>
 </body>
 </html>

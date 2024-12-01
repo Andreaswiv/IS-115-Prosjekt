@@ -15,8 +15,7 @@ if (isset($_SESSION['error_message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motell Booking</title>
-    <link rel="stylesheet" href="../public/assets/css/style.css">
-    <link rel="stylesheet" href="../public/assets/css/headerStyle.css">
+    <link rel="stylesheet" href="../public/assets/css/style.css?v1.0.1">
 </head>
 <body>
 <div class="container">

@@ -1,6 +1,8 @@
 <?php
 include '../../src/assets/inc/setupdb/setup.php';
 require_once '../func/header.php';
+require_once '../func/security.php';
+ensureAdmin();
 
 ?>
 
