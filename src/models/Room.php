@@ -8,6 +8,8 @@ class Room{
     {
         $this->conn = $db;
     }
+
+    // Hent alle rom
     public function getAllRooms()
     {
         $query = "SELECT * FROM rooms ORDER BY id ASC";
@@ -15,6 +17,7 @@ class Room{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     // Hent et spesifikt rom ved ID
     public function getRoomById($id)

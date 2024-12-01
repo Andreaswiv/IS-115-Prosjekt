@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include '../../src/assets/inc/db.php';
+include '../../src/resources/inc/db.php';
 include '../../src/models/Room.php';
 include '../../src/func/security.php';
 include '../../src/func/header.php';
@@ -16,6 +16,10 @@ $roomModel = new Room($db);
 
 // Fetch all rooms
 $rooms = $roomModel->getAllRooms();
+
+if (!$rooms) {
+    die('Kunne ikke hente romdata.');
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,11 +37,12 @@ $rooms = $roomModel->getAllRooms();
 <?php if (empty($rooms)): ?>
     <p>Du har ingen rom.</p>
 <?php else: ?>
+
+<div class= "container">
     <table>
         <thead>
         <tr>
             <th>Romnummer</th>
-            <th>Navn</th>
             <th>Romtype</th>
             <th>Kapasitet</th>
             <th>Tilgjengelig</th>
@@ -49,8 +54,7 @@ $rooms = $roomModel->getAllRooms();
         <tbody>
         <?php foreach ($rooms as $room): ?>
             <tr>
-                <td><?php echo htmlspecialchars($room['id']); ?></td>
-                <td><?php echo htmlspecialchars($room['name']); ?></td>
+                <td><?php echo htmlspecialchars($room['room_name']); ?></td>
                 <td><?php echo htmlspecialchars($room['room_type']); ?></td>
                 <td><?php echo htmlspecialchars($room['capacity']); ?></td>
                 <td><?php echo $room['is_available'] ? 'Ja' : 'Nei'; ?></td>
@@ -58,7 +62,7 @@ $rooms = $roomModel->getAllRooms();
                 <td><?php echo htmlspecialchars($room['unavailable_end']) ?: '-'; ?></td>
                 <td>
                     <form action="roomEdit.php" method="get" style="display: inline;">
-                        <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['id']); ?>">
+                        <input type="hidden" name="room_id" value="<?php echo htmlspecialchars($room['room_name']); ?>">
                         <button type="submit">Rediger</button>
                     </form>
                 </td>
@@ -66,6 +70,7 @@ $rooms = $roomModel->getAllRooms();
         <?php endforeach; ?>
         </tbody>
     </table>
+</div>
 <?php endif; ?>
 </body>
 </html>
