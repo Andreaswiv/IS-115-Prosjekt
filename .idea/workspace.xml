@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Stylet litt og fjernet litt kommentering">
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Fikset README + litt til">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_allCustomersAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_allCustomersAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/inc/setupdb/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/inc/setupdb/setup.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -310,7 +307,14 @@
       <option name="presentableId" value="LOCAL−00023" />
       <updated>1733176700611</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL−00024" summary="Fikset README + litt til">
+      <option name="closed" value="true" />
+      <created>1733177729532</created>
+      <option name="number" value="LOCAL−00024" />
+      <option name="presentableId" value="LOCAL−00024" />
+      <updated>1733177729532</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -344,6 +348,7 @@
     <MESSAGE value="Oppdaterte brukersiden, bort imot ferdig nå" />
     <MESSAGE value="Stylet litt" />
     <MESSAGE value="Stylet litt og fjernet litt kommentering" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stylet litt og fjernet litt kommentering" />
+    <MESSAGE value="Fikset README + litt til" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fikset README + litt til" />
   </component>
 </project>
