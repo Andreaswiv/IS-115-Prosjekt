@@ -1,19 +1,20 @@
 <?php
+/*
 $host = 'localhost';
 $username = 'root';
 $password = '';
 $db_name = 'motell_booking';
 
 try {
-    // Connect to MySQL server and select the database
+    // Connect to MySQL server
     $conn = new PDO("mysql:host=$host", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Create the database if it doesn't exist
-    $conn->exec("CREATE DATABASE IF NOT EXISTS $db_name");
-    $conn->exec("USE $db_name");
+    $conn->exec("CREATE DATABASE IF NOT EXISTS `$db_name`");
+    $conn->exec("USE `$db_name`");
 
-    // Create 'users' table if it doesn't exist
+    // Create 'users' table
     $createUsersTable = "
     CREATE TABLE IF NOT EXISTS users (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,23 +32,50 @@ try {
     ";
     $conn->exec($createUsersTable);
 
-    // Create 'bookings' table if it doesn't exist
+    // Create 'rooms' table
+    $createRoomsTable = "
+    CREATE TABLE IF NOT EXISTS rooms (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        room_name VARCHAR(10) NOT NULL,
+        room_type ENUM('Single', 'Double', 'King Suite') NOT NULL,
+        capacity INT NOT NULL,
+        is_available BOOLEAN NOT NULL DEFAULT 1
+    );
+    ";
+    $conn->exec($createRoomsTable);
+
+
+    ####################################################################################  
+    /* veldig sikker på at disse trengs for å løse 
+    "En administrator må kunne navngi og beskrive rom og romtyper, samt gjøre enkelte rom utilgjengelige for perioder"
+    *//*
+    $alterRoomsTable = "
+    ALTER TABLE rooms 
+    ADD COLUMN IF NOT EXISTS unavailable_start DATETIME DEFAULT NULL,
+    ADD COLUMN IF NOT EXISTS unavailable_end DATETIME DEFAULT NULL;
+";
+$conn->exec($alterRoomsTable);
+    ####################################################################################  
+
+    // Create 'bookings' table
     $createBookingsTable = "
     CREATE TABLE IF NOT EXISTS bookings (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL,
+        room_id INT NOT NULL,
         room_type VARCHAR(50) NOT NULL,
         floor INT NOT NULL,
         near_elevator BOOLEAN NOT NULL,
         has_view BOOLEAN NOT NULL,
         start_date DATE NOT NULL,
         end_date DATE NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
     );
     ";
     $conn->exec($createBookingsTable);
 
-    // Create 'preferences' table if it doesn't exist
+    // Create 'preferences' table
     $createPreferencesTable = "
     CREATE TABLE IF NOT EXISTS preferences (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,163 +84,145 @@ try {
         preference_value VARCHAR(100) NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );
-";
+    ";
     $conn->exec($createPreferencesTable);
 
-    // create table "rooms" if not exist
-    $createRoomsTable = "
-    CREATE TABLE IF NOT EXISTS rooms (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        room_name VARCHAR(10) NOT NULL,
-        room_type ENUM('Single', 'Double', 'King Suite') NOT NULL,
-        capacity INT NOT NULL,
-        is_available BOOLEAN NOT NULL,
-        unavailable_start DATETIME DEFAULT NULL,
-        unavailable_end DATETIME DEFAULT NULL
-    );
-";
-$conn->exec($createRoomsTable);
-
-    // Insert initial users into the database if the table is empty
-    $userCheck = $conn->query("SELECT COUNT(*) FROM users")->fetchColumn();
-    if ($userCheck == 0) {
-        $userInsertData = [
-            [
-                'username' => 'admin',
-                'password' => password_hash('adminpassword', PASSWORD_DEFAULT),
-                'firstName' => 'Admin',
-                'lastName' => 'User',
-                'email' => 'admin@example.com',
-                'phone' => '12345678',
-                'address' => 'Admin Address',
-                'postalCode' => '1234',
-                'role' => 'admin',
-                'registrationDate' => '20-02-2024',
-            ],
-            [
-                'username' => 'user1',
-                'password' => password_hash('password1', PASSWORD_DEFAULT),
-                'firstName' => 'John',
-                'lastName' => 'Doe',
-                'email' => 'john.doe@example.com',
-                'phone' => '12345678',
-                'address' => '123 Street',
-                'postalCode' => '1000',
-                'role' => 'user',
-                'registrationDate' => '12-01-2024',
-            ],
-            [
-                'username' => 'user2',
-                'password' => password_hash('password2', PASSWORD_DEFAULT),
-                'firstName' => 'Jane',
-                'lastName' => 'Doe',
-                'email' => 'jane.doe@example.com',
-                'phone' => '87654321',
-                'address' => '456 Avenue',
-                'postalCode' => '2000',
-                'role' => 'user',
-                'registrationDate' => '02-04-2024',
-            ],
-            [
-                'username' => 'user3',
-                'password' => password_hash('password3', PASSWORD_DEFAULT),
-                'firstName' => 'Alice',
-                'lastName' => 'Smith',
-                'email' => 'alice.smith@example.com',
-                'phone' => '23456789',
-                'address' => '789 Boulevard',
-                'postalCode' => '3000',
-                'role' => 'user',
-                'registrationDate' => '29-05-2024',
-            ],
-            [
-                'username' => 'user4',
-                'password' => password_hash('password4', PASSWORD_DEFAULT),
-                'firstName' => 'Bob',
-                'lastName' => 'Johnson',
-                'email' => 'bob.johnson@example.com',
-                'phone' => '34567890',
-                'address' => '101 Highway',
-                'postalCode' => '4000',
-                'role' => 'user',
-                'registrationDate' => '20-03-2024',
-            ],
-            [
-                'username' => 'user5',
-                'password' => password_hash('password5', PASSWORD_DEFAULT),
-                'firstName' => 'Charlie',
-                'lastName' => 'Brown',
-                'email' => 'charlie.brown@example.com',
-                'phone' => '45678901',
-                'address' => '202 Lane',
-                'postalCode' => '5000',
-                'role' => 'user',
-                'registrationDate' => '26-04-2024',
-            ],
-            [
-                'username' => 'user6',
-                'password' => password_hash('password6', PASSWORD_DEFAULT),
-                'firstName' => 'Diana',
-                'lastName' => 'Prince',
-                'email' => 'diana.prince@example.com',
-                'phone' => '56789012',
-                'address' => '303 Street',
-                'postalCode' => '6000',
-                'role' => 'user',
-                'registrationDate' => '02-09-2024',
-            ],
+    // Insert initial data for rooms
+    $roomCheck = $conn->query("SELECT COUNT(*) FROM rooms")->fetchColumn();
+    if ($roomCheck == 0) {
+        $roomInsertData = [
+            ['100', 'Single', 1, 1],
+            ['101', 'Single', 1, 0],
+            ['102', 'Single', 1, 1],
+            ['103', 'Single', 1, 0],
+            ['104', 'Single', 1, 1],
+            ['105', 'Single', 1, 1],
+            ['106', 'Single', 1, 0],
+            ['107', 'Single', 1, 0],
+            ['108', 'Double', 2, 1],
+            ['109', 'Double', 2, 0],
+            ['110', 'Double', 2, 1],
+            ['111', 'Double', 2, 0],
+            ['112', 'Double', 2, 1],
+            ['113', 'Double', 2, 1],
+            ['114', 'Double', 2, 1],
+            ['115', 'Double', 2, 1],
+            ['201', 'Double', 2, 1],
+            ['202', 'Double', 2, 0],
+            ['203', 'Double', 2, 0],
+            ['204', 'King Suite', 5, 1],
+            ['205', 'King Suite', 5, 0],
+            ['206', 'King Suite', 5, 1],
+            ['207', 'King Suite', 5, 1],
+            ['208', 'King Suite', 5, 1],
+            ['209', 'King Suite', 5, 1]
         ];
 
-        foreach ($userInsertData as $userData) {
+        foreach ($roomInsertData as $room) {
             $stmt = $conn->prepare("
-                INSERT INTO users (username, password, firstName, lastName, email, phone, address, postalCode, role, registrationDate)
-                VALUES (:username, :password, :firstName, :lastName, :email, :phone, :address, :postalCode, :role, STR_TO_DATE(:registrationDate, '%d-%m-%Y'))
+                INSERT INTO rooms (room_name, room_type, capacity, is_available)
+                VALUES (?, ?, ?, ?)
             ");
-            $stmt->execute($userData);
+            $stmt->execute($room);
         }
     }
 
-    // Ensure users exist before inserting preferences
-    // Ensure users exist before inserting preferences
+    // Insert initial data for users
+    $userCheck = $conn->query("SELECT COUNT(*) FROM users")->fetchColumn();
+    if ($userCheck == 0) {
+        $userInsertData = [
+            ['admin', password_hash('adminpassword', PASSWORD_DEFAULT), 'Admin', 'User', 'admin@example.com', '12345678', 'Admin Address', '1234', 'admin'],
+            ['user1', password_hash('password1', PASSWORD_DEFAULT), 'John', 'Doe', 'john.doe@example.com', '12345678', '123 Street', '1000', 'user'],
+            ['user2', password_hash('password2', PASSWORD_DEFAULT), 'Jane', 'Doe', 'jane.doe@example.com', '87654321', '456 Avenue', '2000', 'user'],
+        ];
+
+        foreach ($userInsertData as $user) {
+            $stmt = $conn->prepare("
+                INSERT INTO users (username, password, firstName, lastName, email, phone, address, postalCode, role)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ");
+            $stmt->execute($user);
+        }
+    }
+
+    // Insert preferences if empty
     $preferenceCheck = $conn->query("SELECT COUNT(*) FROM preferences")->fetchColumn();
     if ($preferenceCheck == 0) {
         $insertPreferences = "
-    INSERT INTO preferences (user_id, preference_type, preference_value)
-    VALUES
-    (2, 'room_type', 'Double Room'),
-    (2, 'floor', '1st Floor'),
-    (2, 'near_elevator', 'Near Elevator'),
-    (2, 'has_view', 'Without view'),
-
-    (3, 'room_type', 'Single Room'),
-    (3, 'floor', '1st Floor'),
-    (3, 'near_elevator', 'Far from Elevator'),
-    (3, 'has_view', 'With view'),
-
-    (4, 'room_type', 'King Suite'),
-    (4, 'floor', '2nd Floor'),
-    (4, 'near_elevator', 'Near Elevator'),
-    (4, 'has_view', 'With view'),
-
-    (5, 'room_type', 'Double Room'),
-    (5, 'floor', '2nd Floor'),
-    (5, 'near_elevator', 'Far from Elevator'),
-    (5, 'has_view', 'Without view'),
-
-    (6, 'room_type', 'Single Room'),
-    (6, 'floor', '1st Floor'),
-    (6, 'near_elevator', 'Far from Elevator'),
-    (6, 'has_view', 'With view'),
-
-    (7, 'room_type', 'King Suite'),
-    (7, 'floor', '2nd Floor'),
-    (7, 'near_elevator', 'Near Elevator'),
-    (7, 'has_view', 'With view');
-    ";
+            INSERT INTO preferences (user_id, preference_type, preference_value)
+            VALUES
+            (2, 'room_type', 'Double Room'),
+            (3, 'room_type', 'Single Room')
+        ";
         $conn->exec($insertPreferences);
     }
+} catch (PDOException $e) {
+    die("Database error: " . $e->getMessage());
+}
+*/
 
 
+
+
+
+require_once realpath(__DIR__ . '/../db.php');
+
+
+$database = new Database();
+$conn = $database->getConnection();
+
+
+global $conn; ############################## MENER DENNE KAN FJERNES ##############################
+
+
+
+try {
+    $conn->exec("CREATE DATABASE IF NOT EXISTS motell_booking");
+    $conn->exec("USE motell_booking");
+
+    $conn->exec("
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(50) NOT NULL UNIQUE,
+            password VARCHAR(255) NOT NULL,
+            firstName VARCHAR(100) NOT NULL,
+            lastName VARCHAR(100) NOT NULL,
+            email VARCHAR(100) NOT NULL UNIQUE,
+            phone VARCHAR(20),
+            address VARCHAR(255),
+            postalCode VARCHAR(20),
+            role ENUM('user', 'admin') DEFAULT 'user',
+            registrationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    ");
+
+    $conn->exec("
+        CREATE TABLE IF NOT EXISTS rooms (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            room_name VARCHAR(10) NOT NULL,
+            room_type ENUM('Single', 'Double', 'King Suite') NOT NULL,
+            capacity INT NOT NULL,
+            is_available BOOLEAN NOT NULL DEFAULT 1,
+            unavailable_start DATETIME DEFAULT NULL,
+            unavailable_end DATETIME DEFAULT NULL
+        );
+    ");
+
+    $conn->exec("
+        CREATE TABLE IF NOT EXISTS bookings (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            room_id INT NOT NULL,
+            room_type VARCHAR(50) NOT NULL,
+            floor INT NOT NULL,
+            near_elevator BOOLEAN NOT NULL,
+            has_view BOOLEAN NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
+        );
+    ");
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
 }

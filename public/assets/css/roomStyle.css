@@ -1,0 +1,232 @@
+body {
+    font-family: 'Arial', sans-serif; /* Clean, standard font */
+    margin: 0;
+    padding: 0;
+    background: url('../img/background.jpg') no-repeat center center fixed; /* Add the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    color: #333; /* Neutral text color */
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 500px; /* Increased width for better spacing */
+    margin: 40px auto; /* Center the container */
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 900px;
+    height: 120px;
+    margin-bottom: 20px;
+    margin-left:25%;
+    margin-top: 20px;
+}
+
+.search-container form {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Buttons */
+.search-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 19px;
+}
+
+/* Buttons */
+.search-button-two {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 34px;
+}
+.input-group label {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+}
+
+.input-group input[type="date"],
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 12px 75px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555;
+    appearance: none; /* Removes default browser styles */
+}
+
+.input-group input[type="date"]:focus,
+.input-group input[type="number"]:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Room Image */
+.room-image img {
+    width: 100%;
+    max-width: 350px; /* Adjusted size for a better layout */
+    height: auto;
+    border-radius: 15px; /* Rounded corners */
+    margin: 20px auto; /* Centered spacing */
+    display: block;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+}
+
+/* Room Details */
+.room-details {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.room-details h2 {
+    font-size: 28px; /* Larger heading */
+    margin-bottom: 10px;
+    color: #222;
+    font-weight: bold;
+}
+
+.room-details p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* Form Styling */
+form {
+    text-align: left;
+    margin-top: 20px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+    color: #444;
+}
+
+form input[type="date"],
+form select {
+    width: 260px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
+}
+
+form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+form button {
+    background-color: #007bff; /* Vibrant blue */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+form button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Lift effect */
+}
+
+form button:active {
+    transform: translateY(1px); /* Click feedback */
+}
+
+form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Message Styling */
+.message-container {
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+}
+
+.message {
+    text-align: center;
+    font-size: 18px;
+    padding: 10px; /* Adjusted padding for better spacing */
+    border-radius: 8px; /* Slightly rounder corners */
+    width: 100%;
+    max-width: 400px; /* Limit width for smaller screens */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    background-color: #fff; /* Ensure a white background for better contrast */
+}
+
+.success {
+    background-color: #d4edda; /* Light green background for success */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb; /* Green border */
+}
+
+.error {
+    background-color: #f8d7da; /* Light red background for error */
+    color: #721c24; /* Dark red text */
+    border: 1px solid #f5c6cb; /* Red border */
+}
+
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* Adjust width for smaller screens */
+    }
+
+    .search-bar input,
+    form input[type="date"],
+    form select {
+        width: 100%; /* Make inputs full width on smaller screens */
+    }
+}

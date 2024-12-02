@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = trim($_POST['phone']);
     $address = trim($_POST['address']);
     $postalCode = trim($_POST['postalCode']);
-    $role =trim($_POST['role']);
+    $role = trim($_POST['role']);
 
     // Form validation
     $errors = [];
@@ -41,14 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-
         // Create new user
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $user->createUser($username, $firstName, $lastName, $email, $phone, $address, $postalCode, $hashedPassword, $role);
 
+        // Automatically log in the user after successful registration
+        $_SESSION['user_id'] = $db->lastInsertId(); // Get the last inserted user ID
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = $role;
 
-        $_SESSION['register_success'] = "Registration successful!";
-        header("Location: ../../public/login.php");
+        // Redirect to the stored URL if it exists
+        if (isset($_SESSION['redirect_after_login'])) {
+            $redirectUrl = $_SESSION['redirect_after_login'];
+            unset($_SESSION['redirect_after_login']); // Clear the session variable
+            header("Location: $redirectUrl");
+        } else {
+            header("Location: ../../public/homePage.php"); // Default redirect after registration
+        }
         exit();
     } catch (Exception $e) {
         // Log the error for debugging

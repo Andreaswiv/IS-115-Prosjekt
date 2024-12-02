@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once '../src/func/header.php';
 ?>
 
 <!DOCTYPE html>

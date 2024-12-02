@@ -1,5 +1,6 @@
 <?php
 session_start();  // Start the session to access any session data
+require_once '../src/func/header.php';
 
 // Check if there is any login error stored in the session
 if (isset($_SESSION['login_error'])) {
@@ -11,11 +12,6 @@ if (isset($_SESSION['error_message'])) {
     echo '<p style="color: red;">' . htmlspecialchars($_SESSION['error_message']) . '</p>';
     // Clear the error message from the session so it doesn't persist
     unset($_SESSION['error_message']);
-}
-// Check if there is a logout message
-if (isset($_SESSION['logout_message'])) {
-    echo '<p style="color: green; font-weight: bold; text-align: center;">' . htmlspecialchars($_SESSION['logout_message']) . '</p>';
-    unset($_SESSION['logout_message']);
 }
 if (isset($_SESSION['register_success'])) {
     echo '<p style="color: green;">' . htmlspecialchars($_SESSION['register_success']) . '</p>';

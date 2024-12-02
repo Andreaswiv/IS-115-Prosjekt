@@ -51,13 +51,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Debugging for troubleshooting
             error_log("User logged in: " . print_r($_SESSION, true));
 
-            // Redirect based on role
-            if ($userData['role'] === 'admin') {
-                header("Location: ../../src/AdminIndex.php");
+            // Check if there is a redirect URL in the session
+            if (isset($_SESSION['redirect_after_login'])) {
+                $redirectUrl = $_SESSION['redirect_after_login'];
+                unset($_SESSION['redirect_after_login']); // Clear the session variable after redirecting
+                header("Location: $redirectUrl");
+                exit();
             } else {
-                header("Location: ../../public/index.php");
+                // Redirect based on role if no redirect URL is set
+                if ($userData['role'] === 'admin') {
+                    header("Location: ../../src/AdminIndex.php");
+                } else {
+                    header("Location: ../../public/homePage.php");
+                }
+                exit();
             }
-            exit();
         } else {
             // Increment failed attempts on failed login
             $_SESSION['failed_attempts']++;
@@ -68,9 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['login_error'] = "Too many failed attempts. Your account is locked for 1 hour.";
             } else {
                 $_SESSION['login_error'] = "Invalid username or password. Attempt " . $_SESSION['failed_attempts'] . " of $maxAttempts.";
-                error_log("Password mismatch for username: $username");
-                error_log("Input Password: $password");
-                error_log("Stored Hash: " . $userData['password']);
             }
 
             header("Location: ../../public/login.php");

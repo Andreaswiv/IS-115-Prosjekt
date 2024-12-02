@@ -3,19 +3,23 @@ body {
     font-family: 'Arial', sans-serif; /* Clean, standard font */
     margin: 0;
     padding: 0;
-    background-color: #f9f9fc; /* Lighter background for a fresher look */
+    background: url('../img/background.jpg') no-repeat center center fixed; /* Add the background image */
+    background-size: cover; /* Ensure the image covers the entire background */
     color: #333; /* Neutral text color */
     line-height: 1.6;
 }
 
+
 .container {
-    max-width: 600px;
-    margin: 100px auto;
+    max-width: 90%;
+    width: 700px;
+    margin: 50px auto;
     padding: 20px;
     background: #ffffff; /* Pure white background for contrast */
     border-radius: 12px; /* Slightly rounder edges for a modern look */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
 }
+
 
 /* Titles */
 h1 {
@@ -24,6 +28,14 @@ h1 {
     font-size: 32px; /* Larger, bolder title */
     margin-bottom: 20px;
     letter-spacing: 1px; /* Slightly spaced letters for elegance */
+}
+
+h2 {
+    text-align: center;
+    color: #4CAF50;
+    font-size: 20px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
 }
 
 /* Error and Success Messages */
@@ -105,6 +117,32 @@ form input.error {
 form input.error:focus {
     border-color: #f44336;
 }
+.filters .filter-form {
+    margin-bottom: 20px;
+}
+
+.filter-group-container {
+    display: flex;
+    gap: 10px; /* Space between the dropdowns */
+    align-items: center; /* Align labels and dropdowns vertically */
+    justify-content: flex-start; /* Align items to the left */
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px; /* Smaller text for labels */
+    gap: 5px; /* Space between label and dropdown */
+}
+
+.filter-group select {
+    padding: 8px; /* Smaller padding for dropdowns */
+    font-size: 14px; /* Adjust font size */
+    border-radius: 4px; /* Slightly rounded edges */
+    border: 1px solid #ccc; /* Subtle border */
+    width: 150px; /* Set a fixed width for consistency */
+}
+
 
 /* Lists */
 ul {
@@ -113,6 +151,7 @@ ul {
 }
 
 ul li {
+    text-align: center;
     margin: 10px 0;
 }
 
@@ -192,4 +231,33 @@ table td form button:hover {
         font-size: 14px;
         padding: 10px;
     }
+    }
+
+/* container for table of rooms in form_roomOverview.php */
+.container_roomOverview {
+    max-width: 100%; /* Sikrer at containeren ikke blir bredere enn foreldreelementet eller visningsområdet */
+    width: 1100px;
+    overflow-x: auto; /* Legger til horisontal rulling hvis tabellen er bredere enn containeren */
+    margin: 50px auto;
+    padding: 20px;
+    background: #ffffff; /* Hvit bakgrunn for kontrast */
+    border-radius: 12px; /* Mykere kanter */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Mykere skygge */
+}
+
+.button {
+    width: 200px;
+    background-color: #f58548fa; /* Matching green theme */
+    border: none;
+    border-radius: 6px; /* Rounder edges */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button a {
+    color: white; /* Set the text color to white */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Make the <a> take up the full button */
+    text-align: center; /* Center the text */
 }
