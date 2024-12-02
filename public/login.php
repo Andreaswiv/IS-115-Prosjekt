@@ -13,10 +13,6 @@ if (isset($_SESSION['error_message'])) {
     // Clear the error message from the session so it doesn't persist
     unset($_SESSION['error_message']);
 }
-if (isset($_SESSION['register_success'])) {
-    echo '<p style="color: green;">' . htmlspecialchars($_SESSION['register_success']) . '</p>';
-    unset($_SESSION['register_success']);
-}
 ?>
 
 <!DOCTYPE html>
