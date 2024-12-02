@@ -1,4 +1,5 @@
 <?php
+
 // src/resources/inc/db_queries.php
 
 function fetchPreferences($conn) {

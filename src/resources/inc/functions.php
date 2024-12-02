@@ -1,4 +1,5 @@
 <?php
+
 function sanitize($variable)
 {
     $variable = strip_tags($variable);

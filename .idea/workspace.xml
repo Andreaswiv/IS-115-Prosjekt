@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Fikset README + litt til">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_newBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/inc/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/inc/db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/inc/db_queries.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/inc/db_queries.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/inc/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/inc/functions.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +71,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "ferdig-produkt",
+    "git-widget-placeholder": "Develop",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt/public/assets/img",
     "node.js.detected.package.eslint": "true",
