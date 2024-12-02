@@ -32,7 +32,7 @@ class User {
             throw new Exception("Error creating user: " . implode(", ", $stmt->errorInfo()));
         }
     }
-
+/*
     public function updateUser($id, $firstName, $lastName, $email, $phone, $address, $postalCode, $role) {
         $query = "
     UPDATE users 
@@ -64,7 +64,7 @@ class User {
         }
     }
 
-
+*/
     // Function to retrieve a user by username
     public function getUser($username) {
         $query = "SELECT * FROM users WHERE username = :username LIMIT 1";
@@ -74,5 +74,51 @@ class User {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+
+
+################################################### NY VERSJON AV updateUser(), GAMMEL ER KOMMENTERT UT OVENFOR ############################################################
+// src/models/User.php
+
+public function updateUser($id, $username, $firstName, $lastName, $email, $phone, $address, $postalCode, $password = null) {
+    $query = "UPDATE users SET username = :username, firstName = :firstName, lastName = :lastName, email = :email, phone = :phone, address = :address, postalCode = :postalCode";
+
+    if ($password !== null) {
+        $query .= ", password = :password";
+    }
+
+    $query .= " WHERE id = :id";
+
+    $stmt = $this->conn->prepare($query);
+
+    // Bind parameters
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+    if ($password !== null) {
+        $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+    }
+    $stmt->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+    $stmt->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':phone', $phone, PDO::PARAM_STR);
+    $stmt->bindParam(':address', $address, PDO::PARAM_STR);
+    $stmt->bindParam(':postalCode', $postalCode, PDO::PARAM_STR);
+
+    // Execute query and check for errors
+    if (!$stmt->execute()) {
+        throw new Exception("Error updating user: " . implode(", ", $stmt->errorInfo()));
+    }
 }
+ // Hent brukere basert på rolle
+ public function getUsersByRole($role) {
+    $query = "SELECT id, firstName, lastName, email, phone FROM " . $this->table . " WHERE role = :role";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+} // DENNE MÅ FLYTTES OPP OM GAMMEL updateUser() SKAL BRUKES
+
+
 ?>

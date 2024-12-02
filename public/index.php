@@ -1,4 +1,5 @@
 <?php
+
 require_once '../src/func/security.php';
 require_once '../src/func/header.php';
 // Check if there is an error message in the session
@@ -15,7 +16,7 @@ if (isset($_SESSION['error_message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Motell Booking</title>
-    <link rel="stylesheet" href="../public/assets/css/style.css?v1.0.1">
+    <link rel="stylesheet" href="../public/assets/css/style.css?v1.0.2">
 </head>
 <body>
 <div class="container">
