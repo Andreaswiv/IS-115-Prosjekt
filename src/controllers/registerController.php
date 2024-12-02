@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($_SESSION['redirect_after_login']); // Clear the session variable
             header("Location: $redirectUrl");
         } else {
-            header("Location: ../../public/index.php"); // Default redirect after registration
+            header("Location: ../../public/homePage.php"); // Default redirect after registration
         }
         exit();
     } catch (Exception $e) {

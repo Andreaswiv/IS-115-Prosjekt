@@ -1,5 +1,6 @@
 <?php
 session_start();  // Start the session to access any session data
+require_once '../src/func/header.php';
 
 // Check if there is any login error stored in the session
 if (isset($_SESSION['login_error'])) {

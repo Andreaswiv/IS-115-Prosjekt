@@ -23,8 +23,9 @@ if (isset($_SESSION['user_id'])) {
 <div class="header">
     <!-- Logo -->
     <div class="logo-container">
+        <a href="<?php echo BASE_URL; ?>public/homePage.php" class="user-link">
         <img src="<?php echo BASE_URL; ?>public/assets/img/logo.png" alt="Logo" class="logo-image">
-        <p>Wahl & Oldeide Motell</p>
+        <span class = "login-text">Wahl & Oldeide Motell</span>
     </div>
 
     <!-- Navigation Links -->

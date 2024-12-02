@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($userData['role'] === 'admin') {
                     header("Location: ../../src/AdminIndex.php");
                 } else {
-                    header("Location: ../../public/index.php");
+                    header("Location: ../../public/homePage.php");
                 }
                 exit();
             }

@@ -1,5 +1,6 @@
 <?php
 require_once '../src/func/header.php';
+require_once '../src/func/security.php';
 require_once '../src/models/Room.php'; // Include the Room class
 require_once '../src/resources/inc/setupdb/setup.php'; // Include your DB setup
 

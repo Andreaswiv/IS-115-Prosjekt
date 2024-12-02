@@ -29,7 +29,7 @@ body, html {
 /* Navigation Links */
 .nav-link {
     text-decoration: none; /* Remove underline */
-    color: #32CD32; /* Light green text */
+    color: black;
     font-size: 16px;
     font-weight: 300; /* Lighter font weight for thinner text */
     padding: 10px 15px; /* Increase padding for a larger clickable area */
@@ -41,7 +41,6 @@ body, html {
 
 .nav-link:hover {
     text-decoration: none; /* Explicitly disable underline on hover */
-    color: #228B22; /* Slightly darker green on hover */
 }
 
 .nav-logout {

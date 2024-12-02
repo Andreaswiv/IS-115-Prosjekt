@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
 
         echo "<p>Din booking er bekreftet!</p>";
-        echo '<p><a href="../../public/index.php">Tilbake til forsiden</a></p>';
+        echo '<p><a href="../../public/homePage.php">Tilbake til forsiden</a></p>';
     } catch (Exception $e) {
         echo "<p>Feil ved opprettelse av booking: {$e->getMessage()}</p>";
     }

@@ -25,8 +25,6 @@ class Room
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-
-
     public function countAvailableRooms($start_date, $end_date, $guest_count, $room_type) {
         $query = "
         SELECT COUNT(*) AS available_count
