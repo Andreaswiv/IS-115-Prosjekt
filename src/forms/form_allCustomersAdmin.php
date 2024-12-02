@@ -42,12 +42,15 @@ $customers = $userModel->getUsersByRole('user');
                     <td><?php echo htmlspecialchars($customer['email']); ?></td>
                     <td><?php echo htmlspecialchars($customer['phone']); ?></td>
                     <td>
+                    <td>
                         <form action="form_newBooking.php" method="post">
                             <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($customer['id']); ?>">
                             <input type="hidden" name="firstName" value="<?php echo htmlspecialchars($customer['firstName']); ?>">
                             <input type="hidden" name="lastName" value="<?php echo htmlspecialchars($customer['lastName']); ?>">
                             <button type="submit">Lag en booking</button>
                         </form>
+                    </td>
+
                     </td>
                 </tr>
             <?php endforeach; ?>

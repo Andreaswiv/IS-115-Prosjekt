@@ -78,7 +78,7 @@ $occupiedRoomsGrouped = groupRoomsByType($occupiedRooms);
                 <label for="end_date">Utreise</label>
                 <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($end_date) ?>" required>
             </div>
-            <button type="submit" class="search-button-two">Se ledige rom</button>
+            <button type="submit" class="search-button-two">Søk</button>
         </form>
     </div>
 
@@ -90,28 +90,28 @@ $occupiedRoomsGrouped = groupRoomsByType($occupiedRooms);
         <?php unset($_SESSION['error_message']); ?>
     <?php endif; ?>
 
-    <!-- Romoversikt -->
     <div class="container_roomOverview">
         <h1>Romoversikt</h1>
 
-        <!-- Ledige rom -->
-        <div>
-            <h2>Ledige rom</h2>
-            <?php if (empty($availableRoomsGrouped)): ?>
-                <p>Ingen ledige rom i denne perioden.</p>
-            <?php else: ?>
-                <?php foreach ($availableRoomsGrouped as $roomType => $rooms): ?>
-                    <h3><?php echo htmlspecialchars($roomType); ?></h3>
-                    <table>
-                        <thead>
+        <div class="rooms-overview-container">
+            <!-- Ledige rom -->
+            <div class="room-section">
+                <h2>Ledige rom</h2>
+                <?php if (empty($availableRoomsGrouped)): ?>
+                    <p>Ingen ledige rom i denne perioden.</p>
+                <?php else: ?>
+                    <?php foreach ($availableRoomsGrouped as $roomType => $rooms): ?>
+                        <h3><?php echo htmlspecialchars($roomType); ?></h3>
+                        <table>
+                            <thead>
                             <tr>
                                 <th>Room ID</th>
                                 <th>Romnummer</th>
                                 <th>Kapasitet</th>
                                 <th>Rediger</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             <?php foreach ($rooms as $room): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($room['id']) ?></td>
@@ -125,30 +125,30 @@ $occupiedRoomsGrouped = groupRoomsByType($occupiedRooms);
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
+                            </tbody>
+                        </table>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
 
-        <!-- Opptatte rom -->
-        <div>
-            <h2>Opptatte rom</h2>
-            <?php if (empty($occupiedRoomsGrouped)): ?>
-                <p>Ingen opptatte rom i denne perioden.</p>
-            <?php else: ?>
-                <?php foreach ($occupiedRoomsGrouped as $roomType => $rooms): ?>
-                    <h3><?php echo htmlspecialchars($roomType); ?></h3>
-                    <table>
-                        <thead>
+            <!-- Opptatte rom -->
+            <div class="room-section">
+                <h2>Opptatte rom</h2>
+                <?php if (empty($occupiedRoomsGrouped)): ?>
+                    <p>Ingen opptatte rom i denne perioden.</p>
+                <?php else: ?>
+                    <?php foreach ($occupiedRoomsGrouped as $roomType => $rooms): ?>
+                        <h3><?php echo htmlspecialchars($roomType); ?></h3>
+                        <table>
+                            <thead>
                             <tr>
                                 <th>Room ID</th>
                                 <th>Romnummer</th>
                                 <th>Kapasitet</th>
                                 <th>Rediger</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             <?php foreach ($rooms as $room): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($room['id']) ?></td>
@@ -162,10 +162,11 @@ $occupiedRoomsGrouped = groupRoomsByType($occupiedRooms);
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                            </tbody>
+                        </table>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </body>

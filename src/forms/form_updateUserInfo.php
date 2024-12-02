@@ -95,32 +95,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../public/assets/css/style.css">
 </head>
 <body>
-<div class="container">
+<div class="user-container">
     <h1>Rediger Profil</h1>
     <form method="post">
-        <label for="username">Brukernavn:</label><br>
-        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($userData['username']); ?>" required><br><br>
+        <label for="username">Brukernavn:</label>
+        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($userData['username']); ?>" required>
 
-        <label for="password">Nytt Passord (la stå tomt hvis du ikke vil endre):</label><br>
-        <input type="password" id="password" name="password"><br><br>
+        <label for="password">Nytt Passord (la stå tomt hvis du ikke vil endre):</label>
+        <input type="password" id="password" name="password">
 
-        <label for="firstName">Fornavn:</label><br>
-        <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($userData['firstName']); ?>" required><br><br>
+        <label for="firstName">Fornavn:</label>
+        <input type="text" id="firstName" name="firstName" value="<?php echo htmlspecialchars($userData['firstName']); ?>" required>
 
-        <label for="lastName">Etternavn:</label><br>
-        <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($userData['lastName']); ?>" required><br><br>
+        <label for="lastName">Etternavn:</label>
+        <input type="text" id="lastName" name="lastName" value="<?php echo htmlspecialchars($userData['lastName']); ?>" required>
 
-        <label for="email">E-post:</label><br>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($userData['email']); ?>" required><br><br>
+        <label for="email">E-post:</label>
+        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($userData['email']); ?>" required>
 
-        <label for="phone">Telefon:</label><br>
-        <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($userData['phone']); ?>" required><br><br>
+        <label for="phone">Telefon:</label>
+        <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($userData['phone']); ?>" required>
 
-        <label for="address">Adresse:</label><br>
-        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($userData['address']); ?>" required><br><br>
+        <label for="address">Adresse:</label>
+        <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($userData['address']); ?>" required>
 
-        <label for="postalCode">Postnummer:</label><br>
-        <input type="text" id="postalCode" name="postalCode" value="<?php echo htmlspecialchars($userData['postalCode']); ?>" required><br><br>
+        <label for="postalCode">Postnummer:</label>
+        <input type="text" id="postalCode" name="postalCode" value="<?php echo htmlspecialchars($userData['postalCode']); ?>" required>
 
         <button type="submit">Oppdater informasjon</button>
     </form>

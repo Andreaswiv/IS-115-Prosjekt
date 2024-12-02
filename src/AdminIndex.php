@@ -7,140 +7,43 @@ require_once '../src/resources/inc/db.php';
 require_once '../src/models/Room.php';
 require_once '../src/func/header.php';
 require_once '../src/func/security.php';
-ensureAdmin();
 
 use models\Room;
 
-// Opprett databaseforbindelse og Room-modell
-$database = new Database();
-$db = $database->getConnection();
-$roomModel = new Room($db);
-
-// Hent alle rom og tell totalt antall rom
-$rooms = $roomModel->getAllRooms();
-$totalRooms = count($rooms);
-
-// Hent tilgjengelige rom for alle romtyper for dagens dato
-$current_date = date('Y-m-d');
-$availableRooms = count(array_filter($rooms, fn($room) => $room['is_available'] === 1));
-
-if (isset($_SESSION['error_message'])) {
-    echo '<p style="color: red; font-weight: bold; text-align: center;">' . htmlspecialchars($_SESSION['error_message']) . '</p>';
-    unset($_SESSION['error_message']);
-}
-
-
-
-#################################################################################
-/*
-// Initialize variables
-$start_date = date('Y-m-d');
-$end_date = date('Y-m-d', strtotime('+1 day'));
-
-// Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get start_date and end_date from POST
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-
-}   // Validate end_date is at least 24hr after start_date
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get start_date and end_date from POST
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-   
-    // Validate dates
-    if ($start_date > $end_date) {
-        $_SESSION['error_message'] = "Ankomstdato kan ikke være etter utreisedato.";
-    } elseif ($start_date == $end_date){
-        $_SESSION['error_message'] = "Man må minst reservere et helt døgn.";
-    }
-        header("Location: AdminIndex.php");
-
-    
-}
-
-
-// Fetch total number of rooms
-$rooms = $roomModel->getAllRooms();
-$totalRooms = count($rooms);
-
-// Fetch available rooms for the specified date range
-$availableRooms = $roomModel->countAvailableRoomsForPeriod($start_date, $end_date);
-
-if (isset($_SESSION['error_message'])) {
-    echo '<p style="color: red; font-weight: bold; text-align: center;">' . htmlspecialchars($_SESSION['error_message']) . '</p>';
-    unset($_SESSION['error_message']);
-}
-*/
-
-
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-require_once '../src/resources/inc/db.php';
-require_once '../src/models/Room.php';
-require_once '../src/func/header.php';
-require_once '../src/func/security.php';
 ensureAdmin();
 
-
-
-
-
-// Opprett databaseforbindelse og Room-modell
+// Initialize database connection and Room model
 $database = new Database();
 $db = $database->getConnection();
 $roomModel = new Room($db);
 
-// Initialiser variabler
+// Default date values
 $start_date = date('Y-m-d');
 $end_date = date('Y-m-d', strtotime('+1 day'));
+$error_message = null;
 
-// Sjekk om skjemaet er sendt inn
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Hent start_date og end_date fra POST
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
+    $start_date = $_POST['start_date'] ?? $start_date;
+    $end_date = $_POST['end_date'] ?? $end_date;
 
-    // Validering av datoer
-    if ($start_date > $end_date) {
-        $_SESSION['error_message'] = "Ankomstdato kan ikke være etter utreisedato.";
-    } elseif ($start_date == $end_date){
-        $_SESSION['error_message'] = "Man må minst reservere et helt døgn.";
+    // Validate dates
+    if ($start_date >= $end_date) {
+        $error_message = ($start_date == $end_date)
+            ? "Man må minst reservere et helt døgn."
+            : "Ankomstdato kan ikke være etter utreisedato.";
     }
 }
 
-// Hent totalt antall rom
-$rooms = $roomModel->getAllRooms();
-$totalRooms = count($rooms);
-
-// Hent antall ledige rom hvis det ikke er noen feil
-if (!isset($_SESSION['error_message'])) {
+// Fetch room data only if no validation errors
+if (!$error_message) {
+    $totalRooms = count($roomModel->getAllRooms());
     $availableRooms = $roomModel->countAvailableRoomsForPeriod($start_date, $end_date);
 } else {
+    $totalRooms = $roomModel->getAllRooms() ? count($roomModel->getAllRooms()) : 0;
     $availableRooms = 'N/A';
 }
-
-if (isset($_SESSION['error_message'])) {
-    echo '<p style="color: red; font-weight: bold; text-align: center;">' . htmlspecialchars($_SESSION['error_message']) . '</p>';
-    unset($_SESSION['error_message']);
-}
-
-
-
-
-#################################################################################
-
-
-
-
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="no">
 <head>
@@ -149,10 +52,11 @@ if (isset($_SESSION['error_message'])) {
     <title>Motell Booking ADMIN</title>
     <link rel="stylesheet" href="../public/assets/css/style.css">
     <link rel="stylesheet" href="../public/assets/css/roomStyle.css?v1.0.1">
+
 </head>
 <body>
 <br>
-<h2>Motell-booking ADMIN</h2>
+<h4>Motell-booking ADMIN</h4>
 <div class="search-container">
     <form method="POST" class="search-form">
         <div class="input-group">
@@ -168,12 +72,15 @@ if (isset($_SESSION['error_message'])) {
 </div>
 <div class="container">
     <!-- Romoversikt -->
+    <a href="forms/form_roomOverview.php?start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>" class="room-overview-link">
     <h2>Romoversikt</h2>
     <ul>
         <li>Totalt antall rom: <?php echo htmlspecialchars($totalRooms); ?></li>
         <li>Tilgjengelige rom for den valgte perioden er <?php echo htmlspecialchars($availableRooms); ?></li>
-        <li><a href="forms/form_roomOverview.php?start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>" class="btn">Gå til Romoversikt</a></li>
     </ul>
+        <br>
+    <h3>Trykk på meg for mer informasjon</h3>
+    </a>
 </div>
 </body>
 </html>
