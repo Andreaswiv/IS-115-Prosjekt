@@ -5,25 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Stylet litt og fjernet litt kommentering">
-      <change afterPath="$PROJECT_DIR$/public/assets/js/user-management.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/resources/inc/db_queries.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/homePageStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/homePageStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminIndex.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/doubleRoomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/doubleRoomBooking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/forms/form_allCustomersAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_allCustomersAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_editRoomAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_editRoomAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_historyAllAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_historyAllAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_historyUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_historyUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_newBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_roomOverview.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_roomOverview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_updateUserInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_updateUserInfo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/kingSuiteBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/kingSuiteBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/singleRoomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/singleRoomBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Room.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/inc/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/inc/functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/resources/inc/setupdb/setup.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/inc/setupdb/setup.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="nyeste-branch" />
+        <entry key="$PROJECT_DIR$" value="Develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,7 +70,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Develop",
+    "git-widget-placeholder": "ferdig-produkt",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt/public/assets/img",
     "node.js.detected.package.eslint": "true",
@@ -318,7 +303,14 @@
       <option name="presentableId" value="LOCAL−00022" />
       <updated>1733165726337</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL−00023" summary="Stylet litt og fjernet litt kommentering">
+      <option name="closed" value="true" />
+      <created>1733176700611</created>
+      <option name="number" value="LOCAL−00023" />
+      <option name="presentableId" value="LOCAL−00023" />
+      <updated>1733176700611</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
