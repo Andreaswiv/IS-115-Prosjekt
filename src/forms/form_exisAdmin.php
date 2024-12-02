@@ -4,60 +4,60 @@ include '../../src/resources/inc/db_queries.php';
 include '../../src/resources/inc/functions.php';
 require_once '../func/security.php';
 require_once '../../src/func/header.php';
-ensureAdmin();
+ensureAdmin(); // Ensure that the user is an admin
 
 // Default sorting and filtering logic
-$orderDir = $_GET['order'] ?? 'ASC';
-$sortBy = $_GET['sortBy'] ?? 'id';
-$viewType = $_GET['view'] ?? 'all';
-$groupBy = $_GET['groupBy'] ?? 'none';
-$isLastMonthView = ($viewType == 'lastMonth');
+$orderDir = $_GET['order'] ?? 'ASC'; // Sorting direction: ascending or descending
+$sortBy = $_GET['sortBy'] ?? 'id'; // Column to sort by
+$viewType = $_GET['view'] ?? 'all'; // View filter: all users or recent
+$groupBy = $_GET['groupBy'] ?? 'none'; // Grouping preference
+$isLastMonthView = ($viewType == 'lastMonth'); // Check if last month view is selected
 
 try {
-    $preferences = fetchPreferences($conn);
-    $users = fetchUsers($conn, $sortBy, $orderDir, $viewType, $groupBy);
+    $preferences = fetchPreferences($conn); // Fetch grouping preferences
+    $users = fetchUsers($conn, $sortBy, $orderDir, $viewType, $groupBy); // Fetch user list based on filters
 
     // Fetch roles for the roles dropdown
     $stmt = $conn->query("SHOW COLUMNS FROM users LIKE 'role'");
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     preg_match("/^enum\((.*)\)$/", $result['Type'], $matches);
     $roles = array_map(function ($value) {
-        return trim($value, "'");
+        return trim($value, "'"); // Extract role names from ENUM type
     }, explode(',', $matches[1]));
 } catch (Exception $e) {
-    die("Error: " . $e->getMessage());
+    die("Error: " . $e->getMessage()); // Handle and display errors
 }
 
-// Handle editing and updating
-$isEditing = false;
-$selectedUser = null;
+// Handle editing and updating users
+$isEditing = false; // Track if editing mode is active
+$selectedUser = null; // Store the selected user for editing
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['editUserId'])) {
+    if (isset($_POST['editUserId'])) { // Handle edit request
         $selectedUser = fetchUserById($conn, (int)$_POST['editUserId']);
-        $isEditing = !empty($selectedUser);
+        $isEditing = !empty($selectedUser); // Enable editing mode if user is found
     }
 
-    if (isset($_POST['updateUser'])) {
+    if (isset($_POST['updateUser'])) { // Handle update request
         $userData = [
-            ':id' => (int)$_POST['userId'],
-            ':firstName' => htmlspecialchars($_POST['firstName']),
-            ':lastName' => htmlspecialchars($_POST['lastName']),
-            ':email' => htmlspecialchars($_POST['email']),
-            ':phone' => htmlspecialchars($_POST['phone']),
-            ':address' => htmlspecialchars($_POST['address']),
-            ':postalCode' => htmlspecialchars($_POST['postalCode']),
-            ':role' => htmlspecialchars($_POST['role']),
+            ':id' => (int)$_POST['userId'], // User ID
+            ':firstName' => htmlspecialchars($_POST['firstName']), // First name
+            ':lastName' => htmlspecialchars($_POST['lastName']), // Last name
+            ':email' => htmlspecialchars($_POST['email']), // Email address
+            ':phone' => htmlspecialchars($_POST['phone']), // Phone number
+            ':address' => htmlspecialchars($_POST['address']), // Address
+            ':postalCode' => htmlspecialchars($_POST['postalCode']), // Postal code
+            ':role' => htmlspecialchars($_POST['role']), // User role
         ];
 
-        $errors = validateUserData($userData);
-        if (empty($errors)) {
+        $errors = validateUserData($userData); // Validate input data
+        if (empty($errors)) { // Proceed if no validation errors
             try {
-                updateUser($conn, $userData);
-                $successMessage = "User updated successfully.";
-                $isEditing = false;
+                updateUser($conn, $userData); // Update user information in the database
+                $successMessage = "User updated successfully."; // Success message
+                $isEditing = false; // Exit editing mode
             } catch (Exception $e) {
-                $errors[] = "Error updating user: " . $e->getMessage();
+                $errors[] = "Error updating user: " . $e->getMessage(); // Handle update errors
             }
         }
     }
@@ -69,9 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
-    <link rel="stylesheet" href="../../public/assets/css/style.css?v1.0.3">
+    <title>User Management</title> <!-- Page title -->
+    <link rel="stylesheet" href="../../public/assets/css/style.css?v1.0.3"> <!-- Link to stylesheet -->
     <script>
+        // Pass PHP variables to JavaScript for role change confirmation
         const phpVars = {
             orderDir: '<?= $orderDir; ?>',
             viewType: '<?= $viewType; ?>',
@@ -79,13 +80,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             originalRole: '<?= htmlspecialchars($selectedUser['role'] ?? ''); ?>'
         };
     </script>
-    <script src="../../public/assets/js/user-management.js?v1.0.1"></script>
+    <script src="../../public/assets/js/user-management.js?v1.0.1"></script> <!-- Link to JS script -->
 </head>
 <body>
 <div class="behandling-container">
-    <h1>Bruker Behandling</h1>
+    <h1>Bruker Behandling</h1> <!-- Page header -->
     <div class="filters">
-        <?php if (!$isEditing): // Only show this section if not editing a user ?>
+        <?php if (!$isEditing): // Display filters only if not editing ?>
             <form method="get" class="filter-form">
                 <div class="filter-group-container">
                     <!-- View Filter -->
@@ -140,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </option>
                 <?php endforeach; ?>
             </select><br>
-            <button type="submit" name="updateUser">Update User</button>
+            <button type="submit" name="updateUser">Update User</button> <!-- Submit button for updating -->
         </form>
     <?php else : ?>
         <!-- User Table -->
@@ -163,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <td><?php echo htmlspecialchars($user['email']); ?></td>
                     <td>
                         <form method="post">
-                            <button type="submit" name="editUserId" value="<?php echo htmlspecialchars($user['id']); ?>">Edit</button>
+                            <button type="submit" name="editUserId" value="<?php echo htmlspecialchars($user['id']); ?>">Edit</button> <!-- Button to edit user -->
                         </form>
                     </td>
                 </tr>

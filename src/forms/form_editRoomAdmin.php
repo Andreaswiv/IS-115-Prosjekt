@@ -4,15 +4,15 @@ require_once '../../src/resources/inc/setupdb/setup.php';
 require_once '../func/security.php';
 require_once '../../src/func/header.php';
 
-ensureAdmin();
+ensureAdmin(); // Ensure that the user has admin privileges
 
-// Sjekk om rom-ID er sendt med
+// Check if room ID is provided
 $roomId = isset($_GET['room_id']) ? intval($_GET['room_id']) : null;
 if (!$roomId) {
-    die("Feil: Rom-ID mangler.");
+    die("Feil: Rom-ID mangler."); // Terminate if room ID is missing
 }
 
-// Hent rominformasjon fra databasen
+// Fetch room information from the database
 $query = "SELECT * FROM rooms WHERE id = :roomId";
 $stmt = $conn->prepare($query);
 $stmt->bindValue(':roomId', $roomId, PDO::PARAM_INT);
@@ -20,10 +20,10 @@ $stmt->execute();
 $room = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$room) {
-    die("Feil: Rommet finnes ikke.");
+    die("Feil: Rommet finnes ikke."); // Terminate if the room does not exist
 }
 
-// Hent bookinginformasjon for dette rommet
+// Fetch booking information for the specified room
 $bookingQuery = "
     SELECT * FROM bookings
     WHERE room_id = :roomId
@@ -33,28 +33,28 @@ $bookingStmt->bindValue(':roomId', $roomId, PDO::PARAM_INT);
 $bookingStmt->execute();
 $bookings = $bookingStmt->fetchAll(PDO::FETCH_ASSOC);
 
-$errors = [];
-$successMessage = null;
-$transactionStarted = false;
+$errors = []; // Array to collect error messages
+$successMessage = null; // Variable for success message
+$transactionStarted = false; // Track if a database transaction has started
 
-// Håndter oppdatering av rommet når skjemaet sendes
+// Handle room update when the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        $newRoomId = isset($_POST['new_room_id']) ? intval($_POST['new_room_id']) : null;
-        $roomName = htmlspecialchars($_POST['room_name']);
-        $startDate = $_POST['start_date'] ?: null;
-        $endDate = $_POST['end_date'] ?: null;
+        $newRoomId = isset($_POST['new_room_id']) ? intval($_POST['new_room_id']) : null; // New room ID
+        $roomName = htmlspecialchars($_POST['room_name']); // Sanitize room name input
+        $startDate = $_POST['start_date'] ?: null; // Start date for blocking
+        $endDate = $_POST['end_date'] ?: null; // End date for blocking
 
         if (!$newRoomId || !$roomName) {
-            throw new Exception("Både nytt ID og romnavn må fylles ut.");
+            throw new Exception("Både nytt ID og romnavn må fylles ut."); // Validate input
         }
 
         if ($startDate && $endDate) {
             if ($startDate >= $endDate) {
-                throw new Exception("Startdato må være før sluttdato.");
+                throw new Exception("Startdato må være før sluttdato."); // Validate date range
             }
 
-            // Sjekk tilgjengelighet
+            // Check availability for the specified date range
             $availabilityQuery = "
                 SELECT 1
                 FROM bookings
@@ -70,15 +70,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $availabilityStmt->execute();
 
             if ($availabilityStmt->fetch()) {
-                throw new Exception("Rommet er allerede booket i den valgte perioden.");
+                throw new Exception("Rommet er allerede booket i den valgte perioden."); // Check for overlapping bookings
             }
         }
 
-        // Start en transaksjon
+        // Start a database transaction
         $conn->beginTransaction();
         $transactionStarted = true;
 
-        // Oppdater rom-ID og navn
+        // Update room ID and name
         $updateQuery = "
             UPDATE rooms
             SET id = :newRoomId,
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':roomId', $roomId, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Hvis start- og sluttdato er oppgitt, legg til en blokkering som booking
+        // If start and end dates are provided, add a booking to block the room
         if ($startDate && $endDate) {
             $addBookingQuery = "
                 INSERT INTO bookings (user_id, room_id, room_type, floor, near_elevator, has_view, start_date, end_date)
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $addBookingStmt->execute();
         }
 
-        // Fullfør transaksjonen
+        // Commit the transaction
         $conn->commit();
         $transactionStarted = false;
 
@@ -130,9 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bookings = $bookingStmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $e) {
         if ($transactionStarted) {
-            $conn->rollBack();
+            $conn->rollBack(); // Rollback the transaction in case of an error
         }
-        $errors[] = "Feil under oppdatering: " . $e->getMessage();
+        $errors[] = "Feil under oppdatering: " . $e->getMessage(); // Add error message to the list
     }
 }
 ?>
@@ -141,26 +141,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <title>Rediger Rom</title>
-    <link rel="stylesheet" href="../../public/assets/css/style.css">
+    <title>Rediger Rom</title> <!-- Page title -->
+    <link rel="stylesheet" href="../../public/assets/css/style.css"> <!-- Link to CSS -->
 </head>
 <body>
 <br>
-<h1 style="color:black;">Rediger Rom</h1>
+<h1 style="color:black;">Rediger Rom</h1> <!-- Page header -->
 <div class="container">
     <?php if ($successMessage): ?>
-        <p style="color: green;"><?= htmlspecialchars($successMessage); ?></p>
+        <p style="color: green;"><?= htmlspecialchars($successMessage); ?></p> <!-- Display success message -->
     <?php endif; ?>
-    <p>Rom-ID: <strong><?= htmlspecialchars($roomId); ?></strong></p>
-    <p>Romnavn: <strong><?= htmlspecialchars($room['room_name']); ?></strong></p>
+    <p>Rom-ID: <strong><?= htmlspecialchars($roomId); ?></strong></p> <!-- Display room ID -->
+    <p>Romnavn: <strong><?= htmlspecialchars($room['room_name']); ?></strong></p> <!-- Display room name -->
     <?php if (!empty($errors)): ?>
-        <ul style="color: red;">
+        <ul style="color: red;"> <!-- Display errors if any -->
             <?php foreach ($errors as $error): ?>
                 <li><?= htmlspecialchars($error); ?></li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
 
+    <!-- Form for updating room details -->
     <form action="" method="post">
         <label for="new_room_id">Nytt Rom-ID:</label>
         <input type="number" id="new_room_id" name="new_room_id" value="<?= htmlspecialchars($roomId); ?>" required>
@@ -174,27 +175,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="end_date">Blokker Til:</label>
         <input type="date" id="end_date" name="end_date">
 
-        <button type="submit">Oppdater Rom</button>
+        <button type="submit">Oppdater Rom</button> <!-- Submit button -->
     </form>
 
     <h2>Bookinger for dette rommet</h2>
     <?php if (empty($bookings)): ?>
-        <p>Ingen bookinger funnet for dette rommet.</p>
+        <p>Ingen bookinger funnet for dette rommet.</p> <!-- Message if no bookings are found -->
     <?php else: ?>
         <table>
             <thead>
             <tr>
-                <th>Startdato</th>
-                <th>Sluttdato</th>
-                <th>Romtype</th>
+                <th>Startdato</th> <!-- Start date column -->
+                <th>Sluttdato</th> <!-- End date column -->
+                <th>Romtype</th> <!-- Room type column -->
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($bookings as $booking): ?>
+            <?php foreach ($bookings as $booking): ?> <!-- Loop through each booking -->
                 <tr>
-                    <td><?= htmlspecialchars($booking['start_date']); ?></td>
-                    <td><?= htmlspecialchars($booking['end_date']); ?></td>
-                    <td><?= htmlspecialchars($booking['room_type']); ?></td>
+                    <td><?= htmlspecialchars($booking['start_date']); ?></td> <!-- Display start date -->
+                    <td><?= htmlspecialchars($booking['end_date']); ?></td> <!-- Display end date -->
+                    <td><?= htmlspecialchars($booking['room_type']); ?></td> <!-- Display room type -->
                 </tr>
             <?php endforeach; ?>
             </tbody>
