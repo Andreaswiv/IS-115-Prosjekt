@@ -1,15 +1,15 @@
 <?php
-require_once realpath(__DIR__ . '/../db.php');
+require_once realpath(__DIR__ . '/../db.php'); // Include the database connection class
 
 $database = new Database();
 $conn = $database->getConnection();
 
-global $conn;
-
 try {
+    // Create the database if it doesn't exist and select it
     $conn->exec("CREATE DATABASE IF NOT EXISTS motell_booking");
     $conn->exec("USE motell_booking");
 
+    // Create the users table
     $conn->exec("
         CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +26,7 @@ try {
         );
     ");
 
+    // Create the rooms table
     $conn->exec("
         CREATE TABLE IF NOT EXISTS rooms (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -34,6 +35,7 @@ try {
         );
     ");
 
+    // Create the bookings table with foreign key constraints
     $conn->exec("
         CREATE TABLE IF NOT EXISTS bookings (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -50,6 +52,7 @@ try {
         );
     ");
 } catch (PDOException $e) {
+    // Handle database creation or table creation errors
     die("Database error: " . $e->getMessage());
 }
 ?>
