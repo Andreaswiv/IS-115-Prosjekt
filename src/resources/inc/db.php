@@ -1,4 +1,5 @@
 <?php
+
 class Database {
     private $host = "localhost";
     private $db_name = "motell_booking";
@@ -6,6 +7,7 @@ class Database {
     private $password = "";
     private $conn;
 
+    // Creates a connection to db
     public function getConnection() {
         if ($this->conn === null) {
             try {

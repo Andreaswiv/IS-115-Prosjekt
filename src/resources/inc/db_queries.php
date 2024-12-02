@@ -1,11 +1,13 @@
 <?php
-// src/resources/inc/db_queries.php
 
+// Fetches preferences
 function fetchPreferences($conn) {
     $stmt = $conn->prepare("SELECT DISTINCT preference_value FROM preferences");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_COLUMN);
 }
+
+// Fetches user
 function fetchUsers($conn, $sortBy, $orderDir, $viewType, $groupBy) {
     if ($groupBy && $groupBy !== "none") { // Grouping logic
         $stmt = $conn->prepare("
@@ -31,14 +33,14 @@ function fetchUsers($conn, $sortBy, $orderDir, $viewType, $groupBy) {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
+    // Fetches user based on id
 function fetchUserById($conn, $userId) {
     $stmt = $conn->prepare("SELECT * FROM users WHERE id = :id");
     $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-
+ // Updates user
 function updateUser($conn, $userData) {
     try {
         $stmt = $conn->prepare("

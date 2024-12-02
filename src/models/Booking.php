@@ -9,7 +9,7 @@ class Booking {
         $this->conn = $db;
     }
 
-    // Opprett en ny booking
+    // Create a new booking
     public function createBooking($userId, $roomId, $roomType, $floor, $nearElevator, $hasView, $startDate, $endDate)
     {
         $query = "INSERT INTO " . $this->table . " 

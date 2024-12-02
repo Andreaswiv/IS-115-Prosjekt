@@ -1,8 +1,8 @@
 <?php
-require_once '../../src/resources/inc/db.php';        // Updated database connection
-require_once '../../src/models/Room.php';             // Room model
-require_once '../../src/func/header.php';             // Header (if needed)
-require_once '../../src/func/security.php';           // Security functions
+require_once '../../src/resources/inc/db.php'; // Updated database connection
+require_once '../../src/models/Room.php'; // Room model
+require_once '../../src/func/header.php'; // Header
+require_once '../../src/func/security.php'; // Security functions
 
 use models\Room;
 
@@ -17,22 +17,28 @@ $conn = $database->getConnection();
 // Create Room model
 $roomModel = new Room($conn);
 
-// Get user_id from POST or session
+// Check if user_id is passed from the previous page
 $userId = $_POST['user_id'] ?? $_SESSION['user_id'] ?? null;
-if ($userId) {
+$role = $_SESSION['role'] ?? 'user'; // Default role is "user"
+$displayUserMessage = false;
+
+if ($userId && $role === 'admin') {
     $_SESSION['user_id'] = $userId; // Store it in session for later use
-} else {
-    die("Feil: Ingen bruker-ID angitt.");
+    $displayUserMessage = true;
 }
 
 // Define variables
-$availableSingleRooms = 0;
-$availableDoubleRooms = 0;
-$availableKingSuites = 0;
 $roomPrices = [
     'Single' => 1000,
     'Double' => 1500,
     'King Suite' => 2500,
+];
+
+// Initialize counts
+$roomCounts = [
+    'Single' => 0,
+    'Double' => 0,
+    'King Suite' => 0,
 ];
 
 // Handle form submission
@@ -43,19 +49,23 @@ $child_count = (int) ($_POST['child_count'] ?? 0);
 $guest_count = $adult_count + $child_count;
 
 try {
-    // Fetch available rooms based on the user input
+    // Fetch available rooms based on user input
     if ($start_date && $end_date && $guest_count > 0) {
-        $availableSingleRooms = $roomModel->countAvailableRooms($start_date, $end_date, $guest_count, 'Single');
-        $availableDoubleRooms = $roomModel->countAvailableRooms($start_date, $end_date, $guest_count, 'Double');
-        $availableKingSuites = $roomModel->countAvailableRooms($start_date, $end_date, $guest_count, 'King Suite');
+        $availableRooms = $roomModel->getAvailableRoomsForPeriod($start_date, $end_date, $guest_count);
+    } else {
+        $availableRooms = $roomModel->getAllRooms(); // Fetch all rooms initially
+    }
+
+    // Count rooms by type
+    foreach ($availableRooms as $room) {
+        $roomCounts[$room['room_type']]++;
     }
 } catch (Exception $e) {
-    // Handle any errors that occur during fetching
     $error_message = "Feil ved henting av ledige rom: " . $e->getMessage();
     echo "<p>Debug Error: $error_message</p>";
 }
 
-// Stores data when the form is submitted
+// Store data when the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['start_date'] = $start_date;
     $_SESSION['end_date'] = $end_date;
@@ -66,30 +76,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="no">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book et Rom</title>
     <link rel="stylesheet" href="../../public/assets/css/bookingStyle.css?v1.0.3">
 </head>
 <body>
 <!-- Page Header -->
-<br>
 <div class="container">
-    <h1>Book et rom for Bruker-ID: <?= htmlspecialchars($userId); ?></h1>
+    <?php if ($displayUserMessage): ?>
+        <h1>Book et rom for Bruker-ID: <?= htmlspecialchars($userId); ?></h1>
+    <?php else: ?>
+        <h1>Book Rom Her</h1>
+    <?php endif; ?>
 </div>
+
 <!-- Search Container -->
 <div class="search-container">
     <form method="POST" class="search-form">
-        <input type="hidden" name="user_id" value="<?= htmlspecialchars($userId); ?>">
+        <?php if ($displayUserMessage): ?>
+            <input type="hidden" name="user_id" value="<?= htmlspecialchars($userId); ?>">
+        <?php endif; ?>
         <div class="input-group">
             <label for="start_date">Ankomst</label>
-            <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($start_date) ?>" required>
+            <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($start_date) ?>">
         </div>
         <div class="input-group">
             <label for="end_date">Utreise</label>
-            <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($end_date) ?>" required>
+            <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($end_date) ?>">
         </div>
         <div class="input-group">
             <label for="adult_count">Antall Voksne</label>
-            <input type="number" id="adult_count" name="adult_count" value="<?= htmlspecialchars($adult_count) ?>" min="1" required>
+            <input type="number" id="adult_count" name="adult_count" value="<?= htmlspecialchars($adult_count) ?>" min="1">
         </div>
         <div class="input-group">
             <label for="child_count">Antall Barn</label>
@@ -101,54 +118,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!-- Room Cards -->
 <div class="room-cards">
-    <?php if ($availableSingleRooms > 0): ?>
-        <a href="../forms/singleRoomBooking.php?room_type=Single&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>&user_id=<?= urlencode($userId) ?>" class="room-card">
-            <img src="../../public/assets/img/single_room.JPG" alt="Single Room">
+    <?php foreach (['Single', 'Double', 'King Suite'] as $roomType): ?>
+        <a href="../forms/<?= $roomType === 'King Suite' ? 'kingSuiteBooking.php' : ($roomType === 'Single' ? 'singleRoomBooking.php' : 'doubleRoomBooking.php'); ?>?user_id=<?= urlencode($userId); ?>&room_type=<?= urlencode($roomType); ?>&start_date=<?= urlencode($start_date); ?>&end_date=<?= urlencode($end_date); ?>" class="room-card">
+            <img src="../../public/assets/img/<?= $roomType === 'King Suite' ? 'king_suite.jpeg' : ($roomType === 'Single' ? 'single_room.JPG' : 'double_room.jpg'); ?>" alt="<?= htmlspecialchars($roomType); ?> Room">
             <div class="room-details">
-                <h3>Single Room</h3>
+                <h3><?= htmlspecialchars($roomType); ?> Room</h3>
                 <ul>
-                    <li>25 m²</li>
-                    <li>Plass til 1 person</li>
+                    <li>Plass til <?= $roomType === 'Single' ? 1 : ($roomType === 'Double' ? 2 : 4); ?> personer</li>
                     <li>Wi-Fi inkludert</li>
+                    <li><?= htmlspecialchars($roomCounts[$roomType]); ?> ledige rom</li>
                 </ul>
-                <p>Pris: <?= number_format($roomPrices['Single'], 0, ',', ' ') ?> NOK per natt</p>
-                <br>
-                <p>Ledige rom: <?= htmlspecialchars($availableSingleRooms) ?></p>
+                <p class="price">Pris: <?= number_format($roomPrices[$roomType], 0, ',', ' ') ?> NOK per natt</p>
             </div>
         </a>
-    <?php endif; ?>
-    <?php if ($availableDoubleRooms > 0): ?>
-        <a href="../forms/doubleRoomBooking.php?room_type=Double&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>&user_id=<?= urlencode($userId) ?>" class="room-card">
-            <img src="../../public/assets/img/double_room.jpg" alt="Double Room">
-            <div class="room-details">
-                <h3>Double Room</h3>
-                <ul>
-                    <li>30 m²</li>
-                    <li>Plass til 2 personer</li>
-                    <li>Wi-Fi inkludert</li>
-                </ul>
-                <p>Pris: <?= number_format($roomPrices['Double'], 0, ',', ' ') ?> NOK per natt</p>
-                <br>
-                <p>Ledige rom: <?= htmlspecialchars($availableDoubleRooms) ?></p>
-            </div>
-        </a>
-    <?php endif; ?>
-    <?php if ($availableKingSuites > 0): ?>
-        <a href="../forms/kingSuiteBooking.php?room_type=King Suite&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>&user_id=<?= urlencode($userId) ?>" class="room-card">
-            <img src="../../public/assets/img/king_suite.jpeg" alt="King Suite">
-            <div class="room-details">
-                <h3>King Suite</h3>
-                <ul>
-                    <li>50 m²</li>
-                    <li>Plass til 4 personer</li>
-                    <li>Wi-Fi inkludert</li>
-                </ul>
-                <p>Pris: <?= number_format($roomPrices['King Suite'], 0, ',', ' ') ?> NOK per natt</p>
-                <br>
-                <p>Ledige rom: <?= htmlspecialchars($availableKingSuites) ?></p>
-            </div>
-        </a>
-    <?php endif; ?>
+    <?php endforeach; ?>
 </div>
 
 </body>
