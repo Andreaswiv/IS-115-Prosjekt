@@ -41,7 +41,7 @@ class User {
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
+    // Function to update a user
 public function updateUser($id, $username, $firstName, $lastName, $email, $phone, $address, $postalCode, $password = null) {
     $query = "UPDATE users SET username = :username, firstName = :firstName, lastName = :lastName, email = :email, phone = :phone, address = :address, postalCode = :postalCode";
 
@@ -71,7 +71,7 @@ public function updateUser($id, $username, $firstName, $lastName, $email, $phone
         throw new Exception("Error updating user: " . implode(", ", $stmt->errorInfo()));
     }
 }
- // Hent brukere basert på rolle
+ // Gets user based on role
  public function getUsersByRole($role) {
     $query = "SELECT id, firstName, lastName, email, phone FROM " . $this->table . " WHERE role = :role";
     $stmt = $this->conn->prepare($query);
@@ -80,7 +80,7 @@ public function updateUser($id, $username, $firstName, $lastName, $email, $phone
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-} // DENNE MÅ FLYTTES OPP OM GAMMEL updateUser() SKAL BRUKES
+}
 
 
 ?>

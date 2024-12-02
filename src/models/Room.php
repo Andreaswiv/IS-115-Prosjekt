@@ -11,7 +11,7 @@ class Room
         $this->conn = $db;
     }
 
-    // Hent tilgjengelige rom basert på romtype
+    // Fetch available rooms based on room type
     public function getAvailableRooms($roomType)
     {
         $query = "
@@ -24,6 +24,7 @@ class Room
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    // Count available rooms based on date range, guest count, and room type
     public function countAvailableRooms($start_date, $end_date, $guest_count, $room_type)
     {
         $query = "
@@ -54,15 +55,16 @@ class Room
         return $result['available_count'] ?? 0;
     }
 
-    // Hent alle rom
+    // Fetch all rooms
     public function getAllRooms()
     {
         $query = "SELECT * FROM rooms ORDER BY id ASC";
-        $stmt = $this->conn->prepare($query); // Bruker korrekt PDO-forbindelse
+        $stmt = $this->conn->prepare($query); // Use the correct PDO connection
         $stmt->execute();
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC); // Bruk global \PDO for konstant
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC); // Use global \PDO for constant
     }
 
+    // Count available rooms for a specific date range
     public function countAvailableRoomsForPeriod($start_date, $end_date)
     {
         $query = "
@@ -84,7 +86,7 @@ class Room
         return $result['available_count'] ?? 0;
     }
 
-
+    // Fetch available rooms for a specific date range
     public function getAvailableRoomsForPeriod($start_date, $end_date)
     {
         $query = "
@@ -106,6 +108,7 @@ class Room
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    // Fetch occupied rooms for a specific date range
     public function getOccupiedRoomsForPeriod($start_date, $end_date)
     {
         $query = "

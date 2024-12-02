@@ -24,7 +24,6 @@ function getAvailableRooms($roomType, $conn) {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     return $result['available_rooms'] ?? 0;
 }
-// src/resources/inc/helpers.php
 
 function validateUserData($data) {
     $errors = [];
