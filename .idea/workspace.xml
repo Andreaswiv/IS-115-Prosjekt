@@ -4,19 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Oppdaterte brukersiden, bort imot ferdig nå">
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Stylet litt">
+      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/img/background.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/headerStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/headerStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/bookingStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/bookingStyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/assets/css/homePageStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/homePageStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/roomStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/roomStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/king_suite.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/king_suite.jpeg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/homePage.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/homePage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/authController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/authController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/registerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/registerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AdminIndex.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/doubleRoomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/doubleRoomBooking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_historyAllAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_historyAllAdmin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_newBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/forms/form_roomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_roomBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/func/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/func/header.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/func/security.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/func/security.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/form_roomOverview.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_roomOverview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/kingSuiteBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/kingSuiteBooking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/forms/singleRoomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/singleRoomBooking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Room.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,6 +76,7 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "oppdatere-bruker-opplevelsen",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt/public/assets/img",
@@ -147,6 +154,7 @@
       <workItem from="1732794059088" duration="3586000" />
       <workItem from="1732960342128" duration="12742000" />
       <workItem from="1732997391060" duration="3608000" />
+      <workItem from="1733158406894" duration="4939000" />
     </task>
     <task id="LOCAL−00001" summary="lager nye filer osv">
       <option name="closed" value="true" />
@@ -288,7 +296,14 @@
       <option name="presentableId" value="LOCAL−00020" />
       <updated>1733157043550</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL−00021" summary="Stylet litt">
+      <option name="closed" value="true" />
+      <created>1733157809251</created>
+      <option name="number" value="LOCAL−00021" />
+      <option name="presentableId" value="LOCAL−00021" />
+      <updated>1733157809251</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -320,6 +335,7 @@
     <MESSAGE value="Lagt til bilde, og stylet og fikset exisUser side" />
     <MESSAGE value="Lagt til bilde, og stylet og fikset ny booking side" />
     <MESSAGE value="Oppdaterte brukersiden, bort imot ferdig nå" />
-    <option name="LAST_COMMIT_MESSAGE" value="Oppdaterte brukersiden, bort imot ferdig nå" />
+    <MESSAGE value="Stylet litt" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stylet litt" />
   </component>
 </project>

@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container">
     <div class="room-image">
-        <img src="../../public/assets/img/king_suite.jpeg" alt="King Suite">
+        <img src="../../public/assets/img/king_suite.jpeg?v1.0.3" alt="King Suite">
     </div>
 
     <div class="room-details">
@@ -154,6 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <form method="POST">
+        <input type="hidden" name="start_date" value="<?= htmlspecialchars($start_date ?? '') ?>">
+        <input type="hidden" name="end_date" value="<?= htmlspecialchars($end_date ?? '') ?>">
         <select name="floor" id="floor">
             <option value="" selected>Hvilken som helst etasje</option>
             <option value="1">1. Etasje</option>

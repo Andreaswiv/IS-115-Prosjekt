@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateUser'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management</title>
-    <link rel="stylesheet" href="../../public/assets/css/style.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css?v1.0.1">
     <script>
         function toggleSortOrder() {
             const currentOrder = '<?php echo $orderDir; ?>';
@@ -151,31 +151,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['updateUser'])) {
     <div class="filters">
         <?php if (!$isEditing): // Only show this section if not editing a user ?>
             <form method="get" class="filter-form">
-                <!-- View Filter -->
-                <div class="filter-group">
-                    <label for="viewType">Visning:</label>
-                    <select name="view" id="viewType" onchange="this.form.submit()">
-                        <option value="all" <?php echo ($viewType == 'all') ? 'selected' : ''; ?>>All Users</option>
-                        <option value="lastMonth" <?php echo ($viewType == 'lastMonth') ? 'selected' : ''; ?>>Last 30 Days</option>
-                    </select>
-                </div>
+                <div class="filter-group-container">
+                    <!-- View Filter -->
+                    <div class="filter-group">
+                        <label for="viewType">Visning:</label>
+                        <select name="view" id="viewType" onchange="this.form.submit()">
+                            <option value="all" <?php echo ($viewType == 'all') ? 'selected' : ''; ?>>Alle brukere</option>
+                            <option value="lastMonth" <?php echo ($viewType == 'lastMonth') ? 'selected' : ''; ?>>Siste 30 dager</option>
+                        </select>
+                    </div>
 
-                <!-- Group By Preference -->
-                <div class="filter-group">
-                    <label for="groupBy">Gruppering:</label>
-                    <select name="groupBy" id="groupBy" onchange="this.form.submit()">
-                        <option value="none" <?php echo !$groupBy ? 'selected' : ''; ?>>None</option>
-                        <?php foreach ($preferences as $preference): ?>
-                            <option value="<?php echo htmlspecialchars($preference); ?>"
-                                <?php echo ($groupBy == $preference) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($preference); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <!-- Group By Preference -->
+                    <div class="filter-group">
+                        <label for="groupBy">Gruppering:</label>
+                        <select name="groupBy" id="groupBy" onchange="this.form.submit()">
+                            <option value="none" <?php echo !$groupBy ? 'selected' : ''; ?>>Ingen</option>
+                            <?php foreach ($preferences as $preference): ?>
+                                <option value="<?php echo htmlspecialchars($preference); ?>"
+                                    <?php echo ($groupBy == $preference) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($preference); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                 </div>
             </form>
         <?php endif; ?>
     </div>
+
 
     <?php if ($isEditing && $selectedUser) : ?>
 

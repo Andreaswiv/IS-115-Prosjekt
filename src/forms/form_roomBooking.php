@@ -1,6 +1,4 @@
 <?php
-// src/forms/form_roomBooking.php
-
 require_once '../../src/resources/inc/db.php';
 require_once '../../src/models/Room.php';
 require_once '../../src/models/Booking.php';
@@ -105,7 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="room-details">
         <h2><?php echo htmlspecialchars($selectedRoom['room_name']); ?></h2>
-        <!-- Legg til flere detaljer om rommet hvis ønskelig -->
         <p><strong>Innsjekk:</strong> <?php echo htmlspecialchars($checkInDate); ?></p>
         <p><strong>Utsjekk:</strong> <?php echo htmlspecialchars($checkOutDate); ?></p>
         <p><strong>Antall gjester:</strong> <?php echo htmlspecialchars($totalGuests); ?></p>

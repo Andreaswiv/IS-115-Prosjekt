@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="POST" class="search-form">
         <div class="input-group">
             <label for="start_date">Ankomst</label>
-            <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($start_date) ?>" required>
+            <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($start_date ?? '') ?>" required>
         </div>
         <div class="input-group">
             <label for="end_date">Utreise</label>
@@ -164,6 +164,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <form method="POST">
+        <input type="hidden" name="start_date" value="<?= htmlspecialchars($start_date ?? '') ?>">
+        <input type="hidden" name="end_date" value="<?= htmlspecialchars($end_date ?? '') ?>">
         <select name="floor" id="floor">
             <option value="" selected>Hvilken som helst etasje</option>
             <option value="1">1. Etasje</option>

@@ -153,6 +153,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <form method="POST">
+        <input type="hidden" name="start_date" value="<?= htmlspecialchars($start_date ?? '') ?>">
+        <input type="hidden" name="end_date" value="<?= htmlspecialchars($end_date ?? '') ?>">
         <select name="floor" id="floor">
             <option value="" selected>Any Floor</option>
             <option value="1">1st Floor</option>

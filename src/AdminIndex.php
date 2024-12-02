@@ -41,7 +41,6 @@ if (isset($_SESSION['error_message'])) {
 </head>
 <body>
 <br>
-    <h2>Motell-booking ADMIN</h2>
 <div class="search-container">
     <form method="POST" class="search-form">
         <div class="input-group">

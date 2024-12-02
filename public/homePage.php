@@ -50,11 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Search</title>
-    <link rel="stylesheet" href="../public/assets/css/homePageStyle.css?v1.0.8">
+    <link rel="stylesheet" href="../public/assets/css/homePageStyle.css?v1.0.9">
 </head>
 <body>
-<h2>Ønsker du å bestille motell rom?</h2>
-<h3>Se hva som er ledig her:</h3>
+<br>
+<div class="welcome-section">
+    <h1>Velkommen til Wahl & Oldeide Motell</h1>
+</div>
 <div class="search-container">
     <form method="POST" action="">
         <div class="input-group">
@@ -84,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
     <div class="room-container">
-        <h2>Ledige Rom</h2>
         <div class="results">
             <?php if (!empty($roomTypeCounts)): ?>
                 <?php foreach ($roomTypeCounts as $roomType => $count): ?>

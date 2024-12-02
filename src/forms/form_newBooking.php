@@ -130,6 +130,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </a>
 </div>
 
-<script src="../../public/assets/js/bookingScript.js"></script>
 </body>
 </html>

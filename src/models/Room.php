@@ -54,13 +54,12 @@ class Room
         return $result['available_count'] ?? 0;
     }
     // Hent alle rom
-    public function getAllRooms() {
+    public function getAllRooms()
+    {
         $query = "SELECT * FROM rooms ORDER BY id ASC";
         $stmt = $this->conn->prepare($query); // Bruker korrekt PDO-forbindelse
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC); // Bruk global \PDO for konstant
     }
-
-
 }
 ?>
