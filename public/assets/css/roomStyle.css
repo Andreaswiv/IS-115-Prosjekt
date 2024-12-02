@@ -19,50 +19,81 @@ body {
     text-align: center;
 }
 
-/* Search Bar */
-.search-bar {
+/* Search Container */
+.search-container {
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 10px; /* Increased gap for better spacing */
-    font-size: 14px;
-    padding: 15px;
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto; /* Added some top margin for better spacing */
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 900px;
+    height: 120px;
+    margin-bottom: 20px;
+    margin-left:25%;
+    margin-top: 20px;
 }
 
-.search-bar div {
+.search-container form {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    width: 100%;
+}
+
+.input-group {
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
-.search-bar input {
-    width: 100%;
-    padding: 10px; /* Increased padding for better usability */
-    font-size: 14px;
-    border: 1px solid #ccc; /* Slightly darker border for visibility */
-    border-radius: 8px; /* Softer corners */
-    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
-}
-
-.search-bar button {
-    padding: 10px 15px; /* Balanced padding for better button size */
-    font-size: 14px;
+/* Buttons */
+.search-button {
+    padding: 10px 15px;
     border: none;
-    border-radius: 20px;
-    margin-top: 10px;
-    background-color: #007bff; /* Vibrant blue */
-    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Added hover effect transitions */
+    margin-bottom: 19px;
 }
 
-.search-bar button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05); /* Subtle zoom effect on hover */
+/* Buttons */
+.search-button-two {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 34px;
+}
+.input-group label {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+}
+
+.input-group input[type="date"],
+.input-group input[type="number"] {
+    width: 100%;
+    padding: 12px 75px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #555;
+    appearance: none; /* Removes default browser styles */
+}
+
+.input-group input[type="date"]:focus,
+.input-group input[type="number"]:focus {
+    border-color: #007BFF;
+    outline: none;
 }
 
 /* Room Image */

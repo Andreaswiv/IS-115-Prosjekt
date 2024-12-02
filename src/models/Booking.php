@@ -184,26 +184,24 @@ class Booking {
     }
 
     // Opprett en ny booking
-    public function createBooking($user_id, $room_id, $room_type, $floor, $near_elevator, $has_view, $start_date, $end_date) {
-        $query = "
-            INSERT INTO " . $this->table . " 
-            (user_id, room_id, room_type, floor, near_elevator, has_view, start_date, end_date) 
-            VALUES 
-            (:user_id, :room_id, :room_type, :floor, :near_elevator, :has_view, :start_date, :end_date)
-        ";
+    public function createBooking($userId, $roomId, $roomType, $floor, $nearElevator, $hasView, $startDate, $endDate)
+    {
+        $query = "INSERT INTO " . $this->table . " 
+                  (user_id, room_id, room_type, floor, near_elevator, has_view, start_date, end_date) 
+                  VALUES (:userId, :roomId, :roomType, :floor, :nearElevator, :hasView, :startDate, :endDate)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':user_id', $user_id, \PDO::PARAM_INT);
-        $stmt->bindParam(':room_id', $room_id, \PDO::PARAM_INT);
-        $stmt->bindParam(':room_type', $room_type, \PDO::PARAM_STR);
-        $stmt->bindParam(':floor', $floor, \PDO::PARAM_INT);
-        $stmt->bindParam(':near_elevator', $near_elevator, \PDO::PARAM_BOOL);
-        $stmt->bindParam(':has_view', $has_view, \PDO::PARAM_BOOL);
-        $stmt->bindParam(':start_date', $start_date);
-        $stmt->bindParam(':end_date', $end_date);
 
-        if (!$stmt->execute()) {
-            throw new \Exception("Feil ved opprettelse av booking: " . implode(", ", $stmt->errorInfo()));
-        }
+        // Bind parameters
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':roomId', $roomId);
+        $stmt->bindParam(':roomType', $roomType);
+        $stmt->bindParam(':floor', $floor, $floor !== null ? \PDO::PARAM_INT : \PDO::PARAM_NULL);
+        $stmt->bindParam(':nearElevator', $nearElevator, \PDO::PARAM_BOOL);
+        $stmt->bindParam(':hasView', $hasView, \PDO::PARAM_BOOL);
+        $stmt->bindParam(':startDate', $startDate);
+        $stmt->bindParam(':endDate', $endDate);
+
+        return $stmt->execute();
     }
 }
 ?>

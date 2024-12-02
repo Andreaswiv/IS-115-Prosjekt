@@ -188,9 +188,6 @@ $rooms = $roomModel->getAllRooms();
                         <th>Romnummer</th>
                         <th>Romtype</th>
                         <th>Kapasitet</th>
-                        <th>Tilgjengelig</th>
-                        <th>Utilgjengelig Fra</th>
-                        <th>Utilgjengelig Til</th>
                         <th>Rediger</th>
                     </tr>
                 </thead>
@@ -201,9 +198,6 @@ $rooms = $roomModel->getAllRooms();
                             <td><?= htmlspecialchars($room['room_name']) ?></td>
                             <td><?= htmlspecialchars($room['room_type']) ?></td>
                             <td><?= htmlspecialchars($room['capacity']) ?></td>
-                            <td><?= $room['is_available'] ? 'Ja' : 'Nei' ?></td>
-                            <td><?= htmlspecialchars($room['unavailable_start'] ?? '-') ?></td>
-                            <td><?= htmlspecialchars($room['unavailable_end'] ?? '-') ?></td>
                             <td>
                                 <form action="form_editRoomAdmin.php" method="get" style="display: inline;">
                                     <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']) ?>">

@@ -40,7 +40,6 @@ if (isset($_SESSION['user_id'])) {
         <a href="<?php echo BASE_URL; ?>public/homePage.php" class="nav-link">Hjem</a>
         <a href="<?php echo BASE_URL; ?>src/forms/form_newBooking.php" class="nav-link">Ny Booking</a>
         <a href="<?php echo BASE_URL; ?>src/forms/form_historyUser.php" class="nav-link">Dine Bookinger</a>
-        <a href="<?php echo BASE_URL; ?>src/forms/form_updateUserInfo.php" class="nav-link">Rediger Profil</a> <!-- LAGT TIL form_updateUserInfo.php -->
     <?php else: ?>
 
             <?php endif; ?>
@@ -49,10 +48,9 @@ if (isset($_SESSION['user_id'])) {
     <!-- User Image and Logout -->
     <div class="image-container">
         <?php if ($username): ?>
-            <a href="<?php echo BASE_URL; ?>src/forms/form_exisUser.php" class="user-link">
+            <a href="<?php echo BASE_URL; ?>src/forms/form_updateUserInfo.php" class="user-link">
                 <img src="<?php echo BASE_URL; ?>public/assets/img/userImage.png" alt="User Image" class="user-image">
             </a>
-            <a href="<?php echo BASE_URL; ?>public/logout.php" class="nav-logout">Logg ut</a>
         <?php else: ?>
             <a href="<?php echo BASE_URL; ?>public/login.php" class="user-link">
                 <img src="<?php echo BASE_URL; ?>public/assets/img/userImage.png" alt="Logg Inn" class="user-image">

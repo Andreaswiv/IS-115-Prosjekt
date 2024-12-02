@@ -220,7 +220,6 @@ table td form button:hover {
 
 .button {
     width: 200px;
-    padding: 12px; /* Increased padding for consistency */
     background-color: #f58548fa; /* Matching green theme */
     border: none;
     border-radius: 6px; /* Rounder edges */
