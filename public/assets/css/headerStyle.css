@@ -1,0 +1,125 @@
+/* Reset default styles for the header */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    font-family: 'Roboto', Arial, sans-serif; /* Thinner, modern font */
+}
+
+/* Sticky header styling */
+.header {
+    background-color: white; /* White background */
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%; /* Ensure header spans the viewport width */
+    height: 80px; /* Header height */
+    z-index: 1000;
+    border-bottom: 1px solid black; /* Thinner black underline */
+    display: flex;
+    justify-content: space-between; /* Space between logo, links, and user image */
+    align-items: center; /* Vertically center items */
+}
+
+
+/* Logo container */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo and text */
+    margin-left: 20px;
+}
+
+.logo-container img.logo-image {
+    height: 70px; /* Adjust logo size */
+    width: auto; /* Maintain aspect ratio */
+}
+
+/* Style for the logo text (anchor element) */
+.logo-container a {
+    text-decoration: none; /* Remove the default underline */
+    font-size: 18px; /* Adjust font size */
+    font-weight: 300; /* Light font weight for thinner text */
+    color: #333; /* Neutral color for logo text */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.logo-container a:hover {
+    color: #32CD32; /* Optional: Light green on hover */
+    text-decoration: none; /* Ensure no underline on hover */
+}
+
+/* Navigation links */
+.nav-links {
+    display: flex;
+    gap: 20px; /* Space between navigation links */
+}
+
+.nav-link {
+    text-decoration: none; /* Remove underline */
+    color: #32CD32; /* Light green text */
+    font-size: 16px;
+    font-weight: 300; /* Lighter font weight for thinner text */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+    position: relative; /* For underline effect */
+}
+
+.nav-link::after {
+    content: ''; /* Empty pseudo-element for underline */
+    position: absolute;
+    bottom: -2px; /* Position the underline below the text */
+    left: 0;
+    height: 2px; /* Thickness of the underline */
+    width: 0%; /* Start with no underline */
+    background-color: #32CD32; /* Light green underline */
+    transition: width 0.3s ease; /* Smooth animation */
+}
+
+.nav-link:hover {
+    text-decoration: none; /* Explicitly disable underline on hover */
+    color: #228B22; /* Slightly darker green on hover */
+}
+
+.nav-link:hover::after {
+    width: 100%; /* Expand underline to full width on hover */
+}
+
+/* Style the image container */
+.image-container {
+    display: flex;
+    justify-content: flex-end; /* Align image to the right */
+    align-items: center; /* Align image vertically */
+    position: relative; /* Enable positioning for underline effect */
+}
+
+/* Style the user image */
+.user-image {
+    height: 50px; /* Image height */
+    width: auto; /* Maintain aspect ratio */
+    margin-right: 20px; /* Add margin to prevent it from being flush against the edge */
+    position: relative; /* Enable positioning for underline */
+    transition: filter 0.2s ease; /* Smooth transition for hover effects */
+}
+
+/* Create green underline under the image */
+.image-container::after {
+    content: ''; /* Empty pseudo-element for underline */
+    position: absolute;
+    bottom: -5px; /* Position the underline below the image container */
+    left: 1px; /* Align with the container */
+    right: 20px; /* Align with the container */
+    height: 2px; /* Thickness of the underline */
+    background-color: #32CD32; /* Light green underline */
+    transform: scaleX(0); /* Initially hidden (scale down) */
+    transform-origin: left; /* Scale from the center */
+    transition: transform 0.2s ease-in-out; /* Smooth animation */
+}
+
+.image-container:hover::after {
+    transform: scaleX(1); /* Expand underline to full width on hover */
+}
+
+.image-container:hover .user-image {
+    filter: brightness(1.2); /* Slightly brighten the image on hover */
+}

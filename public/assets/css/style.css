@@ -1,0 +1,195 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif; /* Clean, standard font */
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9fc; /* Lighter background for a fresher look */
+    color: #333; /* Neutral text color */
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 20px;
+    background: #ffffff; /* Pure white background for contrast */
+    border-radius: 12px; /* Slightly rounder edges for a modern look */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+}
+
+/* Titles */
+h1 {
+    text-align: center;
+    color: #4CAF50; /* Vibrant green for accents */
+    font-size: 32px; /* Larger, bolder title */
+    margin-bottom: 20px;
+    letter-spacing: 1px; /* Slightly spaced letters for elegance */
+}
+
+/* Error and Success Messages */
+.error, .success {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px; /* Rounder edges */
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Add space between icon and text */
+}
+
+.error {
+    background-color: #f8d7da; /* Soft red background */
+    color: #721c24;
+    border-left: 4px solid #f44336; /* Add colored accent line */
+}
+
+.success {
+    background-color: #d4edda; /* Soft green background */
+    color: #155724;
+    border-left: 4px solid #4CAF50; /* Add colored accent line */
+}
+
+/* Form Styles */
+form {
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px; /* Slightly larger spacing */
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+form input, form textarea, form select {
+    width: 100%;
+    padding: 12px; /* More padding for touch-friendly design */
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px; /* Rounder edges */
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus, form textarea:focus, form select:focus {
+    border-color: #4CAF50;
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); /* Subtle green glow */
+}
+
+form button {
+    width: 100%;
+    padding: 12px; /* Increased padding for consistency */
+    background-color: #4CAF50; /* Matching green theme */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Rounder edges */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Form Fields on Error */
+form input.error {
+    border-color: #f44336; /* Red border for errors */
+}
+
+form input.error:focus {
+    border-color: #f44336;
+}
+
+/* Lists */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+ul li a {
+    display: block;
+    color: white;
+    background-color: #007BFF; /* Bright blue button */
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+ul li a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Slight lift */
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff; /* Ensure contrast with background */
+    border-radius: 6px;
+    overflow: hidden; /* Keep table edges clean */
+}
+
+table th, table td {
+    padding: 16px; /* More padding for readability */
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4; /* Light header background */
+    font-weight: bold;
+}
+
+table tr:hover {
+    background-color: #f9f9f9; /* Subtle highlight on hover */
+}
+
+table td form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+table td form button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    form input,
+    form button,
+    form textarea {
+        padding: 12px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

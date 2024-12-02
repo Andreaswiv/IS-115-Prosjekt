@@ -1,0 +1,16 @@
+Index: private/.idea/modules.xml
+===================================================================
+diff --git a/private/.idea/modules.xml b/private/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1730202367594)
++++ b/private/.idea/modules.xml	(date 1730202367594)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/IS-115-Prosjekt.iml" filepath="$PROJECT_DIR$/.idea/IS-115-Prosjekt.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
