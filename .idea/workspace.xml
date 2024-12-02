@@ -4,26 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Stylet litt">
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/assets/img/background.jpg" afterDir="false" />
+    <list default="true" id="c808e6a8-140f-4cb2-8d89-2a0cd62b11c0" name="Changes" comment="Stylet litt og fjernet litt kommentering">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/bookingStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/bookingStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/homePageStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/homePageStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/roomStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/roomStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/assets/img/king_suite.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/king_suite.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/homePage.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/homePage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AdminIndex.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AdminIndex.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/doubleRoomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/doubleRoomBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_exisAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_historyAllAdmin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_historyAllAdmin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_newBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_newBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_roomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_roomBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/form_roomOverview.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/form_roomOverview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/kingSuiteBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/kingSuiteBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/forms/singleRoomBooking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/forms/singleRoomBooking.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Room.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Room.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/login.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +19,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="43-ferdigstille-roomoverview" />
+        <entry key="$PROJECT_DIR$" value="nyeste-branch" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,7 +60,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "oppdatere-bruker-opplevelsen",
+    "git-widget-placeholder": "#47 on oppdatere-bruker-opplevelsen",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Applications/XAMPP/xamppfiles/htdocs/IS-115-Prosjekt/public/assets/img",
     "node.js.detected.package.eslint": "true",
@@ -154,7 +137,7 @@
       <workItem from="1732794059088" duration="3586000" />
       <workItem from="1732960342128" duration="12742000" />
       <workItem from="1732997391060" duration="3608000" />
-      <workItem from="1733158406894" duration="4939000" />
+      <workItem from="1733158406894" duration="7083000" />
     </task>
     <task id="LOCAL−00001" summary="lager nye filer osv">
       <option name="closed" value="true" />
@@ -303,7 +286,14 @@
       <option name="presentableId" value="LOCAL−00021" />
       <updated>1733157809251</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL−00022" summary="Stylet litt og fjernet litt kommentering">
+      <option name="closed" value="true" />
+      <created>1733165726337</created>
+      <option name="number" value="LOCAL−00022" />
+      <option name="presentableId" value="LOCAL−00022" />
+      <updated>1733165726337</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -336,6 +326,7 @@
     <MESSAGE value="Lagt til bilde, og stylet og fikset ny booking side" />
     <MESSAGE value="Oppdaterte brukersiden, bort imot ferdig nå" />
     <MESSAGE value="Stylet litt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stylet litt" />
+    <MESSAGE value="Stylet litt og fjernet litt kommentering" />
+    <option name="LAST_COMMIT_MESSAGE" value="Stylet litt og fjernet litt kommentering" />
   </component>
 </project>
