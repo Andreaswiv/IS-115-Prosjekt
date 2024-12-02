@@ -33,67 +33,105 @@ $bookingStmt->bindValue(':roomId', $roomId, PDO::PARAM_INT);
 $bookingStmt->execute();
 $bookings = $bookingStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Håndter oppdatering av rommet når skjemaet sendes
 $errors = [];
+$successMessage = null;
+$transactionStarted = false;
+
+// Håndter oppdatering av rommet når skjemaet sendes
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        $newRoomId = isset($_POST['new_room_id']) ? intval($_POST['new_room_id']) : null;
         $roomName = htmlspecialchars($_POST['room_name']);
-        $roomType = htmlspecialchars($_POST['room_type']);
-        $capacity = intval($_POST['capacity']);
-        $isAvailable = isset($_POST['is_available']) ? 1 : 0;
-        $unavailableStart = $_POST['unavailable_start'] ?: null;
-        $unavailableEnd = $_POST['unavailable_end'] ?: null;
+        $startDate = $_POST['start_date'] ?: null;
+        $endDate = $_POST['end_date'] ?: null;
+
+        if (!$newRoomId || !$roomName) {
+            throw new Exception("Både nytt ID og romnavn må fylles ut.");
+        }
+
+        if ($startDate && $endDate) {
+            if ($startDate >= $endDate) {
+                throw new Exception("Startdato må være før sluttdato.");
+            }
+
+            // Sjekk tilgjengelighet
+            $availabilityQuery = "
+                SELECT 1
+                FROM bookings
+                WHERE room_id = :roomId
+                  AND start_date < :end_date
+                  AND end_date > :start_date
+                LIMIT 1
+            ";
+            $availabilityStmt = $conn->prepare($availabilityQuery);
+            $availabilityStmt->bindValue(':roomId', $roomId, PDO::PARAM_INT);
+            $availabilityStmt->bindValue(':start_date', $startDate, PDO::PARAM_STR);
+            $availabilityStmt->bindValue(':end_date', $endDate, PDO::PARAM_STR);
+            $availabilityStmt->execute();
+
+            if ($availabilityStmt->fetch()) {
+                throw new Exception("Rommet er allerede booket i den valgte perioden.");
+            }
+        }
 
         // Start en transaksjon
         $conn->beginTransaction();
+        $transactionStarted = true;
 
-        // Oppdater rommet i databasen
+        // Oppdater rom-ID og navn
         $updateQuery = "
             UPDATE rooms
-            SET room_name = :roomName,
-                room_type = :roomType,
-                capacity = :capacity,
-                is_available = :isAvailable,
-                unavailable_start = :unavailableStart,
-                unavailable_end = :unavailableEnd
+            SET id = :newRoomId,
+                room_name = :roomName
             WHERE id = :roomId
         ";
         $stmt = $conn->prepare($updateQuery);
+        $stmt->bindValue(':newRoomId', $newRoomId, PDO::PARAM_INT);
         $stmt->bindValue(':roomName', $roomName, PDO::PARAM_STR);
-        $stmt->bindValue(':roomType', $roomType, PDO::PARAM_STR);
-        $stmt->bindValue(':capacity', $capacity, PDO::PARAM_INT);
-        $stmt->bindValue(':isAvailable', $isAvailable, PDO::PARAM_BOOL);
-        $stmt->bindValue(':unavailableStart', $unavailableStart, PDO::PARAM_STR);
-        $stmt->bindValue(':unavailableEnd', $unavailableEnd, PDO::PARAM_STR);
         $stmt->bindValue(':roomId', $roomId, PDO::PARAM_INT);
         $stmt->execute();
 
-        // Hvis rommet settes som tilgjengelig, fjern relaterte bookinger
-        if ($isAvailable) {
-            $deleteBookingsQuery = "
-                DELETE FROM bookings
-                WHERE room_id = :roomId
-                AND (
-                    (start_date BETWEEN :start AND :end)
-                    OR (end_date BETWEEN :start AND :end)
-                )
+        // Hvis start- og sluttdato er oppgitt, legg til en blokkering som booking
+        if ($startDate && $endDate) {
+            $addBookingQuery = "
+                INSERT INTO bookings (user_id, room_id, room_type, floor, near_elevator, has_view, start_date, end_date)
+                VALUES (1, :newRoomId, :roomType, 0, 0, 0, :start_date, :end_date)
             ";
-            $deleteStmt = $conn->prepare($deleteBookingsQuery);
-            $deleteStmt->bindValue(':roomId', $roomId, PDO::PARAM_INT);
-            $deleteStmt->bindValue(':start', $unavailableStart ?? '1900-01-01', PDO::PARAM_STR);
-            $deleteStmt->bindValue(':end', $unavailableEnd ?? '2100-12-31', PDO::PARAM_STR);
-            $deleteStmt->execute();
+            $addBookingStmt = $conn->prepare($addBookingQuery);
+            $addBookingStmt->bindValue(':newRoomId', $newRoomId, PDO::PARAM_INT);
+            $addBookingStmt->bindValue(':roomType', $room['room_type'], PDO::PARAM_STR);
+            $addBookingStmt->bindValue(':start_date', $startDate, PDO::PARAM_STR);
+            $addBookingStmt->bindValue(':end_date', $endDate, PDO::PARAM_STR);
+            $addBookingStmt->execute();
         }
 
         // Fullfør transaksjonen
         $conn->commit();
+        $transactionStarted = false;
 
-        // Gå tilbake til romoversikten
-        header("Location: form_roomOverview.php");
-        exit();
+        // Set success message and refresh room data
+        $successMessage = "Rom oppdatert";
+
+        // Fetch the updated room data
+        $query = "SELECT * FROM rooms WHERE id = :newRoomId";
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(':newRoomId', $newRoomId, PDO::PARAM_INT);
+        $stmt->execute();
+        $room = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Update bookings for the new room ID
+        $bookingQuery = "
+            SELECT * FROM bookings
+            WHERE room_id = :newRoomId
+        ";
+        $bookingStmt = $conn->prepare($bookingQuery);
+        $bookingStmt->bindValue(':newRoomId', $newRoomId, PDO::PARAM_INT);
+        $bookingStmt->execute();
+        $bookings = $bookingStmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (Exception $e) {
-        // Rull tilbake ved feil
-        $conn->rollBack();
+        if ($transactionStarted) {
+            $conn->rollBack();
+        }
         $errors[] = "Feil under oppdatering: " . $e->getMessage();
     }
 }
@@ -107,67 +145,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../public/assets/css/style.css">
 </head>
 <body>
-    <h1>Rediger Rom</h1>
-    <div class="button"><a href="./form_roomOverview.php">Tilbake til Romoversikten</a></div>
-    <div class= "container">
-        <p>Rom-ID: <strong><?= htmlspecialchars($roomId); ?></strong></p>
-        <?php if (!empty($errors)): ?>
-            <ul style="color: red;">
-                <?php foreach ($errors as $error): ?>
-                    <li><?= htmlspecialchars($error); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
+<br>
+<h1 style="color:black;">Rediger Rom</h1>
+<div class="container">
+    <?php if ($successMessage): ?>
+        <p style="color: green;"><?= htmlspecialchars($successMessage); ?></p>
+    <?php endif; ?>
+    <p>Rom-ID: <strong><?= htmlspecialchars($roomId); ?></strong></p>
+    <p>Romnavn: <strong><?= htmlspecialchars($room['room_name']); ?></strong></p>
+    <?php if (!empty($errors)): ?>
+        <ul style="color: red;">
+            <?php foreach ($errors as $error): ?>
+                <li><?= htmlspecialchars($error); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
 
-        <form action="" method="post">
-            <label for="room_name">Romnavn:</label>
-            <input type="text" id="room_name" name="room_name" value="<?= htmlspecialchars($room['room_name']); ?>" required>
+    <form action="" method="post">
+        <label for="new_room_id">Nytt Rom-ID:</label>
+        <input type="number" id="new_room_id" name="new_room_id" value="<?= htmlspecialchars($roomId); ?>" required>
 
-            <label for="room_type">Romtype:</label>
-            <input type="text" id="room_type" name="room_type" value="<?= htmlspecialchars($room['room_type']); ?>" required>
+        <label for="room_name">Romnavn:</label>
+        <input type="text" id="room_name" name="room_name" value="<?= htmlspecialchars($room['room_name']); ?>" required>
 
-            <label for="capacity">Kapasitet:</label>
-            <input type="number" id="capacity" name="capacity" value="<?= htmlspecialchars($room['capacity']); ?>" required>
+        <label for="start_date">Blokker Fra:</label>
+        <input type="date" id="start_date" name="start_date">
 
-            <label for="is_available">Tilgjengelig:</label>
-            <input type="checkbox" id="is_available" name="is_available" <?= $room['is_available'] ? 'checked' : ''; ?>>
+        <label for="end_date">Blokker Til:</label>
+        <input type="date" id="end_date" name="end_date">
 
-            <label for="unavailable_start">Utilgjengelig Fra:</label>
-            <input type="datetime-local" id="unavailable_start" name="unavailable_start" 
-                value="<?= htmlspecialchars($room['unavailable_start']); ?>">
+        <button type="submit">Oppdater Rom</button>
+    </form>
 
-            <label for="unavailable_end">Utilgjengelig Til:</label>
-            <input type="datetime-local" id="unavailable_end" name="unavailable_end" 
-                value="<?= htmlspecialchars($room['unavailable_end']); ?>">
-
-            <button type="submit">Oppdater Rom</button>
-        </form>
-
-        <h2>Bookinger for dette rommet</h2>
-        <?php if (empty($bookings)): ?>
-            <p>Ingen bookinger funnet for dette rommet.</p>
-        <?php else: ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Bruker-ID</th>
-                        <th>Startdato</th>
-                        <th>Sluttdato</th>
-                        <th>Romtype</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($bookings as $booking): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($booking['user_id']); ?></td>
-                            <td><?= htmlspecialchars($booking['start_date']); ?></td>
-                            <td><?= htmlspecialchars($booking['end_date']); ?></td>
-                            <td><?= htmlspecialchars($booking['room_type']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    </div>
+    <h2>Bookinger for dette rommet</h2>
+    <?php if (empty($bookings)): ?>
+        <p>Ingen bookinger funnet for dette rommet.</p>
+    <?php else: ?>
+        <table>
+            <thead>
+            <tr>
+                <th>Startdato</th>
+                <th>Sluttdato</th>
+                <th>Romtype</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($bookings as $booking): ?>
+                <tr>
+                    <td><?= htmlspecialchars($booking['start_date']); ?></td>
+                    <td><?= htmlspecialchars($booking['end_date']); ?></td>
+                    <td><?= htmlspecialchars($booking['room_type']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+</div>
 </body>
 </html>

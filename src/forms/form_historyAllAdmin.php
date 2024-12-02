@@ -24,7 +24,7 @@ $query = "
     FROM bookings b
     JOIN rooms r ON b.room_id = r.id
     JOIN users u ON b.user_id = u.id
-    ORDER BY b.start_date DESC
+    ORDER BY b.id DESC
 ";
 $stmt = $conn->prepare($query);
 $stmt->execute();
@@ -48,36 +48,36 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php else: ?>
         <table>
             <thead>
-                <tr>
-                    <th>Booking-ID</th>
-                    <th>Brukernavn</th>
-                    <th>Fornavn</th>
-                    <th>Etternavn</th>
-                    <th>Romnummer</th>
-                    <th>Romtype</th>
-                    <th>Startdato</th>
-                    <th>Sluttdato</th>
-                    <th>Etasje</th>
-                    <th>Nær Heis</th>
-                    <th>Utsikt</th>
-                </tr>
+            <tr>
+                <th>Booking-ID</th>
+                <th>Brukernavn</th>
+                <th>Fornavn</th>
+                <th>Etternavn</th>
+                <th>Romnummer</th>
+                <th>Romtype</th>
+                <th>Startdato</th>
+                <th>Sluttdato</th>
+                <th>Etasje</th>
+                <th>Nær Heis</th>
+                <th>Utsikt</th>
+            </tr>
             </thead>
             <tbody>
-                <?php foreach ($bookings as $booking): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($booking['id']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['user_name']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['first_name']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['last_name']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['room_name']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['room_type']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['start_date']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['end_date']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['floor']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['near_elevator']); ?></td>
-                        <td><?php echo htmlspecialchars($booking['has_view']); ?></td>
-                    </tr>
-                <?php endforeach; ?>
+            <?php foreach ($bookings as $booking): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($booking['id']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['user_name']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['first_name']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['last_name']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['room_name']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['room_type']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['start_date']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['end_date']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['floor']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['near_elevator']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['has_view']); ?></td>
+                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     <?php endif; ?>

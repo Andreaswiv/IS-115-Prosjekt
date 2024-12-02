@@ -17,6 +17,14 @@ $conn = $database->getConnection();
 // Create Room model
 $roomModel = new Room($conn);
 
+// Get user_id from POST or session
+$userId = $_POST['user_id'] ?? $_SESSION['user_id'] ?? null;
+if ($userId) {
+    $_SESSION['user_id'] = $userId; // Store it in session for later use
+} else {
+    die("Feil: Ingen bruker-ID angitt.");
+}
+
 // Define variables
 $availableSingleRooms = 0;
 $availableDoubleRooms = 0;
@@ -62,10 +70,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../../public/assets/css/bookingStyle.css?v1.0.3">
 </head>
 <body>
-<!-- Search Container -->
+<!-- Page Header -->
 <br>
+<div class="container">
+    <h1>Book et rom for Bruker-ID: <?= htmlspecialchars($userId); ?></h1>
+</div>
+<!-- Search Container -->
 <div class="search-container">
     <form method="POST" class="search-form">
+        <input type="hidden" name="user_id" value="<?= htmlspecialchars($userId); ?>">
         <div class="input-group">
             <label for="start_date">Ankomst</label>
             <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($start_date) ?>" required>
@@ -85,49 +98,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="search-button">Søk</button>
     </form>
 </div>
+
+<!-- Room Cards -->
 <div class="room-cards">
-    <a href="../forms/singleRoomBooking.php?room_type=Single&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>" class="room-card">
-        <img src="../../public/assets/img/single_room.JPG" alt="Single Room">
-        <div class="room-details">
-            <h3>Single Room</h3>
-            <ul>
-                <li>25 m²</li>
-                <li>Plass til 1 person</li>
-                <li>Wi-Fi inkludert</li>
-            </ul>
-            <p>Pris: <?= number_format($roomPrices['Single'], 0, ',', ' ') ?> NOK per natt</p>
-            <br>
-            <p>Ledige rom: <?= htmlspecialchars($availableSingleRooms) ?></p>
-        </div>
-    </a>
-    <a href="../forms/doubleRoomBooking.php?room_type=Double&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>" class="room-card">
-        <img src="../../public/assets/img/double_room.jpg" alt="Double Room">
-        <div class="room-details">
-            <h3>Double Room</h3>
-            <ul>
-                <li>30 m²</li>
-                <li>Plass til 2 personer</li>
-                <li>Wi-Fi inkludert</li>
-            </ul>
-            <p>Pris: <?= number_format($roomPrices['Double'], 0, ',', ' ') ?> NOK per natt</p>
-            <br>
-            <p>Ledige rom: <?= htmlspecialchars($availableDoubleRooms) ?></p>
-        </div>
-    </a>
-    <a href="../forms/kingSuiteBooking.php?room_type=King Suite&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>" class="room-card">
-        <img src="../../public/assets/img/king_suite.jpeg" alt="King Suite">
-        <div class="room-details">
-            <h3>King Suite</h3>
-            <ul>
-                <li>50 m²</li>
-                <li>Plass til 4 personer</li>
-                <li>Wi-Fi inkludert</li>
-            </ul>
-            <p>Pris: <?= number_format($roomPrices['King Suite'], 0, ',', ' ') ?> NOK per natt</p>
-            <br>
-            <p>Ledige rom: <?= htmlspecialchars($availableKingSuites) ?></p>
-        </div>
-    </a>
+    <?php if ($availableSingleRooms > 0): ?>
+        <a href="../forms/singleRoomBooking.php?room_type=Single&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>&user_id=<?= urlencode($userId) ?>" class="room-card">
+            <img src="../../public/assets/img/single_room.JPG" alt="Single Room">
+            <div class="room-details">
+                <h3>Single Room</h3>
+                <ul>
+                    <li>25 m²</li>
+                    <li>Plass til 1 person</li>
+                    <li>Wi-Fi inkludert</li>
+                </ul>
+                <p>Pris: <?= number_format($roomPrices['Single'], 0, ',', ' ') ?> NOK per natt</p>
+                <br>
+                <p>Ledige rom: <?= htmlspecialchars($availableSingleRooms) ?></p>
+            </div>
+        </a>
+    <?php endif; ?>
+    <?php if ($availableDoubleRooms > 0): ?>
+        <a href="../forms/doubleRoomBooking.php?room_type=Double&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>&user_id=<?= urlencode($userId) ?>" class="room-card">
+            <img src="../../public/assets/img/double_room.jpg" alt="Double Room">
+            <div class="room-details">
+                <h3>Double Room</h3>
+                <ul>
+                    <li>30 m²</li>
+                    <li>Plass til 2 personer</li>
+                    <li>Wi-Fi inkludert</li>
+                </ul>
+                <p>Pris: <?= number_format($roomPrices['Double'], 0, ',', ' ') ?> NOK per natt</p>
+                <br>
+                <p>Ledige rom: <?= htmlspecialchars($availableDoubleRooms) ?></p>
+            </div>
+        </a>
+    <?php endif; ?>
+    <?php if ($availableKingSuites > 0): ?>
+        <a href="../forms/kingSuiteBooking.php?room_type=King Suite&start_date=<?= urlencode($start_date) ?>&end_date=<?= urlencode($end_date) ?>&guest_count=<?= urlencode($guest_count) ?>&user_id=<?= urlencode($userId) ?>" class="room-card">
+            <img src="../../public/assets/img/king_suite.jpeg" alt="King Suite">
+            <div class="room-details">
+                <h3>King Suite</h3>
+                <ul>
+                    <li>50 m²</li>
+                    <li>Plass til 4 personer</li>
+                    <li>Wi-Fi inkludert</li>
+                </ul>
+                <p>Pris: <?= number_format($roomPrices['King Suite'], 0, ',', ' ') ?> NOK per natt</p>
+                <br>
+                <p>Ledige rom: <?= htmlspecialchars($availableKingSuites) ?></p>
+            </div>
+        </a>
+    <?php endif; ?>
 </div>
 
 </body>

@@ -1,5 +1,6 @@
 <?php
 include '../../src/resources/inc/db.php';
+include '../../src/resources/inc/db_queries.php';
 include '../../src/resources/inc/functions.php';
 require_once '../../src/func/security.php';
 require_once '../../src/func/header.php';
@@ -11,44 +12,15 @@ use models\Room;
 
 runSecurityChecks(); // Ensure the user is logged in
 
-// Create Database and Room Model
+// Create Database Connection
 $database = new Database();
 $db = $database->getConnection();
-$roomModel = new Room($db);
 
 // Retrieve session or POST dates
 $start_date = $_SESSION['start_date'] ?? $_POST['start_date'] ?? null;
 $end_date = $_SESSION['end_date'] ?? $_POST['end_date'] ?? null;
 $room_type = $_GET['room_type'] ?? 'King Suite';
 $assignedRoomId = null;
-
-// Function to get a random available room
-function getRandomAvailableRoomId($start_date, $end_date, $room_type, $db) {
-    $query = "
-        SELECT r.id
-        FROM rooms r
-        WHERE r.room_type = :room_type
-          AND NOT EXISTS (
-                SELECT 1
-                FROM bookings b
-                WHERE b.room_id = r.id
-                  AND (
-                      (:start_date BETWEEN b.start_date AND b.end_date)
-                      OR (:end_date BETWEEN b.start_date AND b.end_date)
-                      OR (b.start_date BETWEEN :start_date AND :end_date)
-                      OR (b.end_date BETWEEN :start_date AND :end_date)
-                  )
-              )
-        LIMIT 1
-    ";
-    $stmt = $db->prepare($query);
-    $stmt->bindParam(':start_date', $start_date, PDO::PARAM_STR);
-    $stmt->bindParam(':end_date', $end_date, PDO::PARAM_STR);
-    $stmt->bindParam(':room_type', $room_type, PDO::PARAM_STR);
-    $stmt->execute();
-
-    return $stmt->fetchColumn(); // Return the first available room ID
-}
 
 // Automatically check availability if room_type, start_date, and end_date are provided
 if ($room_type && $start_date && $end_date) {
@@ -74,11 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nearElevator = isset($_POST['near_elevator']) ? 1 : 0;
             $hasView = isset($_POST['has_view']) ? 1 : 0;
 
-            $booking = new Booking($db);
             $userId = $_SESSION['user_id'];
 
             try {
-                $bookingCreated = $booking->createBooking(
+                $bookingCreated = createBooking(
                     $userId,
                     $assignedRoomId,
                     $room_type,
@@ -86,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $nearElevator,
                     $hasView,
                     $start_date,
-                    $end_date
+                    $end_date,
+                    $db
                 );
 
                 if ($bookingCreated) {

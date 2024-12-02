@@ -41,14 +41,18 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dine Bookinger</title>
-    <link rel="stylesheet" href="../../public/assets/css/style.css">
+    <link rel="stylesheet" href="../../public/assets/css/style.css?v1.0.2">
 </head>
 <body>
-<div class="container_roomOverview">
+<div class="container_roomOverview-two">
     <h1>Dine Bookinger</h1>
 
     <?php if (empty($bookings)): ?>
-        <p>Du har ingen registrerte bookinger.</p>
+        <p class="no-bookings">
+        Du har ingen registrerte bookinger. <br>
+        Ser ut som du ikke har bestilt noe enda. <br>
+        <a href="form_newBooking.php" style="text-decoration: none; color: #007bff;">Gå til booking</a> for å komme i gang!
+    </p>
     <?php else: ?>
         <table>
             <thead>

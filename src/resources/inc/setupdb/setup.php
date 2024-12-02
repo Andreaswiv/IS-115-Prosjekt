@@ -200,11 +200,7 @@ try {
         CREATE TABLE IF NOT EXISTS rooms (
             id INT AUTO_INCREMENT PRIMARY KEY,
             room_name VARCHAR(10) NOT NULL,
-            room_type ENUM('Single', 'Double', 'King Suite') NOT NULL,
-            capacity INT NOT NULL,
-            is_available BOOLEAN NOT NULL DEFAULT 1,
-            unavailable_start DATETIME DEFAULT NULL,
-            unavailable_end DATETIME DEFAULT NULL
+            room_type ENUM('Single', 'Double', 'King Suite') NOT NULL
         );
     ");
 

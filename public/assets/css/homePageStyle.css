@@ -186,7 +186,7 @@ button {
 .welcome-section {
     text-align: center;
     color: white;
-    text-shadow: 6px 6px 10px rgba(0, 0, 0, 1); /* Grønn skygge */
+    text-shadow: 6px 6px 10px rgba(0, 0, 0, 1);
     margin-bottom: 20px;
     padding: 20px;
     margin-left: auto;
@@ -197,12 +197,12 @@ button {
     font-size: 3em;
     font-weight: bold;
     margin: 0 0 10px 0;
-    text-shadow: 4px 4px 8px rgba(0, 0, 0, 1); /* Øk skyggens intensitet */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 1);
 }
 
 .welcome-section h2 {
     font-size: 1.8em;
     font-weight: 500;
     margin: 0;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 1); /* Skygge med middels intensitet */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
 }
