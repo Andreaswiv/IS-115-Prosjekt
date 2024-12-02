@@ -1,13 +1,13 @@
 <?php
 include '../../src/resources/inc/db.php';
-include '../../src/resources/inc/db_queries.php'; // Include db_queries for reusable functions
+include '../../src/resources/inc/db_queries.php';
 include '../../src/resources/inc/functions.php';
 require_once '../../src/func/security.php';
 require_once '../../src/func/header.php';
 
-runSecurityChecks(); // Ensure the user is logged in
+runSecurityChecks(); // Ensure the user is authenticated
 
-// Create Database Connection
+// Create database connection
 $database = new Database();
 $db = $database->getConnection();
 
@@ -17,24 +17,23 @@ $end_date = $_SESSION['end_date'] ?? $_POST['end_date'] ?? null;
 $room_type = $_GET['room_type'] ?? 'King Suite';
 $assignedRoomId = null;
 
-// Automatically check availability if room_type, start_date, and end_date are provided
+// Check availability if room type and dates are provided
 if ($room_type && $start_date && $end_date) {
     $assignedRoomId = getRandomAvailableRoomId($start_date, $end_date, $room_type, $db);
 
     if ($assignedRoomId) {
-        $_SESSION['assignedRoomId'] = $assignedRoomId; // Store in session
+        $_SESSION['assignedRoomId'] = $assignedRoomId; // Store assigned room ID in session
     } else {
-        unset($_SESSION['assignedRoomId']); // Clear session if no room is found
+        unset($_SESSION['assignedRoomId']); // Clear session if no room is available
     }
 }
 
-// Handle form submission
+// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
 
     if ($action === 'book') {
-        // Retrieve room ID from session
-        $assignedRoomId = $_SESSION['assignedRoomId'] ?? null;
+        $assignedRoomId = $_SESSION['assignedRoomId'] ?? null; // Get assigned room ID from session
 
         if ($assignedRoomId) {
             $floor = $_POST['floor'] ?? null;
@@ -77,11 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single Room Booking</title>
-    <link rel="stylesheet" href="../../public/assets/css/roomStyle.css?v1.0.2">
+    <title>Single Room Booking</title> <!-- Page title -->
+    <link rel="stylesheet" href="../../public/assets/css/roomStyle.css?v1.0.2"> <!-- Stylesheet link -->
 </head>
 <body>
 <div class="search-container">
+    <!-- Form to select dates -->
     <form method="POST" class="search-form">
         <div class="input-group">
             <label for="start_date">Ankomst</label>
@@ -111,16 +111,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container">
     <div class="room-image">
-        <img src="../../public/assets/img/single_room.JPG" alt="Enkelt rom">
+        <img src="../../public/assets/img/single_room.JPG" alt="Enkelt rom"> <!-- Room image -->
     </div>
 
     <div class="room-details">
-        <h2>Enkelt rom</h2>
+        <h2>Enkelt rom</h2> <!-- Room details -->
         <p><strong>Størrelse:</strong> 25 m²</p>
         <p><strong>Kapasitet:</strong> 1 person</p>
         <p><strong>Wi-Fi:</strong> Inkludert</p>
     </div>
     
+    <!-- Booking preferences form -->
     <form method="POST">
         <input type="hidden" name="start_date" value="<?= htmlspecialchars($start_date ?? '') ?>">
         <input type="hidden" name="end_date" value="<?= htmlspecialchars($end_date ?? '') ?>">
@@ -139,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="checkbox" name="has_view"> Helst Rom med Utsikt
             </label>
         </div>
-        <button type="submit" name="action" value="book" <?= isset($_SESSION['assignedRoomId']) ? '' : 'disabled' ?>>Book Now</button>
+        <button type="submit" name="action" value="book" <?= isset($_SESSION['assignedRoomId']) ? '' : 'disabled' ?>>Book Now</button> <!-- Book button -->
     </form>
 </div>
 </body>

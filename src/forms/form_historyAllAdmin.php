@@ -6,10 +6,10 @@ include '../../src/resources/inc/functions.php';
 require_once '../../src/func/security.php';
 require_once '../../src/func/header.php';
 
-// Sjekk at brukeren er logget inn og er admin
+// Ensure the user is logged in and has admin privileges
 ensureAdmin();
 
-// Hent alle bookinger fra databasen
+// Fetch all bookings from the database
 $query = "
     SELECT b.id, u.username AS user_name, u.firstName AS first_name, u.lastName AS last_name, 
            r.room_name, b.room_type, b.start_date, b.end_date, b.floor, 
@@ -28,7 +28,7 @@ $query = "
 ";
 $stmt = $conn->prepare($query);
 $stmt->execute();
-$bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$bookings = $stmt->fetchAll(PDO::FETCH_ASSOC); // Retrieve all bookings as an associative array
 ?>
 
 <!DOCTYPE html>
@@ -36,48 +36,48 @@ $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alle Bookinger</title>
-    <link rel="stylesheet" href="../../public/assets/css/style.css?v1.0.1">
+    <title>Alle Bookinger</title> <!-- Page title -->
+    <link rel="stylesheet" href="../../public/assets/css/style.css?v1.0.1"> <!-- Link to stylesheet -->
 </head>
 <body>
 <div class="container_roomOverview">
-    <h1>Alle Bookinger</h1>
+    <h1>Alle Bookinger</h1> <!-- Page header -->
 
     <?php if (empty($bookings)): ?>
-        <p>Det er ingen registrerte bookinger.</p>
+        <p>Det er ingen registrerte bookinger.</p> <!-- Message if no bookings are found -->
     <?php else: ?>
         <table>
             <thead>
             <tr>
-                <th>Booking-ID</th>
-                <th>Brukernavn</th>
-                <th>Fornavn</th>
-                <th>Etternavn</th>
-                <th>Romnummer</th>
-                <th>Romtype</th>
-                <th>Startdato</th>
-                <th>Sluttdato</th>
-                <th>Etasje</th>
-                <th>Nær Heis</th>
-                <th>Utsikt</th>
+                <th>Booking-ID</th> <!-- Booking ID column -->
+                <th>Brukernavn</th> <!-- Username column -->
+                <th>Fornavn</th> <!-- First name column -->
+                <th>Etternavn</th> <!-- Last name column -->
+                <th>Romnummer</th> <!-- Room number column -->
+                <th>Romtype</th> <!-- Room type column -->
+                <th>Startdato</th> <!-- Start date column -->
+                <th>Sluttdato</th> <!-- End date column -->
+                <th>Etasje</th> <!-- Floor column -->
+                <th>Nær Heis</th> <!-- Near elevator column -->
+                <th>Utsikt</th> <!-- View column -->
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($bookings as $booking): ?>
+            <?php foreach ($bookings as $booking): ?> <!-- Iterate over each booking -->
                 <tr>
-                    <td><?php echo htmlspecialchars($booking['id']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['user_name']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['first_name']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['last_name']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['room_name']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['room_type']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['start_date']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['end_date']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['floor']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['near_elevator']); ?></td>
-                    <td><?php echo htmlspecialchars($booking['has_view']); ?></td>
+                    <td><?php echo htmlspecialchars($booking['id']); ?></td> <!-- Display booking ID -->
+                    <td><?php echo htmlspecialchars($booking['user_name']); ?></td> <!-- Display username -->
+                    <td><?php echo htmlspecialchars($booking['first_name']); ?></td> <!-- Display first name -->
+                    <td><?php echo htmlspecialchars($booking['last_name']); ?></td> <!-- Display last name -->
+                    <td><?php echo htmlspecialchars($booking['room_name']); ?></td> <!-- Display room number -->
+                    <td><?php echo htmlspecialchars($booking['room_type']); ?></td> <!-- Display room type -->
+                    <td><?php echo htmlspecialchars($booking['start_date']); ?></td> <!-- Display start date -->
+                    <td><?php echo htmlspecialchars($booking['end_date']); ?></td> <!-- Display end date -->
+                    <td><?php echo htmlspecialchars($booking['floor']); ?></td> <!-- Display floor -->
+                    <td><?php echo htmlspecialchars($booking['near_elevator']); ?></td> <!-- Display near elevator status -->
+                    <td><?php echo htmlspecialchars($booking['has_view']); ?></td> <!-- Display view status -->
                 </tr>
-            <?php endforeach; ?>
+            <?php endforeach; ?> <!-- End of booking iteration -->
             </tbody>
         </table>
     <?php endif; ?>
